@@ -1,0 +1,17 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u1-journey-skeleton",
+  "upstream_ids": ["NFR3.1", "NFR3.2", "NFR4.2", "NFR5.2", "NFR6.5", "NFR6.12", "NFR6.13", "NFR10.2", "NFR11.1", "NFR11.2"],
+  "coverage": [
+    { "id": "NFR3.1", "status": "OK", "target": "infrastructure-specification.md: Google Services Gradle plugin; Firebase Android app com.h2.game.block_blast" },
+    { "id": "NFR3.2", "status": "OK", "target": "infrastructure-specification.md: Firebase iOS app com.h2.game.blockBlast" },
+    { "id": "NFR4.2", "status": "OK", "target": "cicd-pipeline.md steps 2–5 (pub get, analyze, build)" },
+    { "id": "NFR5.2", "status": "OK", "target": "monitoring-design.md metric bootstrap done ≤3500ms" },
+    { "id": "NFR6.5", "status": "OK", "target": "infrastructure-specification.md: Remote Config client minimumFetchInterval 12h, fetchTimeout 2s" },
+    { "id": "NFR6.12", "status": "OK", "target": "monitoring-design.md metric config_source" },
+    { "id": "NFR6.13", "status": "OK", "target": "monitoring-design.md metric bootstrap done" },
+    { "id": "NFR10.2", "status": "OK", "target": "cicd-pipeline.md step 4 (flutter test --coverage, per-file lcov)" },
+    { "id": "NFR11.1", "status": "OK", "target": "infrastructure-specification.md: native config files only; API key restriction deferred (Q2=B, accepted risk)" },
+    { "id": "NFR11.2", "status": "OK", "target": "cicd-pipeline.md secrets section; config files only in android/app and ios/Runner" }
+  ]
+}

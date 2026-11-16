@@ -1,0 +1,26 @@
+## Review
+
+**Verdict:** READY
+**Reviewer:** aidlc-architecture-reviewer-agent
+**Iteration:** 1
+
+Người điều phối chép nguyên văn review do reviewer trả về (reviewer không có công cụ đọc/ghi file). Reviewer đánh giá dựa trên bản tóm tắt thay đổi, chưa đối chiếu với file thật.
+
+### Findings
+
+| ID | Severity | Location | Finding | Required action | Status |
+|---|---|---|---|---|---|
+| R-01 | Critical | decisions.md > ADR-008; LevelGameController (state machine); JourneyController.onLevelWon/onLevelLost | Thiết kế mới đã đóng được lỗi gốc. Máy trạng thái playing → resolving → won\|lost khóa input và bỏ qua trigger thắng/thua thứ hai. Victory chỉ mở sau khi Future của repository hoàn tất. Thắng ưu tiên hơn hết nước đi trong cùng một lượt. Còn một điểm chưa nêu: nếu ghi đĩa thất bại thì `JourneyOutcome` ra sao. | Ghi rõ trong ADR-008 hành vi khi ghi thất bại: vẫn mở Victory dựa trên cache trong bộ nhớ và ghi log lỗi, hoặc báo lỗi và cho thử lại. Không để trạng thái `resolving` bị treo. | Resolved |
+| R-02 | Critical | decisions.md > ADR-009; ProgressRepository | Một writer duy nhất, cache nạp khi bootstrap, hàng đợi ghi tuần tự theo chuỗi Future và các khóa tách riêng đã loại được rủi ro ghi đè đồng thời. Các API cập nhật từng phần chỉ hoàn tất sau khi ghi đĩa xong. | Không cần sửa. Nên nêu trong ADR-009 rằng một lần ghi lỗi không được làm hỏng chuỗi Future cho các lần ghi sau. | Resolved |
+| R-03 | Major | AppBootstrap; LevelCatalog; LevelRound; decisions.md > ADR-010 | AppBootstrap đã tập trung vòng đời cấu hình: timeout ≤2s, không treo, có mặc định khi lỗi. LevelCatalog bất biến trong phiên. SplashUI chỉ phụ thuộc AppBootstrap. LevelRound khóa `targetScore` khi bắt đầu. Hệ quả cần được ghi lại: cấu hình kích hoạt muộn chỉ có hiệu lực từ lần mở app sau. | Ghi rõ hệ quả này trong ADR-010 để các stage sau không kỳ vọng cấu hình áp dụng ngay trong phiên. | Resolved |
+| R-04 | Major | JourneyController; AnalyticsService; SessionTracker | JourneyController chỉ phụ thuộc LevelCatalog và ProgressRepository, và trả về `JourneyOutcome`. Phụ thuộc vào Analytics đã được gỡ. LevelGameController gửi cả event lẫn user property. Việc SessionTracker ghi ở `paused` là điểm chính, `detached` chỉ best-effort, cũng hợp lý. | Không cần sửa. | Resolved |
+| R-05 | Major | LevelConfigService; decisions.md > ADR-006 | Mỗi URL được kiểm tra theo https cùng host `firebasestorage.googleapis.com` hoặc `*.firebasestorage.app`. URL sai chỉ làm `backgroundUrl = null` cho riêng level đó và vẫn giữ asset. Rủi ro còn lại là dựa vào quy tắc bảo mật của bucket (public-read, không ghi), đã được nêu trong ADR-006. | Không cần sửa. Khi so khớp host, dùng parse URI chuẩn và so sánh host đầy đủ hoặc hậu tố có dấu chấm đứng trước. Đừng dùng `contains`, vì cách đó cho phép vượt qua bằng host giả. | Resolved |
+| R-06 | Major | LevelConfigService validation | Quy tắc đã đủ chặt: đúng 36 cặp gem/sub hợp lệ và duy nhất, `target` nguyên trong 1..10,000,000. Cận trên là giả định và đã được nêu rõ. Target không tăng dần chỉ cảnh báo, hợp lý vì requirements không bắt buộc đơn điệu. | Không cần sửa. Nên xác nhận cận trên 10,000,000 với chủ sản phẩm ở stage sau. | Resolved |
+| R-07 | Minor | EndlessGameController | Chỉ lưu điểm, không lưu bàn chơi và combo, đúng với FR9.3. Việc mất điểm cuối khi app bị kill đột ngột đã được ghi nhận là hạn chế chấp nhận. Home hiển thị "—" khi chưa có điểm. | Ghi giới hạn này vào mục rủi ro chấp nhận của tài liệu. | Accepted risk |
+| R-08 | Major | SplashUI, HomeUI, GameplayUI, VictoryUI; traceability.json | GameUI đã tách thành 4 component có trách nhiệm rõ ràng. US8.1/US8.2 là file cấu hình nền tảng và không có component runtime, nên để Deferred sang code-generation là hợp lý. US8.6 Deferred sang nfr-design cũng chấp nhận được. GameplayUI vẫn gom khá nhiều thứ (header, progress bar, background, QuitDialog, GameOverOverlay). Đó là thành phần trình bày chứ không chứa logic, nên tôi không coi là blocker. | Không cần sửa. Nếu GameplayUI phình ra khi cài đặt, tách các widget con trong thư mục `widgets/`. | Resolved |
+| R-09 | Major | decisions.md > ADR-005 | Các seam đã đủ: AnalyticsService, RemoteConfigClient, Clock, `SharedPreferences.setMockInitialValues`, ImageLoader, audio player có thể tiêm, và Random tiêm được cho BlockGenerator. Các lớp Firebase mỏng không bị loại khỏi coverage, nên mức 80% không bị nới lỏng. | Không cần sửa. | Resolved |
+| R-10 | Minor | AppBootstrap; ProgressRepository.load; ADR-010 | Nếu dữ liệu đã lưu bị hỏng hoặc sai định dạng (JSON hỏng, khóa legacy), brief chưa nói AppBootstrap xử lý ra sao. Brief chỉ nói "defaults on error" cho cấu hình và việc xóa khóa legacy. Cần định nghĩa rõ hành vi để tránh crash khi khởi động. | Ghi rõ trong ADR-009 hoặc ADR-010: dữ liệu hỏng trong từng khóa thì dùng giá trị mặc định cho khóa đó, không làm hỏng cả cache. Ghi log sự cố. | New |
+
+### Summary
+
+Cả chín phát hiện trước đó đều được xử lý bằng các quyết định có căn cứ (ADR-005, 006, 008, 009 và 010). Bản sửa không còn lỗi chặn nào. Còn hai điểm nhỏ cần ghi vào tài liệu: hành vi khi ghi đĩa thất bại ở ADR-008 và việc xử lý dữ liệu lưu bị hỏng (R-10). Review này dựa trên brief chứ không dựa trên việc đọc artifact, nên người duyệt cần tự đối chiếu `depends_on`/`dependents` và `traceability.json` với các điểm nêu trên trước khi phê duyệt.

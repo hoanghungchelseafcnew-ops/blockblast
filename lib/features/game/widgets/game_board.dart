@@ -1,0 +1,62 @@
+import 'board_cell.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../core/theme/theme_manager.dart';
+import '../../../core/constants/game_constants.dart';
+import '../models/cell_model.dart';
+
+class GameBoard extends StatelessWidget {
+  final List<List<CellModel>> board;
+
+  const GameBoard({super.key, required this.board});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeBg = context.watch<ThemeManager>().boardBackground;
+
+    return Padding(
+      padding: const EdgeInsets.all(GameConstants.boardPadding),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          decoration: BoxDecoration(
+            color: themeBg,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 15,
+                spreadRadius: 2,
+              )
+            ],
+          ),
+          padding: const EdgeInsets.all(10),
+          child: GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: GameConstants.boardSize,
+              crossAxisSpacing: GameConstants.cellSpacing,
+              mainAxisSpacing: GameConstants.cellSpacing,
+            ),
+            itemCount: GameConstants.boardSize * GameConstants.boardSize,
+            itemBuilder: (_, index) {
+              final row = index ~/ GameConstants.boardSize;
+              final col = index % GameConstants.boardSize;
+              final cell = board[row][col];
+
+              return BoardCell(
+                filled: cell.filled,
+                preview: cell.preview,
+                previewColor: cell.previewColor,
+                cellColor: cell.color,
+                isIce: cell.isIce,
+                isBomb: cell.isBomb,
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}

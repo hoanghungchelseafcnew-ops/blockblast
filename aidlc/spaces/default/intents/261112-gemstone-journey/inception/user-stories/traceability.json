@@ -1,0 +1,34 @@
+{
+  "stage": "user-stories",
+  "upstream_ids": [
+    "FR1", "FR2", "FR3", "FR4", "FR5", "FR6", "FR7", "FR8", "FR9", "FR10", "FR11", "FR12", "FR13", "FR14",
+    "NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR8", "NFR9", "NFR10", "NFR11"
+  ],
+  "coverage": [
+    { "id": "FR1", "status": "OK", "target": "US2.1, US2.2" },
+    { "id": "FR2", "status": "OK", "target": "US1.1, US1.2, US1.3, US1.4, US1.5, US2.3, US2.6" },
+    { "id": "FR3", "status": "OK", "target": "US6.1, US6.2, US7.4" },
+    { "id": "FR4", "status": "OK", "target": "US6.3, US6.4" },
+    { "id": "FR5", "status": "OK", "target": "US7.1, US7.2, US7.3, US7.4" },
+    { "id": "FR6", "status": "OK", "target": "US1.7, US3.1, US3.2, US3.3, US3.4" },
+    { "id": "FR7", "status": "N/A", "justification": "Out of scope (D-11): no level selection UI; PLAY goes to current level (US5.1)" },
+    { "id": "FR8", "status": "OK", "target": "US1.1, US1.6, US1.7, US3.3" },
+    { "id": "FR9", "status": "OK", "target": "US4.1, US4.2, US4.3, US4.4, US6.3" },
+    { "id": "FR10", "status": "OK", "target": "US5.1, US5.2, US5.3" },
+    { "id": "FR11", "status": "OK", "target": "US1.7, US2.4, US2.5, US2.6, US2.7" },
+    { "id": "FR12", "status": "OK", "target": "US5.4" },
+    { "id": "FR13", "status": "OK", "target": "US5.3, US8.3" },
+    { "id": "FR14", "status": "OK", "target": "US8.1, US8.2" },
+    { "id": "NFR1", "status": "OK", "target": "US8.5" },
+    { "id": "NFR2", "status": "OK", "target": "US8.3" },
+    { "id": "NFR3", "status": "OK", "target": "US8.1, US8.2" },
+    { "id": "NFR4", "status": "OK", "target": "US8.4, US7.2" },
+    { "id": "NFR5", "status": "OK", "target": "US3.4, US7.3, US8.6" },
+    { "id": "NFR6", "status": "OK", "target": "US7.4" },
+    { "id": "NFR7", "status": "OK", "target": "US8.6" },
+    { "id": "NFR8", "status": "OK", "target": "US8.6" },
+    { "id": "NFR9", "status": "OK", "target": "US2.4, US3.4, US8.6" },
+    { "id": "NFR10", "status": "OK", "target": "US8.5" },
+    { "id": "NFR11", "status": "OK", "target": "US8.4" }
+  ]
+}

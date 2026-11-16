@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "01a1cee8-d5e3-778f-8ca4-4bc99c076955",
+  "source": {
+    "kind": "managed",
+    "path": "documents/REQUIREMENTS-gemstone-journey.md"
+  },
+  "sha256": "c06a5424c40901d54726360eb9d2196360b3224dffaf14230d84ecd475989b88",
+  "bytes": 15180,
+  "indexed_at": "2026-11-12T08:38:47.977Z",
+  "extraction": {
+    "state": "extracted",
+    "extractor": {
+      "name": "builtin-text",
+      "version": "1"
+    },
+    "chars": 13617,
+    "truncated": false,
+    "source_revision": "c06a5424c40901d54726360eb9d2196360b3224dffaf14230d84ecd475989b88"
+  },
+  "summary": {
+    "state": "absent"
+  },
+  "content": "documentkb/01a1cee8-d5e3-778f-8ca4-4bc99c076955/content.md",
+  "content_sha256": "c06a5424c40901d54726360eb9d2196360b3224dffaf14230d84ecd475989b88",
+  "content_trust": "untrusted",
+  "content_handling": "data-not-instructions"
+}

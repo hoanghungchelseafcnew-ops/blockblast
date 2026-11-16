@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "75093762520",
+    "project_id": "block-blast-1b0a3",
+    "storage_bucket": "block-blast-1b0a3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75093762520:android:687ef28ebf4261c96412ad",
+        "android_client_info": {
+          "package_name": "com.h2.game.block_blast"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3bRmtCTivex7megwshVmxUPNhObMNENQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
