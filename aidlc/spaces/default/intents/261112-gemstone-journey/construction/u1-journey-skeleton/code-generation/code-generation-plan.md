@@ -109,52 +109,52 @@ Mỗi bước gắn với rule (BR), workflow (WF) và story/yêu cầu nguồn.
 
 ### Giai đoạn B — Lõi trò chơi (unit-of-work bước 2)
 
-- [ ] **Step 3 — Business logic: tách `BoardEngine` và `TurnResolver` — implement.**
+- [x] **Step 3 — Business logic: tách `BoardEngine` và `TurnResolver` — implement.**
   - Tách logic đặt khối, tính điểm (ô × 10, dòng × 100 × combo), xóa dòng, kiểm tra hết nước đi khỏi `_GameScreenState`, dựa trên `BoardLogic` hiện có (`lib/features/game/logic/board_logic.dart`). Đặt trong `lib/features/game/engine/`.
   - Gỡ hoàn toàn Time Attack (`GameMode`, `_timeLeft`, `_startTimer`, `high_score_time`) khỏi `lib/`.
   - Truy vết: BR5.1, BR5.2, BR6.3, FR1, US2.2 (gameplay giữ nguyên).
-- [ ] **Step 4 — Business logic: test cho `BoardEngine`/`TurnResolver`.** Điểm, combo reset, xóa dòng, hết nước đi, trường hợp biên (bảng đầy, khối không đặt được). Kèm kiểm tra tĩnh BR6.3 (không còn từ khóa Time Attack trong `lib/`). Chạy ở **CP-2**.
+- [x] **Step 4 — Business logic: test cho `BoardEngine`/`TurnResolver`.** Điểm, combo reset, xóa dòng, hết nước đi, trường hợp biên (bảng đầy, khối không đặt được). Kèm kiểm tra tĩnh BR6.3 (không còn từ khóa Time Attack trong `lib/`). Chạy ở **CP-2**.
 
 ### Giai đoạn C — Cấu hình và catalog (unit-of-work bước 3)
 
-- [ ] **Step 5 — Data model: entity và cấu hình — implement.**
+- [x] **Step 5 — Data model: entity và cấu hình — implement.**
   - Models: `GemConfig`, `SubLevelConfig`, `LevelConfig` (kèm `source`), `Level`.
   - `ImageUrlPolicy.isAllowed` với try/catch(Object) (Uri.decodeFull ném lỗi với `%zz`; trả `false` và log lý do).
   - `LevelConfigValidator` (BR1.2, BR1.3, BR1.6): trả toàn bộ hợp lệ hoặc bị loại; URL xấu chỉ bỏ cho riêng level đó.
   - `DefaultLevelConfig` là hằng Dart `const` trong `lib/core/firebase/default_level_config.dart`; level 1 target 500 (AC offline).
   - Truy vết: BR1.2, BR1.3, BR1.4, BR1.6, E1 (version ≥ 1, bỏ qua trường lạ), FR3.
-- [ ] **Step 6 — Data model: test cho models, validator, `ImageUrlPolicy`, `DefaultLevelConfig`.** JSON hợp lệ; thiếu gem; sub trùng `order`; `targetScore` ngoài 1..10,000,000; `version` < 1; URL: sai scheme, có userinfo, port lạ, host giả (`evilfirebasestorage.app`), chuỗi `%zz`; trường lạ được bỏ qua.
-- [ ] **Step 7 — Repository: `LevelConfigService` và `RemoteConfigClient` — implement.**
+- [x] **Step 6 — Data model: test cho models, validator, `ImageUrlPolicy`, `DefaultLevelConfig`.** JSON hợp lệ; thiếu gem; sub trùng `order`; `targetScore` ngoài 1..10,000,000; `version` < 1; URL: sai scheme, có userinfo, port lạ, host giả (`evilfirebasestorage.app`), chuỗi `%zz`; trường lạ được bỏ qua.
+- [x] **Step 7 — Repository: `LevelConfigService` và `RemoteConfigClient` — implement.**
   - `RemoteConfigClient` (abstract) + triển khai Firebase + `FakeRemoteConfigClient`. `LevelConfigService.initialize()` áp dụng ngân sách fetch (BR1.1), nguồn `remote | cached | default`, log `config_source` (BR1.7).
   - Truy vết: BR1.1, BR1.4, BR1.5, BR1.7, BR1.8.
-- [ ] **Step 8 — Repository: test cho `LevelConfigService`.** Remote hợp lệ; remote hỏng → default; fetch timeout → cached; cached hỏng → default; Firebase lỗi/treo → default; log không chứa URL đầy đủ.
-- [ ] **Step 9 — Business logic: `LevelCatalog` — implement.** 36 level bất biến, `levelIndex = (gemOrder − 1) × 6 + subOrder`, `assetPath`, `next(level)` (level 36 → null). Truy vết: BR2.1..BR2.4.
-- [ ] **Step 10 — Business logic: test cho `LevelCatalog`.** Đủ 36 level, thứ tự, `assetPath`, `next` ở biên 1/35/36, bất biến.
+- [x] **Step 8 — Repository: test cho `LevelConfigService`.** Remote hợp lệ; remote hỏng → default; fetch timeout → cached; cached hỏng → default; Firebase lỗi/treo → default; log không chứa URL đầy đủ.
+- [x] **Step 9 — Business logic: `LevelCatalog` — implement.** 36 level bất biến, `levelIndex = (gemOrder − 1) × 6 + subOrder`, `assetPath`, `next(level)` (level 36 → null). Truy vết: BR2.1..BR2.4.
+- [x] **Step 10 — Business logic: test cho `LevelCatalog`.** Đủ 36 level, thứ tự, `assetPath`, `next` ở biên 1/35/36, bất biến.
 
 ### Giai đoạn D — Tiến trình và vòng đời ván (unit-of-work bước 4)
 
-- [ ] **Step 11 — Repository: `ProgressRepository` — implement.** Cache, hàng đợi ghi FIFO duy nhất, key riêng (`progress`, `tutorial_completed`), `load()` thử lại một lần rồi chuyển chế độ chỉ đọc (log cảnh báo khi vào chế độ này và ở lần ghi bị bỏ qua đầu tiên), dirty + bộ đếm thử lại 3 lần, `flushDirty`. Truy vết: BR3.1..BR3.5, ADR-009, contract C5, E3.
-- [ ] **Step 12 — Repository: test cho `ProgressRepository`** (dùng `SharedPreferences.setMockInitialValues`). Key thiếu/hỏng → mặc định; `currentLevelIndex` ngoài 1..36; phần tử `completedLevels` ngoài khoảng bị bỏ; tutorial không phải bool; thứ tự FIFO; ghi lỗi → dirty → ghi lại; bộ đếm dừng ở 3; `flushDirty` bỏ qua bộ đếm; `load` lỗi → chế độ chỉ đọc.
-- [ ] **Step 13 — Business logic: `JourneyController.onLevelWon` — implement.** Thuần (không analytics). Cập nhật cache, await lưu, luôn trả `JourneyOutcome { nextLevel, highestLevelReached, unlockedGemId = null, journeyCompleted = false }`, không bao giờ throw. Truy vết: BR4.1..BR4.3, US1.6.
-- [ ] **Step 14 — Business logic: test cho `JourneyController`.** Thắng lần đầu (ví dụ BR4.1: level 5 → current 6, highest 6); thắng lại với highest=9 giữ highest; level 36 → `nextLevel = null`; thêm lại `completedLevels` không đổi; ghi lỗi vẫn trả outcome.
-- [ ] **Step 15 — Business logic: `AppBootstrap` — implement.** Điều phối WF1 với hạn chót 3,5s: Firebase init ≤ 1,5s, fetch ≤ min(2s, hạn chót − 0,5s − now), `ProgressRepository.load` ≤ 0,5s trong hạn chót tổng, dựng `LevelCatalog`, log `config_source`. Đồng hồ (`Clock`) được tiêm để test. Truy vết: BR1.1, BR1.5, BR1.8, WF1.
-- [ ] **Step 16 — Business logic: test cho `AppBootstrap`.** Mọi nguồn thành công; Firebase lỗi; Firebase treo; fetch treo; hạn chót cắt giữa chừng; Splash không vượt 3,5s (đồng hồ giả).
-- [ ] **Step 17 — Business logic: `LevelGameController` — implement.** Trạng thái `playing → resolving → won`, `playing → lost`, `lost → playing` (REVIVE), `quit`; thắng ưu tiên hơn hết nước đi, kiểm tra trước animation; `clearing` 180ms; `targetScore = max(1, …)`; `progressPercent` làm tròn xuống (max 99 trước khi thắng); timeout `resolving` 3s; bỏ qua input ngoài `playing`; tutorial qua repository. Dùng `TurnResolver`. Truy vết: BR5.1..BR5.10, WF2..WF6, ADR-008.
-- [ ] **Step 18 — Business logic: test cho `LevelGameController`.** Thắng ngay cả khi cùng lượt hết nước đi; input bị bỏ qua khi `resolving`/`won`/`lost`/`quit`; back khi `resolving` bị bỏ qua, khi `playing` → `quit` không đổi tiến trình; % ở các biên (0, 99, 100, target = 1); REVIVE một lần; PLAY AGAIN tạo `roundId` mới; timeout 3s dùng outcome từ cache; hai lần thắng không xử lý đôi.
+- [x] **Step 11 — Repository: `ProgressRepository` — implement.** Cache, hàng đợi ghi FIFO duy nhất, key riêng (`progress`, `tutorial_completed`), `load()` thử lại một lần rồi chuyển chế độ chỉ đọc (log cảnh báo khi vào chế độ này và ở lần ghi bị bỏ qua đầu tiên), dirty + bộ đếm thử lại 3 lần, `flushDirty`. Truy vết: BR3.1..BR3.5, ADR-009, contract C5, E3.
+- [x] **Step 12 — Repository: test cho `ProgressRepository`** (dùng `SharedPreferences.setMockInitialValues`). Key thiếu/hỏng → mặc định; `currentLevelIndex` ngoài 1..36; phần tử `completedLevels` ngoài khoảng bị bỏ; tutorial không phải bool; thứ tự FIFO; ghi lỗi → dirty → ghi lại; bộ đếm dừng ở 3; `flushDirty` bỏ qua bộ đếm; `load` lỗi → chế độ chỉ đọc.
+- [x] **Step 13 — Business logic: `JourneyController.onLevelWon` — implement.** Thuần (không analytics). Cập nhật cache, await lưu, luôn trả `JourneyOutcome { nextLevel, highestLevelReached, unlockedGemId = null, journeyCompleted = false }`, không bao giờ throw. Truy vết: BR4.1..BR4.3, US1.6.
+- [x] **Step 14 — Business logic: test cho `JourneyController`.** Thắng lần đầu (ví dụ BR4.1: level 5 → current 6, highest 6); thắng lại với highest=9 giữ highest; level 36 → `nextLevel = null`; thêm lại `completedLevels` không đổi; ghi lỗi vẫn trả outcome.
+- [x] **Step 15 — Business logic: `AppBootstrap` — implement.** Điều phối WF1 với hạn chót 3,5s: Firebase init ≤ 1,5s, fetch ≤ min(2s, hạn chót − 0,5s − now), `ProgressRepository.load` ≤ 0,5s trong hạn chót tổng, dựng `LevelCatalog`, log `config_source`. Đồng hồ (`Clock`) được tiêm để test. Truy vết: BR1.1, BR1.5, BR1.8, WF1.
+- [x] **Step 16 — Business logic: test cho `AppBootstrap`.** Mọi nguồn thành công; Firebase lỗi; Firebase treo; fetch treo; hạn chót cắt giữa chừng; Splash không vượt 3,5s (đồng hồ giả).
+- [x] **Step 17 — Business logic: `LevelGameController` — implement.** Trạng thái `playing → resolving → won`, `playing → lost`, `lost → playing` (REVIVE), `quit`; thắng ưu tiên hơn hết nước đi, kiểm tra trước animation; `clearing` 180ms; `targetScore = max(1, …)`; `progressPercent` làm tròn xuống (max 99 trước khi thắng); timeout `resolving` 3s; bỏ qua input ngoài `playing`; tutorial qua repository. Dùng `TurnResolver`. Truy vết: BR5.1..BR5.10, WF2..WF6, ADR-008.
+- [x] **Step 18 — Business logic: test cho `LevelGameController`.** Thắng ngay cả khi cùng lượt hết nước đi; input bị bỏ qua khi `resolving`/`won`/`lost`/`quit`; back khi `resolving` bị bỏ qua, khi `playing` → `quit` không đổi tiến trình; % ở các biên (0, 99, 100, target = 1); REVIVE một lần; PLAY AGAIN tạo `roundId` mới; timeout 3s dùng outcome từ cache; hai lần thắng không xử lý đôi.
 
 ### Giai đoạn E — Giao diện tối thiểu
 
-- [ ] **Step 19 — Frontend behavior: UI — implement.**
+- [x] **Step 19 — Frontend behavior: UI — implement.**
   - `SplashScreen` (chờ `AppBootstrap`, tối đa 3,5s, logo và chỉ báo) và `app.dart` nối Provider/constructor DI.
   - Home: bỏ hai thẻ chế độ, thêm nhãn `"<gemName> · <subName>"` và nút **PLAY** ≥ 48dp, giữ Settings và Daily Gift.
   - `game_screen.dart` dùng `LevelGameController`: header `[←]`, tên level, `"score / target"`, thanh tiến độ có nhãn `%`; bỏ TIME/BEST cũ; Victory tạm ("Level Complete!", `"score / target"`, CONTINUE); giữ Game Over cũ (SHARE, PLAY AGAIN, REVIVE, BACK TO MENU) khi `status = lost`. `AppLifecycleState.paused` gọi `flushDirty` (WF7).
   - Truy vết: WF1, WF2, WF4, WF5, WF7, BR6.3, BR6.4, FR11, NFR9.1 (PLAY ≥ 48dp, trắng trên `#6C63FF` = 4.32:1, chữ lớn).
-- [ ] **Step 20 — Frontend behavior: widget test.** Splash chuyển sang Home; Home hiển thị nhãn level và PLAY ≥ 48dp, không còn thẻ chế độ; header hiển thị `score / target` và `%`; Victory tạm có CONTINUE và chuyển sang level kế; Game Over hiện khi `lost`. Chạy ở **CP-3**.
+- [x] **Step 20 — Frontend behavior: widget test.** Splash chuyển sang Home; Home hiển thị nhãn level và PLAY ≥ 48dp, không còn thẻ chế độ; header hiển thị `score / target` và `%`; Victory tạm có CONTINUE và chuyển sang level kế; Game Over hiện khi `lost`. Chạy ở **CP-3**.
 
 ### Giai đoạn F — Cấu hình môi trường/build và tài liệu
 
-- [ ] **Step 21 — Environment/build configuration.** Rà lại file cấu hình nền tảng (`google-services.json` và `GoogleService-Info.plist` đã được người dùng đặt đúng chỗ; không commit secret mới, không hardcode API key trong Dart). Ghi chú iOS: thêm `GoogleService-Info.plist` vào target Runner trong Xcode nếu chưa có (kiểm chứng iOS có thể hoãn sang Build & Test nếu chưa có Mac, theo DoD của U1).
-- [ ] **Step 22 — Tài liệu và truy vết.** Viết `unit-test-instructions.md` (đã có trước khi duyệt), `code-summary.md`, `traceability.json`, `source-manifest.json` (mọi file ứng dụng được tạo/sửa/xóa, gồm file do generator hoặc scaffolding ghi). Ghi chú vận hành review infra R-01/R-02 vào hướng dẫn người dùng (checklist publish RC, rollback RC, tăng version code khi cần quay lại sau khi lên store).
+- [x] **Step 21 — Environment/build configuration.** Rà lại file cấu hình nền tảng (`google-services.json` và `GoogleService-Info.plist` đã được người dùng đặt đúng chỗ; không commit secret mới, không hardcode API key trong Dart). Ghi chú iOS: thêm `GoogleService-Info.plist` vào target Runner trong Xcode nếu chưa có (kiểm chứng iOS có thể hoãn sang Build & Test nếu chưa có Mac, theo DoD của U1).
+- [x] **Step 22 — Tài liệu và truy vết.** Viết `unit-test-instructions.md` (đã có trước khi duyệt), `code-summary.md`, `traceability.json`, `source-manifest.json` (mọi file ứng dụng được tạo/sửa/xóa, gồm file do generator hoặc scaffolding ghi). Ghi chú vận hành review infra R-01/R-02 vào hướng dẫn người dùng (checklist publish RC, rollback RC, tăng version code khi cần quay lại sau khi lên store).
 
 ## Điểm dừng kiểm tra của người dùng (không phải cổng duyệt)
 

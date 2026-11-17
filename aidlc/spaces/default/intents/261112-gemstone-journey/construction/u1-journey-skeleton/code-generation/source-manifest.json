@@ -1,0 +1,205 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-journey-skeleton",
+  "version": 1,
+  "writes": [
+    {
+      "path": "android/app/build.gradle.kts"
+    },
+    {
+      "path": "android/app/google-services.json"
+    },
+    {
+      "path": "android/app/src/main/AndroidManifest.xml"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/h2/game/block_blast/MainActivity.kt"
+    },
+    {
+      "path": "android/settings.gradle.kts"
+    },
+    {
+      "path": "ios/Runner.xcodeproj/project.pbxproj"
+    },
+    {
+      "path": "ios/Runner/GoogleService-Info.plist"
+    },
+    {
+      "path": "lib/app.dart"
+    },
+    {
+      "path": "lib/core/config/image_url_policy.dart"
+    },
+    {
+      "path": "lib/core/config/level_config.dart"
+    },
+    {
+      "path": "lib/core/config/level_config_service.dart"
+    },
+    {
+      "path": "lib/core/config/level_config_validator.dart"
+    },
+    {
+      "path": "lib/core/config/remote_config_client.dart"
+    },
+    {
+      "path": "lib/core/firebase/default_level_config.dart"
+    },
+    {
+      "path": "lib/core/firebase/firebase_gateway.dart"
+    },
+    {
+      "path": "lib/core/firebase/firebase_remote_config_client.dart"
+    },
+    {
+      "path": "lib/core/log/gj_log.dart"
+    },
+    {
+      "path": "lib/core/utils/clock.dart"
+    },
+    {
+      "path": "lib/features/game/engine/board_engine.dart"
+    },
+    {
+      "path": "lib/features/game/engine/board_geometry.dart"
+    },
+    {
+      "path": "lib/features/game/engine/turn_resolver.dart"
+    },
+    {
+      "path": "lib/features/game/engine/turn_result.dart"
+    },
+    {
+      "path": "lib/features/game/logic/board_logic.dart"
+    },
+    {
+      "path": "lib/features/game/screens/game_screen.dart"
+    },
+    {
+      "path": "lib/features/game/services/game_feedback.dart"
+    },
+    {
+      "path": "lib/features/game/services/score_share_service.dart"
+    },
+    {
+      "path": "lib/features/home/screens/home_screen.dart"
+    },
+    {
+      "path": "lib/features/journey/controllers/journey_controller.dart"
+    },
+    {
+      "path": "lib/features/journey/controllers/level_game_controller.dart"
+    },
+    {
+      "path": "lib/features/journey/models/journey_outcome.dart"
+    },
+    {
+      "path": "lib/features/journey/models/level.dart"
+    },
+    {
+      "path": "lib/features/journey/models/player_progress.dart"
+    },
+    {
+      "path": "lib/features/journey/services/app_bootstrap.dart"
+    },
+    {
+      "path": "lib/features/journey/services/level_catalog.dart"
+    },
+    {
+      "path": "lib/features/journey/services/progress_lifecycle_observer.dart"
+    },
+    {
+      "path": "lib/features/journey/services/progress_repository.dart"
+    },
+    {
+      "path": "lib/features/journey/services/progress_store.dart"
+    },
+    {
+      "path": "lib/features/splash/screens/splash_screen.dart"
+    },
+    {
+      "path": "lib/main.dart"
+    },
+    {
+      "path": "pubspec.yaml"
+    },
+    {
+      "path": "test/core/config/default_level_config_test.dart"
+    },
+    {
+      "path": "test/core/config/firebase_remote_config_client_test.dart"
+    },
+    {
+      "path": "test/core/config/image_url_policy_test.dart"
+    },
+    {
+      "path": "test/core/config/level_config_service_test.dart"
+    },
+    {
+      "path": "test/core/config/level_config_validator_test.dart"
+    },
+    {
+      "path": "test/fakes/fake_clock.dart"
+    },
+    {
+      "path": "test/fakes/fake_progress_store.dart"
+    },
+    {
+      "path": "test/fakes/fake_remote_config_client.dart"
+    },
+    {
+      "path": "test/fakes/log_capture.dart"
+    },
+    {
+      "path": "test/features/game/engine/board_engine_test.dart"
+    },
+    {
+      "path": "test/features/game/engine/board_geometry_test.dart"
+    },
+    {
+      "path": "test/features/game/engine/engine_test_helpers.dart"
+    },
+    {
+      "path": "test/features/game/engine/time_attack_removed_test.dart"
+    },
+    {
+      "path": "test/features/game/engine/turn_resolver_test.dart"
+    },
+    {
+      "path": "test/features/game/services/game_feedback_test.dart"
+    },
+    {
+      "path": "test/features/game/services/score_share_service_test.dart"
+    },
+    {
+      "path": "test/features/journey/app_bootstrap_test.dart"
+    },
+    {
+      "path": "test/features/journey/journey_controller_test.dart"
+    },
+    {
+      "path": "test/features/journey/level_catalog_test.dart"
+    },
+    {
+      "path": "test/features/journey/level_game_controller_test.dart"
+    },
+    {
+      "path": "test/features/journey/progress_repository_test.dart"
+    },
+    {
+      "path": "test/fixtures/level_config_valid.json"
+    },
+    {
+      "path": "test/ui/game_screen_test.dart"
+    },
+    {
+      "path": "test/ui/splash_home_test.dart"
+    },
+    {
+      "path": "test/ui/ui_test_helpers.dart"
+    },
+    {
+      "path": "test/widget_test.dart"
+    }
+  ]
+}

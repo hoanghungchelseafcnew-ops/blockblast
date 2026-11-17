@@ -7,25 +7,47 @@ import '../../../core/theme/theme_manager.dart';
 import '../../../core/audio/audio_controller.dart';
 import '../../../core/widgets/animated_background.dart';
 import '../../game/screens/game_screen.dart';
+import '../../game/services/game_feedback.dart';
+import '../../journey/controllers/level_game_controller.dart';
+import '../../journey/models/level.dart';
+import '../../journey/services/app_bootstrap.dart';
+import '../../journey/services/progress_lifecycle_observer.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+    required this.services,
+    this.feedback = const DeviceGameFeedback(),
+  });
+
+  /// Dịch vụ dựng ở bootstrap (constructor DI).
+  final AppServices services;
+
+  /// Âm thanh và rung cho ván chơi mới.
+  final GameFeedback feedback;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _highScoreClassic = 0;
-  int _highScoreTime = 0;
+  late final ProgressLifecycleObserver _lifecycleObserver;
 
   @override
   void initState() {
     super.initState();
-    _loadHighScores();
+    // WF7: app vào nền thì ghi lại các key dirty.
+    _lifecycleObserver = ProgressLifecycleObserver(widget.services.progress)
+      ..attach();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkDailyReward();
     });
+  }
+
+  @override
+  void dispose() {
+    _lifecycleObserver.detach();
+    super.dispose();
   }
 
   Future<void> _checkDailyReward() async {
@@ -62,14 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  Future<void> _loadHighScores() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _highScoreClassic = prefs.getInt('high_score') ?? 0;
-      _highScoreTime = prefs.getInt('high_score_time') ?? 0;
-    });
   }
 
   void _openSettings(BuildContext context) {
@@ -158,6 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final themeBgGradient = context.watch<ThemeManager>().backgroundGradient;
+    final level = widget.services.journey.currentLevel;
 
     return Scaffold(
       body: Stack(
@@ -194,20 +209,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                       ).animate().fade(duration: 800.ms).slideY(begin: -0.2, end: 0, curve: Curves.easeOutBack),
                       const SizedBox(height: 50),
-                      _buildModeCard(
-                        title: 'CLASSIC MODE',
-                        icon: Icons.play_arrow_rounded,
-                        score: _highScoreClassic,
-                        onTap: () => _startGame(GameMode.classic),
-                      ).animate(delay: 300.ms).fade().slideX(),
-                      const SizedBox(height: 20),
-                      _buildModeCard(
-                        title: 'TIME ATTACK',
-                        icon: Icons.timer,
-                        score: _highScoreTime,
-                        isSecondary: true,
-                        onTap: () => _startGame(GameMode.timeAttack),
-                      ).animate(delay: 500.ms).fade().slideX(),
+                      _buildLevelCard(level)
+                          .animate(delay: 300.ms)
+                          .fade()
+                          .slideX(),
                     ],
                   ),
                 ),
@@ -219,65 +224,64 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildModeCard({
-    required String title,
-    required IconData icon,
-    required int score,
-    required VoidCallback onTap,
-    bool isSecondary = false,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 280,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: BoxDecoration(
-          color: isSecondary ? Colors.white.withOpacity(0.05) : AppColors.primary.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isSecondary ? Colors.white24 : AppColors.primary),
-          boxShadow: isSecondary ? [] : [
-            BoxShadow(color: AppColors.primary.withOpacity(0.5), blurRadius: 15, offset: const Offset(0, 5))
-          ],
+  /// Nhãn level hiện tại và nút PLAY (WF2). Không còn thẻ chế độ (BR6.3).
+  Widget _buildLevelCard(Level level) {
+    return Column(
+      children: [
+        Text(
+          level.displayName,
+          key: const Key('home-level-label'),
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            letterSpacing: 1.2,
+          ),
         ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size: 28, color: Colors.white),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ],
+        const SizedBox(height: 24),
+        ElevatedButton.icon(
+          key: const Key('home-play-button'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            minimumSize: const Size(220, 56),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'BEST: $score',
-              style: TextStyle(
-                fontSize: 14,
-                color: isSecondary ? AppColors.accent : Colors.white70,
-                letterSpacing: 1.5,
-              ),
+          ),
+          onPressed: _startGame,
+          icon: const Icon(Icons.play_arrow_rounded, size: 28, color: Colors.white),
+          label: const Text(
+            'PLAY',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              letterSpacing: 1.2,
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
-  void _startGame(GameMode mode) {
+  void _startGame() {
+    final services = widget.services;
+    final level = services.journey.currentLevel;
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => GameScreen(mode: mode)),
+      MaterialPageRoute<void>(
+        builder: (_) => ChangeNotifierProvider<LevelGameController>(
+          create: (_) => LevelGameController(
+            journey: services.journey,
+            progress: services.progress,
+            feedback: widget.feedback,
+          )..start(level),
+          child: const GameScreen(),
+        ),
+      ),
     ).then((_) {
-      _loadHighScores();
+      // Level hiện tại có thể đã đổi sau ván thắng.
+      if (mounted) setState(() {});
     });
   }
 }

@@ -81,7 +81,10 @@ class BoardLogic {
     cell.clearingColor = cell.color ?? Colors.yellow;
   }
 
-  static Future<void> applyClearAnimated(List<List<CellModel>> board) async {
+  static Future<void> applyClearAnimated(
+    List<List<CellModel>> board, {
+    Duration delay = const Duration(milliseconds: 180),
+  }) async {
     final size = board.length;
     List<Point> bombExplosions = [];
 
@@ -108,7 +111,7 @@ class BoardLogic {
       }
     }
 
-    await Future.delayed(const Duration(milliseconds: 180));
+    await Future.delayed(delay);
 
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {

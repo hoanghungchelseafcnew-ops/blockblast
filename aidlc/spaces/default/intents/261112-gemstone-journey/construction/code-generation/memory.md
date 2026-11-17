@@ -5,6 +5,7 @@
 <!-- example: 2026-05-29T10:14:32Z — chose REST over GraphQL; the consuming team only needs CRUD, revisit if subscriptions land -->
 
 ## Deviations
+- 2026-11-17T08:55:00Z — u1: thêm ProgressRepository.abandonLoad() ngoài plan để hạn chót bootstrap không làm ghi đè tiến trình thật bằng level 1; adapter nền tảng (DeviceGameFeedback, PlatformScoreShareService) chưa có test nên có thể dưới 80% coverage, đã ghi vào code-summary.md.
 <!-- example: 2026-05-29T10:14:32Z — skipped the optional caching layer the stage prose suggested; the dataset is small enough that it adds risk -->
 
 ## Tradeoffs

@@ -8,8 +8,8 @@ Bạn có duyệt đúng kế hoạch Code Generation này không? Phạm vi duy
 - Bỏ hai lần zip sao lưu (bạn đã dùng git).
 - AI chỉ viết code và test. Bạn chạy `flutter` ở CP-1, CP-2, CP-3 và báo kết quả.
 
-[Approval Fingerprint]: sha256:v3:2d2ee7aaa56857f23b98583dc6990c153974549afe9eeefd88a588ac12837f00
-[Planned Source]: 3729cd4378f6b853ab57e42ce02763721363d5e89dc07a046d3e7bac84172f2f
+[Approval Fingerprint]: sha256:v3:1259d36af257399feb1d0f2d0b1b0c8cb45801640ca508a22a26ef0ec20a5dcb
+[Planned Source]: 76722fed2240a6111898071e032773a60a1b7c6c418ebfd40b71fc41bc2ebcf4
 
 - Approve Plan
 - Request Changes
