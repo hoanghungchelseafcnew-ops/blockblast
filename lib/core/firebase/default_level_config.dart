@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../config/level_config.dart';
 import '../config/level_config_validator.dart';
 
@@ -5,9 +7,7 @@ import '../config/level_config_validator.dart';
 ///
 /// Hằng số Dart: không đọc file, không I/O, luôn có sẵn. Giống hệt JSON mẫu
 /// trong requirements và không có `background_url`.
-class DefaultLevelConfig {
-  const DefaultLevelConfig._();
-
+abstract final class DefaultLevelConfig {
   static const String json = '''
 {
   "version": 1,
@@ -91,18 +91,19 @@ class DefaultLevelConfig {
   static LevelConfig? _cached;
 
   /// Cấu hình mặc định đã parse (một lần), `source = default`.
-  static LevelConfig get config => _cached ??= _parse();
+  static LevelConfig get config => _cached ??= parse(json);
 
-  static LevelConfig _parse() {
+  /// Parse [source] như cấu hình mặc định. Hằng số hỏng là lỗi lập trình nên
+  /// fail fast bằng [StateError] thay vì âm thầm chơi với dữ liệu sai.
+  @visibleForTesting
+  static LevelConfig parse(String source) {
     final result = LevelConfigValidator.validate(
-      json,
+      source,
       source: ConfigSource.defaults,
     );
-    final parsed = result.config;
-    if (parsed == null) {
-      // Không thể xảy ra: test `default_level_config_test` giữ hằng số hợp lệ.
-      throw StateError('DefaultLevelConfig is invalid: ${result.firstError}');
-    }
-    return parsed;
+    return result.config ??
+        (throw StateError(
+          'DefaultLevelConfig is invalid: ${result.firstError}',
+        ));
   }
 }

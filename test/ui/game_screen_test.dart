@@ -10,12 +10,6 @@ import '../features/game/engine/engine_test_helpers.dart';
 import '../fakes/log_capture.dart';
 import 'ui_test_helpers.dart';
 
-Future<void> _settle(WidgetTester tester) async {
-  for (var i = 0; i < 6; i++) {
-    await tester.pump(const Duration(milliseconds: 250));
-  }
-}
-
 String _text(WidgetTester tester, String key) =>
     tester.widget<Text>(find.byKey(Key(key))).data!;
 
@@ -25,27 +19,31 @@ void main() {
   });
 
   group('header (BR5.6, FR11)', () {
-    testWidgets('shows the level name, "score / target" and the percent label',
-        (tester) async {
-      final h = await GameHarness.create(levelIndex: 8, target: 1000);
-      await pumpGameScreen(tester, h);
+    testWidgets(
+      'shows the level name, "score / target" and the percent label',
+      (tester) async {
+        final h = await GameHarness.create(levelIndex: 8, target: 1000);
+        await pumpGameScreen(tester, h);
 
-      expect(_text(tester, 'game-level-name'), 'Amethyst · Slabbing');
-      expect(_text(tester, 'game-score-target'), '0 / 1000');
-      expect(_text(tester, 'game-progress-label'), '0%');
-      expect(find.text('TIME'), findsNothing);
-      expect(find.text('BEST'), findsNothing);
-      expect(
-        tester
-            .widget<LinearProgressIndicator>(
-                find.byKey(const Key('game-progress-bar')))
-            .value,
-        0,
-      );
-    });
+        expect(_text(tester, 'game-level-name'), 'Amethyst · Slabbing');
+        expect(_text(tester, 'game-score-target'), '0 / 1000');
+        expect(_text(tester, 'game-progress-label'), '0%');
+        expect(find.text('TIME'), findsNothing);
+        expect(find.text('BEST'), findsNothing);
+        expect(
+          tester
+              .widget<LinearProgressIndicator>(
+                find.byKey(const Key('game-progress-bar')),
+              )
+              .value,
+          0,
+        );
+      },
+    );
 
-    testWidgets('updates score, target and percent after a placement',
-        (tester) async {
+    testWidgets('updates score, target and percent after a placement', (
+      tester,
+    ) async {
       final h = await GameHarness.create(target: 200);
       await pumpGameScreen(tester, h);
 
@@ -58,7 +56,8 @@ void main() {
       expect(
         tester
             .widget<LinearProgressIndicator>(
-                find.byKey(const Key('game-progress-bar')))
+              find.byKey(const Key('game-progress-bar')),
+            )
             .value,
         closeTo(0.1, 0.0001),
       );
@@ -75,8 +74,9 @@ void main() {
       expect(find.text('DRAG BLOCKS TO THE BOARD!'), findsNothing);
     });
 
-    testWidgets('shows the combo text after back-to-back clears',
-        (tester) async {
+    testWidgets('shows the combo text after back-to-back clears', (
+      tester,
+    ) async {
       final h = await GameHarness.create(
         target: 100000,
         source: () => [single(), single(), single()],
@@ -102,16 +102,21 @@ void main() {
   });
 
   group('drag and drop', () {
-    testWidgets('dragging a block onto the board places it and scores',
-        (tester) async {
+    testWidgets('dragging a block onto the board places it and scores', (
+      tester,
+    ) async {
       final h = await GameHarness.create(target: 100000);
       await pumpGameScreen(tester, h);
 
       final palette = find.byType(BlockPalette);
-      final blockCenter = tester.getCenter(find.descendant(
-        of: palette,
-        matching: find.byType(Draggable<BlockModel>),
-      ).first);
+      final blockCenter = tester.getCenter(
+        find
+            .descendant(
+              of: palette,
+              matching: find.byType(Draggable<BlockModel>),
+            )
+            .first,
+      );
       final boardBox = tester.getRect(find.byType(GameBoard));
       final size = BoardGeometry.cellSize(boardBox.width);
       final target = Offset(
@@ -130,15 +135,20 @@ void main() {
       expect(h.controller.tray.length, 2);
     });
 
-    testWidgets('dropping a block outside the board changes nothing',
-        (tester) async {
+    testWidgets('dropping a block outside the board changes nothing', (
+      tester,
+    ) async {
       final h = await GameHarness.create(target: 100000);
       await pumpGameScreen(tester, h);
 
-      final blockCenter = tester.getCenter(find.descendant(
-        of: find.byType(BlockPalette),
-        matching: find.byType(Draggable<BlockModel>),
-      ).first);
+      final blockCenter = tester.getCenter(
+        find
+            .descendant(
+              of: find.byType(BlockPalette),
+              matching: find.byType(Draggable<BlockModel>),
+            )
+            .first,
+      );
       final gesture = await tester.startGesture(blockCenter);
       await tester.pump();
       await gesture.moveTo(const Offset(5, 5));
@@ -153,8 +163,9 @@ void main() {
   });
 
   group('victory (temporary, WF4)', () {
-    testWidgets('shows Level Complete with the score and a CONTINUE button',
-        (tester) async {
+    testWidgets('shows Level Complete with the score and a CONTINUE button', (
+      tester,
+    ) async {
       final h = await GameHarness.create(target: 10);
       await pumpGameScreen(tester, h);
 
@@ -166,10 +177,13 @@ void main() {
       expect(find.byKey(const Key('victory-overlay')), findsOneWidget);
       expect(find.text('Level Complete!'), findsOneWidget);
       expect(_text(tester, 'victory-score'), '10 / 10');
-      final size =
-          tester.getSize(find.byKey(const Key('victory-continue-button')));
+      final size = tester.getSize(
+        find.byKey(const Key('victory-continue-button')),
+      );
       expect(size.height, greaterThanOrEqualTo(48));
       expect(find.byKey(const Key('game-over-overlay')), findsNothing);
+      // flutter_animate starts a timer when an overlay mounts; let it finish.
+      await tester.pump(const Duration(seconds: 1));
     });
 
     testWidgets('CONTINUE starts the next level', (tester) async {
@@ -200,23 +214,35 @@ void main() {
       return h;
     }
 
-    testWidgets('appears when status is lost with all four actions',
-        (tester) async {
+    testWidgets('appears when status is lost with all four actions', (
+      tester,
+    ) async {
       final h = await lostGame(tester);
       expect(h.controller.status, LevelStatus.lost);
       expect(find.byKey(const Key('game-over-overlay')), findsOneWidget);
       expect(find.text('GAME OVER'), findsOneWidget);
       expect(find.text('FINAL SCORE: 10'), findsOneWidget);
       expect(find.byKey(const Key('game-over-share-button')), findsOneWidget);
-      expect(find.byKey(const Key('game-over-play-again-button')), findsOneWidget);
+      expect(
+        find.byKey(const Key('game-over-play-again-button')),
+        findsOneWidget,
+      );
       expect(find.byKey(const Key('game-over-revive-button')), findsOneWidget);
       expect(find.byKey(const Key('game-over-menu-button')), findsOneWidget);
       expect(find.byKey(const Key('victory-overlay')), findsNothing);
-      expect(h.store.attempts, isEmpty, reason: 'progress is not touched');
+      // The first placement legitimately saves `tutorial_completed`.
+      expect(
+        h.store.attempts,
+        isNot(contains('progress')),
+        reason: 'progress is not touched',
+      );
+      // flutter_animate starts a timer when an overlay mounts; let it finish.
+      await tester.pump(const Duration(seconds: 1));
     });
 
-    testWidgets('REVIVE resumes play and hides the REVIVE button afterwards',
-        (tester) async {
+    testWidgets('REVIVE resumes play and hides the REVIVE button afterwards', (
+      tester,
+    ) async {
       final h = await lostGame(tester);
       await tester.tap(find.byKey(const Key('game-over-revive-button')));
       await tester.pump(const Duration(milliseconds: 500));
@@ -235,13 +261,16 @@ void main() {
       expect(_text(tester, 'game-score-target'), '0 / 11');
     });
 
-    testWidgets('SHARE SCORE calls the share service with the final score',
-        (tester) async {
+    testWidgets('SHARE SCORE calls the share service with the final score', (
+      tester,
+    ) async {
       final h = await lostGame(tester);
       await tester.tap(find.byKey(const Key('game-over-share-button')));
       await tester.pump();
       expect(h.share.shared, 1);
       expect(h.share.lastScore, 10);
+      // flutter_animate starts a timer when an overlay mounts; let it finish.
+      await tester.pump(const Duration(seconds: 1));
     });
 
     testWidgets('BACK TO MENU leaves the game screen', (tester) async {
@@ -254,8 +283,9 @@ void main() {
   });
 
   group('back navigation (BR5.8, BR5.4)', () {
-    testWidgets('the back arrow while playing quits to the previous screen',
-        (tester) async {
+    testWidgets('the back arrow while playing quits to the previous screen', (
+      tester,
+    ) async {
       final h = await GameHarness.create();
       await pumpGameScreen(tester, h);
       expect(find.text('base-route'), findsNothing);
@@ -266,8 +296,9 @@ void main() {
       expect(h.store.attempts, isEmpty);
     });
 
-    testWidgets('the system back button also quits while playing',
-        (tester) async {
+    testWidgets('the system back button also quits while playing', (
+      tester,
+    ) async {
       final h = await GameHarness.create();
       await pumpGameScreen(tester, h);
       await tester.binding.handlePopRoute();

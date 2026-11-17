@@ -156,6 +156,23 @@ Mỗi bước gắn với rule (BR), workflow (WF) và story/yêu cầu nguồn.
 - [x] **Step 21 — Environment/build configuration.** Rà lại file cấu hình nền tảng (`google-services.json` và `GoogleService-Info.plist` đã được người dùng đặt đúng chỗ; không commit secret mới, không hardcode API key trong Dart). Ghi chú iOS: thêm `GoogleService-Info.plist` vào target Runner trong Xcode nếu chưa có (kiểm chứng iOS có thể hoãn sang Build & Test nếu chưa có Mac, theo DoD của U1).
 - [x] **Step 22 — Tài liệu và truy vết.** Viết `unit-test-instructions.md` (đã có trước khi duyệt), `code-summary.md`, `traceability.json`, `source-manifest.json` (mọi file ứng dụng được tạo/sửa/xóa, gồm file do generator hoặc scaffolding ghi). Ghi chú vận hành review infra R-01/R-02 vào hướng dẫn người dùng (checklist publish RC, rollback RC, tăng version code khi cần quay lại sau khi lên store).
 
+### Giai đoạn G — Sửa đổi theo Request Changes (2026-11-17, "hãy sửa theo ý bạn đi")
+
+Lý do: lần chạy verify đầu tiên với Flutter 3.35.6 bị đỏ, và review lần 2 có các finding R-01..R-05.
+
+- [x] **Step 23 — Sửa để verify xanh.**
+  - Lỗi app: `ImageUrlPolicy` loại `%` sai định dạng ngay trên chuỗi gốc (BR1.3).
+  - Lỗi test: kiểu override của fake Remote Config; test combo phải gọi `applyClear()`; test thua kiểm tra "không ghi `progress`" vì BR3.4 cho ghi `tutorial_completed`; `pumpGameScreen` pump thêm một frame; flush timer của `flutter_animate`.
+  - Lint để `flutter analyze` sạch: đổi `withOpacity` sang `withValues(alpha:)`, bỏ các `default` không bao giờ chạy tới, đổi sang `activeThumbColor`, thêm ngoặc nhọn, bỏ import và helper không dùng. Các file cũ phải sửa được thêm vào manifest.
+- [x] **Step 24 — Xử lý review.**
+  - R-04 (BR5.7): `revive()` kiểm tra lại `hasMoves`.
+  - R-01 (C4): thêm `AnalyticsService` và `NoopAnalyticsService`.
+  - R-03: ghi lại các chỗ lệch chữ ký so với C2.
+  - R-05: thêm test để các file U1 đạt ≥ 80%; `GemIds`, `SubIds`, `DefaultLevelConfig` đổi thành `abstract final class`; thêm `DefaultLevelConfig.parse` fail fast. Không dùng `coverage:ignore`.
+- [x] **Step 25 — R-02: xóa `lib/features/game/controllers/game_controller.dart`.** File 0 byte, không được import ở đâu. Ghi việc xóa vào manifest.
+- [x] **Step 26 — `lib/main.dart` testable (DoD-2).** Tách phần dựng service và cây Provider ra một hàm thuần trong `lib/app_composition.dart`, để `main()` chỉ còn `ensureInitialized`, `AudioController.init` và `runApp`. Viết test cho hàm đó: dựng được `BlockBlastApp` với `ThemeManager` và `AppBootstrap` thật, đi qua Splash tới Home khi không có Firebase. Mục tiêu: mọi file U1 trong `lib/` đạt ≥ 80%, gồm cả `main.dart` (nếu còn phần không đo được thì ghi rõ con số).
+- [x] **Step 27 — Chạy lại `flutter analyze && flutter test --coverage`, cập nhật `code-summary.md`, `source-manifest.json`, `traceability.json`.**
+
 ## Điểm dừng kiểm tra của người dùng (không phải cổng duyệt)
 
 | CP | Sau bước | Người dùng chạy | Kết quả cần báo |

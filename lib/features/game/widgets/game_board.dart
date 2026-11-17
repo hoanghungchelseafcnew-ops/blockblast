@@ -22,10 +22,10 @@ class GameBoard extends StatelessWidget {
           decoration: BoxDecoration(
             color: themeBg,
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 15,
                 spreadRadius: 2,
               )

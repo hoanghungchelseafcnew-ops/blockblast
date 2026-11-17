@@ -102,7 +102,8 @@
     "NFR11.3",
     "NFR11.4",
     "NFR11.5",
-    "NFR11.6"
+    "NFR11.6",
+    "C4"
   ],
   "coverage": [
     {
@@ -573,7 +574,7 @@
     {
       "id": "NFR10.1",
       "status": "OK",
-      "target": "aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/unit-test-instructions.md"
+      "target": "test/ui/legacy_widgets_test.dart"
     },
     {
       "id": "NFR10.2",
@@ -609,6 +610,11 @@
       "id": "NFR11.6",
       "status": "OK",
       "target": "lib/core/config/level_config_service.dart"
+    },
+    {
+      "id": "C4",
+      "status": "OK",
+      "target": "lib/core/analytics/analytics_service.dart"
     }
   ]
 }

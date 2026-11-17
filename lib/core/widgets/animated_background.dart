@@ -71,7 +71,7 @@ class _BackgroundPainter extends CustomPainter {
       final currentY = (p.y - (progress * p.speed)) % 1.0;
       final offset = Offset(p.x * size.width, currentY * size.height);
       
-      paint.color = Colors.white.withOpacity(p.opacity);
+      paint.color = Colors.white.withValues(alpha: p.opacity);
       canvas.drawCircle(offset, p.size, paint);
     }
   }

@@ -73,3 +73,47 @@ Một Firebase project dùng chung cho debug và release, nên mọi thay đổi
 - CP-3: `flutter analyze && flutter test --coverage`, rồi xem `coverage/lcov.info` theo từng file (`lcov --list coverage/lcov.info`).
 - Theo nhóm: `flutter test test/core/config/`, `flutter test test/features/journey/`, `flutter test test/ui/`.
 - Kiểm tra end-to-end bằng tay (DoD): offline thì level 1 target 500; online thì target từ Remote Config; thắng level 1, CONTINUE sang level 2, tắt app và mở lại vẫn ở level 2.
+
+## Sửa sau lần chạy verify đầu tiên (Flutter 3.35.6 trong WSL)
+
+Lần chạy đầu của `flutter analyze && flutter test --coverage` báo 1 lỗi analyze và 15 test đỏ. Đã sửa:
+
+- **Lỗi app:** `ImageUrlPolicy` để lọt `%zz`, vì `Uri.tryParse` tự đổi thành `%25zz` nên `Uri.decodeFull` không ném lỗi. Đã thêm kiểm tra trên chuỗi gốc: mọi `%` phải đi kèm đúng 2 chữ số hex, sai thì trả `invalid_encoding`.
+- **Lỗi test:**
+  - Fake `FirebaseRemoteConfig` khai báo `settings` nullable, sai kiểu override. Đã đổi tên thành `appliedSettings`.
+  - Test combo đặt khối thứ hai mà không gọi `applyClear()`, trái với hợp đồng của `BoardEngine.place`.
+  - Hai test "thua không đụng tiến trình" coi việc ghi `tutorial_completed` ở lần đặt đầu là vi phạm, trong khi BR3.4 cho phép ghi. Đã thu hẹp lại thành "không ghi key `progress`".
+  - `pumpGameScreen` chỉ pump một frame nên route không bao giờ chuyển xong. Đã thêm một `pump()`.
+  - Ba widget test kết thúc khi timer của `flutter_animate` còn treo. Đã pump thêm 1 giây ở cuối.
+- **Lint (bắt buộc vì `flutter analyze` mặc định fatal cả info):** đổi `withOpacity` thành `withValues(alpha:)` và bỏ hai `default` không bao giờ chạy tới trong 7 file cũ. Các file này đã được thêm vào `source-manifest.json`. Ngoài ra: `activeColor` đổi thành `activeThumbColor` ở Home, thêm ngoặc nhọn trong `board_logic.dart`, bỏ import thừa và helper `_settle` không dùng.
+- `pubspec.lock` được resolve lại bằng Flutter 3.35.6: chỉ thêm các gói firebase, khớp với `pubspec.yaml`.
+
+Kết quả: `flutter analyze` không còn issue nào, `flutter test --coverage` 191/191 test xanh.
+
+**Coverage dòng dưới 80% ở file U1 (DoD-2):** `lib/core/utils/clock.dart` 2/4, `lib/core/firebase/default_level_config.dart` 4/6, `lib/core/config/level_config.dart` 5/7, `lib/core/firebase/firebase_gateway.dart` 6/8. Tổng các file đã nạp là 94,2%. Có 9 file trong `lib/` không được test nào nạp, trong đó có `main.dart` và `game_controller.dart` (code chết, xem review R-02). Ngưỡng 80% không bị hạ.
+
+## Xử lý review lần 2
+
+- **R-04 (BR5.7):** `revive()` xóa vùng 3×3, sau đó kiểm tra lại `hasMoves`. Nếu khay vẫn không đặt được khối nào, ván vào lại `lost` (không còn REVIVE) và phát `gameOver` lần nữa. Có test hồi quy: khay chỉ còn hai khối 1×4.
+- **R-01 (C4):** đã thêm `lib/core/analytics/analytics_service.dart` gồm interface `AnalyticsService` (6 hàm theo C4, đều trả `Future<void>` và không throw) và `NoopAnalyticsService`, có test kèm theo. U1 chưa gọi analytics từ `LevelGameController`. U5 sẽ nối bản Firebase vào.
+- **R-03 (C2):** chữ ký thực tế lệch so với C2 như sau:
+  - `start(Level)` thay cho `start()`: level được truyền vào, không đọc ngầm.
+  - `requestBack()` trả `bool` thay cho `quit()`: màn hình chỉ `pop` khi được phép (BR5.4/BR5.8).
+  - `updatePreview(row, col)` thay cho `onDragUpdate(Offset)`: việc đổi tọa độ chạm sang ô thuộc widget (`BoardGeometry`), controller chỉ nhận ô.
+  
+  Hành vi và các trạng thái giữ đúng như C2.
+- **R-05 (coverage DoD-2):** đã thêm test cho `SystemClock`, cho initializer Firebase mặc định khi không có platform (trả `failed`, không throw), cho `DefaultLevelConfig.parse` khi JSON nhúng bị hỏng (fail fast bằng `StateError`), và widget test 3 theme cho `BoardCell`, `DraggableBlock`, `ParticleExplosion`. `GemIds`, `SubIds`, `DefaultLevelConfig` đổi thành `abstract final class` để bỏ các constructor rỗng không bao giờ chạy. Không dùng `coverage:ignore`.
+  - Kết quả: mọi file U1 trong `lib/` đạt ≥ 80%, **trừ `lib/main.dart`** (0%, không có test nào nạp). Tổng các file đã nạp đạt 96,8% (1344/1388).
+  - `main.dart` là composition root, chỉ gọi `runApp` với các service thật. Đã thử smoke test gọi `main()` nhưng Splash bị kẹt vì platform channel trong môi trường test. Đề xuất: tách phần dựng service ra một hàm có test, hoặc kiểm chứng bằng chạy tay end-to-end. Người dùng quyết định ở checkpoint.
+  - `remote_config_client.dart` chỉ chứa interface, không có dòng thực thi.
+- **R-02:** `lib/features/game/controllers/game_controller.dart` là file 0 byte, không được import ở đâu. Chưa xóa, chờ người dùng đồng ý.
+
+Kết quả verify: `flutter analyze` không còn issue, `flutter test --coverage` 209/209 test xanh.
+
+## Request Changes 2026-11-17: Step 25–27
+
+- **Step 25 (R-02):** đã xóa `lib/features/game/controllers/game_controller.dart`. File này rỗng (0 byte) và không có nơi nào import. Manifest vẫn giữ đường dẫn này, coi như một lần xóa.
+- **Step 26 (DoD-2):** tách phần dựng service và cây Provider ra `lib/app_composition.dart`, gồm `createAppBootstrap()` (lúc dựng không có I/O, các tham số chỉ để test thay thế) và `buildRootApp()`. `main()` chỉ còn 3 dòng: `ensureInitialized`, `AudioController.init`, `runApp`. Test `test/app_composition_test.dart` kiểm tra bốn việc: dựng service thật mà không chạm tới Firebase, thay được từng phụ thuộc, `ThemeManager` nằm phía trên `BlockBlastApp`, và khi Firebase lỗi thì app đi từ Splash tới Home ở chế độ offline.
+- **Step 27:** `flutter analyze` báo "No issues found!". `flutter test --coverage` cho 213/213 test xanh. Coverage dòng tính trên các file đã nạp là 97,1% (1357/1398). Mọi file U1 trong `lib/` đạt ≥ 80%, trừ hai file:
+  - `lib/main.dart`: 3 dòng, không test nào nạp, vì đây là điểm vào gọi `runApp` trên binding thật. Logic thật của nó đã được test qua `app_composition.dart`.
+  - `lib/core/config/remote_config_client.dart`: chỉ có interface, không có dòng thực thi nào.

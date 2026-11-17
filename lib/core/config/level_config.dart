@@ -11,9 +11,7 @@ enum ConfigSource {
 }
 
 /// Mã gem theo thứ tự hành trình (BR2.1).
-class GemIds {
-  const GemIds._();
-
+abstract final class GemIds {
   static const List<String> all = [
     'rose_quartz',
     'amethyst',
@@ -25,9 +23,7 @@ class GemIds {
 }
 
 /// Mã level con theo thứ tự trong một gem (BR2.1).
-class SubIds {
-  const SubIds._();
-
+abstract final class SubIds {
   static const List<String> all = [
     'rough_stone',
     'slabbing',

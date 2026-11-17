@@ -174,20 +174,22 @@ void main() {
       expect(() => g.controller.level, throwsStateError);
     });
 
-    test('the tutorial shows until the first valid placement (BR3.4)',
-        () async {
-      final g = await _Game.create();
-      final c = g.controller;
-      expect(c.tutorialActive, isTrue);
-      // Đặt sai chỗ không tính.
-      await g.place(c.tray.first, 0, 7 + 5);
-      expect(c.tutorialActive, isTrue);
-      await g.place(c.tray.first, 0, 0);
-      expect(c.tutorialActive, isFalse);
-      await g.repo.flushDirty();
-      await Future<void>.delayed(Duration.zero);
-      expect(g.store.data[ProgressRepository.tutorialKey], true);
-    });
+    test(
+      'the tutorial shows until the first valid placement (BR3.4)',
+      () async {
+        final g = await _Game.create();
+        final c = g.controller;
+        expect(c.tutorialActive, isTrue);
+        // Đặt sai chỗ không tính.
+        await g.place(c.tray.first, 0, 7 + 5);
+        expect(c.tutorialActive, isTrue);
+        await g.place(c.tray.first, 0, 0);
+        expect(c.tutorialActive, isFalse);
+        await g.repo.flushDirty();
+        await Future<void>.delayed(Duration.zero);
+        expect(g.store.data[ProgressRepository.tutorialKey], true);
+      },
+    );
 
     test('the tutorial stays hidden once completed', () async {
       final g = await _Game.create(
@@ -235,40 +237,44 @@ void main() {
       expect(c.activeBlock, isNull);
     });
 
-    test('a cleared line adds the bonus, then animation, then a refilled tray',
-        () async {
-      final g = await _Game.create(
-        target: 100000,
-        source: () => [single(), single(), single()],
-      );
-      final c = g.controller;
-      g.fillRowExcept(0, 0);
-      await g.place(c.tray.first, 0, 0);
-      expect(c.score, 110);
-      expect(c.comboStreak, 1);
-      expect(g.feedback.clearedCount, 1);
-      expect(c.board[0].every((cell) => !cell.filled), isTrue);
-      expect(c.clearing, isFalse);
-    });
+    test(
+      'a cleared line adds the bonus, then animation, then a refilled tray',
+      () async {
+        final g = await _Game.create(
+          target: 100000,
+          source: () => [single(), single(), single()],
+        );
+        final c = g.controller;
+        g.fillRowExcept(0, 0);
+        await g.place(c.tray.first, 0, 0);
+        expect(c.score, 110);
+        expect(c.comboStreak, 1);
+        expect(g.feedback.clearedCount, 1);
+        expect(c.board[0].every((cell) => !cell.filled), isTrue);
+        expect(c.clearing, isFalse);
+      },
+    );
 
-    test('back-to-back clears show the combo text, which then disappears',
-        () async {
-      final g = await _Game.create(
-        target: 100000,
-        source: () => [single(), single(), single()],
-      );
-      final c = g.controller;
-      g.fillRowExcept(0, 0);
-      g.fillRowExcept(1, 0);
-      await g.place(c.tray.first, 0, 0);
-      expect(c.comboText, isNull);
-      await g.place(c.tray.first, 1, 0);
-      expect(c.comboStreak, 2);
-      expect(c.comboText, 'COMBO x2');
-      expect(g.feedback.comboCount, 1);
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      expect(c.comboText, isNull);
-    });
+    test(
+      'back-to-back clears show the combo text, which then disappears',
+      () async {
+        final g = await _Game.create(
+          target: 100000,
+          source: () => [single(), single(), single()],
+        );
+        final c = g.controller;
+        g.fillRowExcept(0, 0);
+        g.fillRowExcept(1, 0);
+        await g.place(c.tray.first, 0, 0);
+        expect(c.comboText, isNull);
+        await g.place(c.tray.first, 1, 0);
+        expect(c.comboStreak, 2);
+        expect(c.comboText, 'COMBO x2');
+        expect(g.feedback.comboCount, 1);
+        await Future<void>.delayed(const Duration(milliseconds: 200));
+        expect(c.comboText, isNull);
+      },
+    );
 
     test('a move without a cleared line resets the combo streak', () async {
       final g = await _Game.create(
@@ -315,45 +321,51 @@ void main() {
   });
 
   group('winning (WF4, BR5.3, BR4.1)', () {
-    test('reaching the target wins, saves progress and moves to the next level',
-        () async {
-      final g = await _Game.create(levelIndex: 1, target: 10);
-      final c = g.controller;
-      await g.place(c.tray.first, 0, 0);
-      expect(c.status, LevelStatus.won);
-      expect(c.outcome!.nextLevel!.levelIndex, 2);
-      expect(c.outcome!.highestLevelReached, 2);
-      expect(g.repo.progress.currentLevelIndex, 2);
-      expect(g.repo.progress.completedLevels, {1});
-      expect(g.store.data[ProgressRepository.progressKey], isNotNull);
-      expect(c.progressPercent, 100);
-    });
+    test(
+      'reaching the target wins, saves progress and moves to the next level',
+      () async {
+        final g = await _Game.create(levelIndex: 1, target: 10);
+        final c = g.controller;
+        await g.place(c.tray.first, 0, 0);
+        expect(c.status, LevelStatus.won);
+        expect(c.outcome!.nextLevel!.levelIndex, 2);
+        expect(c.outcome!.highestLevelReached, 2);
+        expect(g.repo.progress.currentLevelIndex, 2);
+        expect(g.repo.progress.completedLevels, {1});
+        expect(g.store.data[ProgressRepository.progressKey], isNotNull);
+        expect(c.progressPercent, 100);
+      },
+    );
 
-    test('winning takes priority over running out of moves in the same turn',
-        () async {
-      final g = await _Game.create(target: 10);
-      g.fillBoardLeavingIsolatedGaps();
-      await g.place(g.controller.tray.first, 0, 0);
-      expect(g.controller.status, LevelStatus.won);
-      expect(g.feedback.gameOverCount, 0);
-    });
+    test(
+      'winning takes priority over running out of moves in the same turn',
+      () async {
+        final g = await _Game.create(target: 10);
+        g.fillBoardLeavingIsolatedGaps();
+        await g.place(g.controller.tray.first, 0, 0);
+        expect(g.controller.status, LevelStatus.won);
+        expect(g.feedback.gameOverCount, 0);
+      },
+    );
 
-    test('winning with a cleared line waits for the animation then wins',
-        () async {
-      final g = await _Game.create(
-        target: 10,
-        clearDelay: const Duration(milliseconds: 40),
-      );
-      final c = g.controller;
-      g.fillRowExcept(0, 0);
-      c.onDragStart(c.tray.first);
-      final turn = c.placeAt(0, 0);
-      expect(c.status, LevelStatus.resolving);
-      expect(c.clearing, isTrue);
-      await turn;
-      expect(c.status, LevelStatus.won);
-      expect(c.clearing, isFalse);
-    });
+    test(
+      'winning with a cleared line waits for the animation then wins',
+      () async {
+        final g = await _Game.create(
+          target: 10,
+          clearDelay: const Duration(milliseconds: 40),
+        );
+        final c = g.controller;
+        g.fillRowExcept(0, 0);
+        c.onDragStart(c.tray.first);
+        final turn = c.placeAt(0, 0);
+        expect(c.status, LevelStatus.resolving);
+        expect(c.clearing, isTrue);
+        await turn;
+        expect(c.status, LevelStatus.won);
+        expect(c.clearing, isFalse);
+      },
+    );
 
     test('input and back are ignored while resolving (BR5.4)', () async {
       final g = await _Game.create(
@@ -374,37 +386,45 @@ void main() {
       expect(c.status, LevelStatus.won);
     });
 
-    test('resolving ends after the timeout using the cached outcome (BR5.9)',
-        () async {
-      final g = await _Game.create(
-        target: 10,
-        resolveTimeout: const Duration(milliseconds: 30),
-        progressWriteDelay: const Duration(milliseconds: 300),
-      );
-      final c = g.controller;
-      await g.place(c.tray.first, 0, 0);
-      expect(c.status, LevelStatus.won);
-      expect(c.outcome!.nextLevel!.levelIndex, 2);
-      expect(g.repo.progress.currentLevelIndex, 2, reason: 'cache is updated');
-      expect(log.where('resolving timed out'), hasLength(1));
-      // Cho lần ghi chậm hoàn tất để test không để lại việc dở dang.
-      await Future<void>.delayed(const Duration(milliseconds: 350));
-      expect(g.store.data[ProgressRepository.progressKey], isNotNull);
-    });
+    test(
+      'resolving ends after the timeout using the cached outcome (BR5.9)',
+      () async {
+        final g = await _Game.create(
+          target: 10,
+          resolveTimeout: const Duration(milliseconds: 30),
+          progressWriteDelay: const Duration(milliseconds: 300),
+        );
+        final c = g.controller;
+        await g.place(c.tray.first, 0, 0);
+        expect(c.status, LevelStatus.won);
+        expect(c.outcome!.nextLevel!.levelIndex, 2);
+        expect(
+          g.repo.progress.currentLevelIndex,
+          2,
+          reason: 'cache is updated',
+        );
+        expect(log.where('resolving timed out'), hasLength(1));
+        // Cho lần ghi chậm hoàn tất để test không để lại việc dở dang.
+        await Future<void>.delayed(const Duration(milliseconds: 350));
+        expect(g.store.data[ProgressRepository.progressKey], isNotNull);
+      },
+    );
 
-    test('a win is processed once: later input is ignored and nothing is saved twice',
-        () async {
-      final g = await _Game.create(target: 10);
-      final c = g.controller;
-      await g.place(c.tray.first, 0, 0);
-      expect(c.status, LevelStatus.won);
-      final writes = g.store.attemptsFor(ProgressRepository.progressKey);
-      await g.place(c.tray.first, 4, 4);
-      expect(c.score, 10);
-      expect(c.status, LevelStatus.won);
-      expect(g.store.attemptsFor(ProgressRepository.progressKey), writes);
-      expect(g.repo.progress.completedLevels.length, 1);
-    });
+    test(
+      'a win is processed once: later input is ignored and nothing is saved twice',
+      () async {
+        final g = await _Game.create(target: 10);
+        final c = g.controller;
+        await g.place(c.tray.first, 0, 0);
+        expect(c.status, LevelStatus.won);
+        final writes = g.store.attemptsFor(ProgressRepository.progressKey);
+        await g.place(c.tray.first, 4, 4);
+        expect(c.score, 10);
+        expect(c.status, LevelStatus.won);
+        expect(g.store.attemptsFor(ProgressRepository.progressKey), writes);
+        expect(g.repo.progress.completedLevels.length, 1);
+      },
+    );
 
     test('a failed save still reaches won and does not throw', () async {
       final g = await _Game.create(target: 10);
@@ -445,17 +465,25 @@ void main() {
   });
 
   group('running out of moves (WF5, BR5.7)', () {
-    test('no moves and below target is lost without touching progress',
-        () async {
-      final g = await _Game.create(target: 11);
-      g.fillBoardLeavingIsolatedGaps();
-      await g.place(g.controller.tray.first, 0, 0);
-      expect(g.controller.status, LevelStatus.lost);
-      expect(g.controller.canRevive, isTrue);
-      expect(g.feedback.gameOverCount, 1);
-      expect(g.store.attempts, isEmpty, reason: 'U1 never saves on a loss');
-      expect(g.repo.progress.currentLevelIndex, 1);
-    });
+    test(
+      'no moves and below target is lost without touching progress',
+      () async {
+        final g = await _Game.create(target: 11);
+        g.fillBoardLeavingIsolatedGaps();
+        await g.place(g.controller.tray.first, 0, 0);
+        expect(g.controller.status, LevelStatus.lost);
+        expect(g.controller.canRevive, isTrue);
+        expect(g.feedback.gameOverCount, 1);
+        // The first placement legitimately saves `tutorial_completed`; a loss
+        // must never write the progress key.
+        expect(
+          g.store.attempts,
+          isNot(contains('progress')),
+          reason: 'U1 never saves progress on a loss',
+        );
+        expect(g.repo.progress.currentLevelIndex, 1);
+      },
+    );
 
     test('input is ignored once lost (BR5.4)', () async {
       final g = await _Game.create(target: 11);
@@ -485,6 +513,29 @@ void main() {
       c.revive();
       expect(c.status, LevelStatus.playing);
     });
+
+    test(
+      'REVIVE that frees no room for the tray goes straight back to lost',
+      () async {
+        // Tray: a single (used to lose) plus two 1x4 lines that cannot fit in
+        // the 3x3 centre that REVIVE clears.
+        final g = await _Game.create(
+          target: 100000,
+          source: () => [single(), line(4), line(4)],
+        );
+        g.fillBoardLeavingIsolatedGaps();
+        final c = g.controller;
+        await g.place(c.tray.first, 0, 0);
+        expect(c.status, LevelStatus.lost);
+        expect(g.feedback.gameOverCount, 1);
+        c.revive();
+        expect(c.revived, isTrue);
+        expect(c.status, LevelStatus.lost, reason: 'no 1x4 fits after REVIVE');
+        expect(c.canRevive, isFalse);
+        expect(g.feedback.gameOverCount, 2);
+        expect(g.store.attempts, isNot(contains('progress')));
+      },
+    );
 
     test('REVIVE is ignored when the round is not lost', () async {
       final g = await _Game.create();
@@ -550,24 +601,26 @@ void main() {
       expect(quit.controller.requestBack(), isTrue);
     });
 
-    test('back during the clear animation quits and the turn stops (BR5.10)',
-        () async {
-      final g = await _Game.create(
-        target: 100000,
-        clearDelay: const Duration(milliseconds: 40),
-      );
-      final c = g.controller;
-      g.fillRowExcept(0, 0);
-      c.onDragStart(c.tray.first);
-      final turn = c.placeAt(0, 0);
-      expect(c.clearing, isTrue);
-      c.onDragStart(c.tray[0]);
-      expect(c.activeBlock, isNull, reason: 'no new drag while clearing');
-      expect(c.requestBack(), isTrue);
-      expect(c.status, LevelStatus.quit);
-      await turn;
-      expect(c.status, LevelStatus.quit);
-    });
+    test(
+      'back during the clear animation quits and the turn stops (BR5.10)',
+      () async {
+        final g = await _Game.create(
+          target: 100000,
+          clearDelay: const Duration(milliseconds: 40),
+        );
+        final c = g.controller;
+        g.fillRowExcept(0, 0);
+        c.onDragStart(c.tray.first);
+        final turn = c.placeAt(0, 0);
+        expect(c.clearing, isTrue);
+        c.onDragStart(c.tray[0]);
+        expect(c.activeBlock, isNull, reason: 'no new drag while clearing');
+        expect(c.requestBack(), isTrue);
+        expect(c.status, LevelStatus.quit);
+        await turn;
+        expect(c.status, LevelStatus.quit);
+      },
+    );
   });
 
   group('lifecycle', () {
@@ -584,21 +637,23 @@ void main() {
       await turn;
     });
 
-    test('starting a new round while a stale turn is finishing is safe',
-        () async {
-      final g = await _Game.create(
-        target: 100000,
-        clearDelay: const Duration(milliseconds: 30),
-      );
-      final c = g.controller;
-      g.fillRowExcept(0, 0);
-      c.onDragStart(c.tray.first);
-      final turn = c.placeAt(0, 0);
-      c.start(g.levelWith(2, 800));
-      await turn;
-      expect(c.level.levelIndex, 2);
-      expect(c.score, 0);
-      expect(c.status, LevelStatus.playing);
-    });
+    test(
+      'starting a new round while a stale turn is finishing is safe',
+      () async {
+        final g = await _Game.create(
+          target: 100000,
+          clearDelay: const Duration(milliseconds: 30),
+        );
+        final c = g.controller;
+        g.fillRowExcept(0, 0);
+        c.onDragStart(c.tray.first);
+        final turn = c.placeAt(0, 0);
+        c.start(g.levelWith(2, 800));
+        await turn;
+        expect(c.level.levelIndex, 2);
+        expect(c.score, 0);
+        expect(c.status, LevelStatus.playing);
+      },
+    );
   });
 }

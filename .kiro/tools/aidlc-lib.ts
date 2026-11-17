@@ -28098,7 +28098,13 @@ function currentUnitLifecycleRows(
       slug,
       unitMajor,
       unitScoped ? unit : undefined,
-      sourceRows,
+      // The floor helper treats supplied rows as pre-sorted; shard order is not
+      // chronological, so hand it a chronologically sorted copy.
+      [...sourceRows].sort((a, b) => {
+        if (a.timestamp !== b.timestamp) return a.timestamp < b.timestamp ? -1 : 1;
+        if (a.shardIndex !== b.shardIndex) return a.shardIndex - b.shardIndex;
+        return a.pos - b.pos;
+      }),
     );
     floorByUnit.set(key, floor);
     return floor;

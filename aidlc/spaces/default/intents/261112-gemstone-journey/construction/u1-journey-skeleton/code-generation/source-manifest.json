@@ -28,6 +28,12 @@
       "path": "lib/app.dart"
     },
     {
+      "path": "lib/app_composition.dart"
+    },
+    {
+      "path": "lib/core/analytics/analytics_service.dart"
+    },
+    {
       "path": "lib/core/config/image_url_policy.dart"
     },
     {
@@ -55,7 +61,16 @@
       "path": "lib/core/log/gj_log.dart"
     },
     {
+      "path": "lib/core/theme/app_theme.dart"
+    },
+    {
       "path": "lib/core/utils/clock.dart"
+    },
+    {
+      "path": "lib/core/widgets/animated_background.dart"
+    },
+    {
+      "path": "lib/features/game/controllers/game_controller.dart"
     },
     {
       "path": "lib/features/game/engine/board_engine.dart"
@@ -80,6 +95,18 @@
     },
     {
       "path": "lib/features/game/services/score_share_service.dart"
+    },
+    {
+      "path": "lib/features/game/widgets/board_cell.dart"
+    },
+    {
+      "path": "lib/features/game/widgets/draggable_block.dart"
+    },
+    {
+      "path": "lib/features/game/widgets/game_board.dart"
+    },
+    {
+      "path": "lib/features/game/widgets/particle_explosion.dart"
     },
     {
       "path": "lib/features/home/screens/home_screen.dart"
@@ -121,7 +148,16 @@
       "path": "lib/main.dart"
     },
     {
+      "path": "pubspec.lock"
+    },
+    {
       "path": "pubspec.yaml"
+    },
+    {
+      "path": "test/app_composition_test.dart"
+    },
+    {
+      "path": "test/core/analytics/analytics_service_test.dart"
     },
     {
       "path": "test/core/config/default_level_config_test.dart"
@@ -137,6 +173,9 @@
     },
     {
       "path": "test/core/config/level_config_validator_test.dart"
+    },
+    {
+      "path": "test/core/platform_defaults_test.dart"
     },
     {
       "path": "test/fakes/fake_clock.dart"
@@ -191,6 +230,9 @@
     },
     {
       "path": "test/ui/game_screen_test.dart"
+    },
+    {
+      "path": "test/ui/legacy_widgets_test.dart"
     },
     {
       "path": "test/ui/splash_home_test.dart"

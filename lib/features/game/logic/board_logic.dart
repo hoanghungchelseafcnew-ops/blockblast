@@ -70,8 +70,16 @@ class BoardLogic {
       }
     }
 
-    for (int r in fullRows) for (int c = 0; c < size; c++) _markForClearing(board[r][c]);
-    for (int c in fullCols) for (int r = 0; r < size; r++) _markForClearing(board[r][c]);
+    for (int r in fullRows) {
+      for (int c = 0; c < size; c++) {
+        _markForClearing(board[r][c]);
+      }
+    }
+    for (int c in fullCols) {
+      for (int r = 0; r < size; r++) {
+        _markForClearing(board[r][c]);
+      }
+    }
 
     return linesCleared;
   }

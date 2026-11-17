@@ -200,6 +200,8 @@ Future<GlobalKey<NavigatorState>> pumpGameScreen(
       ),
     ),
   );
+  // Frame đầu bắt đầu animation chuyển route; frame sau cho nó chạy xong.
+  await tester.pump();
   await tester.pump(const Duration(milliseconds: 500));
   return navKey;
 }

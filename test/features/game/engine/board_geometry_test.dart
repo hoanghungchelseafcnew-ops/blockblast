@@ -1,5 +1,4 @@
 import 'package:block_blast/features/game/engine/board_geometry.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'engine_test_helpers.dart';

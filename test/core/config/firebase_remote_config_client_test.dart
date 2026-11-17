@@ -7,14 +7,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Fake tối thiểu của SDK: chỉ ba hàm mà adapter dùng.
 class _FakeFirebaseRemoteConfig implements FirebaseRemoteConfig {
-  RemoteConfigSettings? settings;
+  RemoteConfigSettings? appliedSettings;
   int fetchCalls = 0;
   bool fetchResult = true;
   RemoteConfigValue value = RemoteConfigValue(null, ValueSource.valueStatic);
 
   @override
   Future<void> setConfigSettings(RemoteConfigSettings configSettings) async {
-    settings = configSettings;
+    appliedSettings = configSettings;
   }
 
   @override
@@ -43,20 +43,27 @@ void main() {
   });
 
   group('FirebaseRemoteConfigClient', () {
-    test('configure sets a 12 hour minimum fetch interval and a 2 second timeout',
-        () async {
-      await client.configure();
-      expect(sdk.settings!.minimumFetchInterval, const Duration(hours: 12));
-      expect(sdk.settings!.fetchTimeout, const Duration(seconds: 2));
-    });
+    test(
+      'configure sets a 12 hour minimum fetch interval and a 2 second timeout',
+      () async {
+        await client.configure();
+        expect(
+          sdk.appliedSettings!.minimumFetchInterval,
+          const Duration(hours: 12),
+        );
+        expect(sdk.appliedSettings!.fetchTimeout, const Duration(seconds: 2));
+      },
+    );
 
-    test('fetchAndActivate delegates to the SDK and returns its result',
-        () async {
-      expect(await client.fetchAndActivate(), isTrue);
-      sdk.fetchResult = false;
-      expect(await client.fetchAndActivate(), isFalse);
-      expect(sdk.fetchCalls, 2);
-    });
+    test(
+      'fetchAndActivate delegates to the SDK and returns its result',
+      () async {
+        expect(await client.fetchAndActivate(), isTrue);
+        sdk.fetchResult = false;
+        expect(await client.fetchAndActivate(), isFalse);
+        expect(sdk.fetchCalls, 2);
+      },
+    );
 
     test('readLevelConfig returns the remote value as text', () {
       sdk.value = RemoteConfigValue(

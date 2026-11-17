@@ -28,11 +28,11 @@ class LevelGameController extends ChangeNotifier {
     this.resolveTimeout = const Duration(seconds: 3),
     this.comboTextDuration = const Duration(seconds: 1),
     String Function()? roundIdFactory,
-  })  : _journey = journey,
-        _progress = progress,
-        _engine = engine ?? BoardEngine(),
-        _feedback = feedback,
-        _roundIdFactory = roundIdFactory ?? _defaultRoundId;
+  }) : _journey = journey,
+       _progress = progress,
+       _engine = engine ?? BoardEngine(),
+       _feedback = feedback,
+       _roundIdFactory = roundIdFactory ?? _defaultRoundId;
 
   final JourneyController _journey;
   final ProgressRepository _progress;
@@ -106,7 +106,10 @@ class LevelGameController extends ChangeNotifier {
     _comboTimer?.cancel();
     _level = level;
     if (level.targetScore < 1) {
-      GjLog.error('Game', 'target below 1, raised to 1: levelId=${level.levelIndex}');
+      GjLog.error(
+        'Game',
+        'target below 1, raised to 1: levelId=${level.levelIndex}',
+      );
     }
     _targetScore = math.max(1, level.targetScore);
     _roundId = _roundIdFactory();
@@ -230,6 +233,12 @@ class LevelGameController extends ChangeNotifier {
     _engine.clearCenter();
     _revived = true;
     _status = LevelStatus.playing;
+    // BR5.7: vùng 3×3 có thể không đủ chỗ cho khối trong khay; khi đó hết
+    // nước đi ngay và vào lại `lost` (không còn REVIVE).
+    if (!_engine.hasMoves) {
+      _status = LevelStatus.lost;
+      _feedback.gameOver();
+    }
     _notify();
   }
 

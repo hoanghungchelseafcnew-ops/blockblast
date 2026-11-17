@@ -17,16 +17,20 @@ void main() {
 
     test('level 1 (Rose Quartz · Rough Stone) targets 500', () {
       final config = DefaultLevelConfig.config;
-      expect(config.levels['rose_quartz']!.subLevels['rough_stone']!.targetScore,
-          500);
+      expect(
+        config.levels['rose_quartz']!.subLevels['rough_stone']!.targetScore,
+        500,
+      );
     });
 
     test('contains 6 gems x 6 sub levels with source default', () {
       final config = DefaultLevelConfig.config;
       expect(config.source, ConfigSource.defaults);
       expect(config.levels.keys, GemIds.all);
-      expect(config.levels.values.fold<int>(0, (n, g) => n + g.subLevels.length),
-          36);
+      expect(
+        config.levels.values.fold<int>(0, (n, g) => n + g.subLevels.length),
+        36,
+      );
     });
 
     test('Ruby · Bling is the highest target at 350,000 and has no urls', () {
@@ -39,8 +43,24 @@ void main() {
     });
 
     test('the parsed config is cached across calls', () {
-      expect(identical(DefaultLevelConfig.config, DefaultLevelConfig.config),
-          isTrue);
+      expect(
+        identical(DefaultLevelConfig.config, DefaultLevelConfig.config),
+        isTrue,
+      );
+    });
+
+    test('a corrupted embedded config fails fast with StateError', () {
+      expect(() => DefaultLevelConfig.parse('{not json'), throwsStateError);
+      expect(
+        () => DefaultLevelConfig.parse('{"version": 0, "levels": {}}'),
+        throwsStateError,
+      );
+    });
+
+    test('parse of the embedded constant matches config', () {
+      final parsed = DefaultLevelConfig.parse(DefaultLevelConfig.json);
+      expect(parsed.source, ConfigSource.defaults);
+      expect(parsed.levels.length, DefaultLevelConfig.config.levels.length);
     });
   });
 }

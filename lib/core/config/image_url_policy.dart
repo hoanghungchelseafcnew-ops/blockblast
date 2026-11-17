@@ -9,6 +9,8 @@ class ImageUrlPolicy {
   static const String storageApiHost = 'firebasestorage.googleapis.com';
   static const String storageAppSuffix = '.firebasestorage.app';
 
+  static final RegExp _malformedPercent = RegExp(r'%(?![0-9A-Fa-f]{2})');
+
   /// True khi [url] được phép dùng làm ảnh nền.
   static bool isAllowed(String? url) => rejectionReason(url) == null;
 
@@ -17,6 +19,9 @@ class ImageUrlPolicy {
   static String? rejectionReason(String? url) {
     if (url == null || url.trim().isEmpty) return 'empty';
     try {
+      // `Uri.tryParse` tự đổi `%zz` thành `%25zz` nên phải kiểm tra chuỗi gốc:
+      // mọi `%` phải theo sau bởi đúng hai chữ số hex.
+      if (_malformedPercent.hasMatch(url)) return 'invalid_encoding';
       final uri = Uri.tryParse(url.trim());
       if (uri == null) return 'unparseable';
       if (uri.scheme != 'https') return 'scheme';

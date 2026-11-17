@@ -481,3 +481,407 @@
 **Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-11-17T07:29:21Z
+**Event**: HUMAN_TURN
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Error Logged
+**Timestamp**: 2026-11-17T07:29:43Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-state
+**Command**: aidlc-state engine state unit complete --stage code-generation --unit u1-journey-skeleton
+**Error**: Refusing to complete unit "u1-journey-skeleton" for "code-generation": it is not the active unit (no unit is active — start it first).
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-17T07:36:24Z
+**Event**: HUMAN_TURN
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Error Logged
+**Timestamp**: 2026-11-17T07:37:54Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-state
+**Command**: aidlc-state engine state unit complete --stage code-generation --unit u1-journey-skeleton
+**Error**: Refusing to complete unit "u1-journey-skeleton" for "code-generation": it is not the active unit (no unit is active — start it first).
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-17T07:38:10Z
+**Event**: UNIT_COMPLETED
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+**Run floor**: STAGE_JUMPED:2026-11-17T02:58:14Z#2
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-17T09:22:13Z
+**Event**: HUMAN_TURN
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Guard Stood Aside
+**Timestamp**: 2026-11-17T09:30:38Z
+**Event**: GUARD_STOOD_ASIDE
+**Guard**: review-freeze
+**Authority**: grant
+**Grant**: turn-marker
+**Actor**: main
+**Stage**: code-generation
+**Tool**: Bash
+**Details**: <project-dir>/aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-summary.md
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-11-17T09:31:11Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+**Checkpoint**: review-receipt
+**Changed**: (paths unavailable)
+**Recorded**: sha256:a13dc9d4b6e9bf7f2af0f32e300b9f2a6fca0531c2616fa2a816248013bcc0bd
+**Current**: sha256:4dcf7fd51f153301e4fd6fd91445b56c88f9d2b24d820e89041bbb8d915b14a1
+**Details**: code-generation-plan changed after it was reviewed. Continuing to the gate with the diff (Guard Policy: relaxed or off).
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-11-17T09:31:11Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+**Checkpoint**: review-receipt
+**Changed**: (paths unavailable)
+**Recorded**: 5dc8061fb450ee51b26b2d28e6e90b26ea691dcf937fcbab9b7729e78c967e4f
+**Current**: 98dfca97f53796092386ae1282802bc58e98384eb54a7dc6132028342d228a31
+**Details**: Reviewed source changed after it was reviewed. Continuing to the gate with the diff (Guard Policy: relaxed or off).
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-17T09:31:13Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-journey-skeleton
+**Iteration**: 2
+**Recovery**: stale-receipt
+**Recovery Cause**: artifact
+**Artifact Fingerprint**: sha256:4dcf7fd51f153301e4fd6fd91445b56c88f9d2b24d820e89041bbb8d915b14a1
+**Request Id**: review:085ebc665d328ed5a75070438d8c497a
+**Source Fingerprint**: 98dfca97f53796092386ae1282802bc58e98384eb54a7dc6132028342d228a31
+**Unit Source Fingerprint**: sha256:ca0222b2da0311350d2057744595d6378843327136a49ea937ed62a52cf7a06e
+
+---
+
+## Reviewer Scope Blocked
+**Timestamp**: 2026-11-17T09:31:59Z
+**Event**: REVIEWER_SCOPE_BLOCKED
+**Tool**: Bash
+**Target**: <project-dir>
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+
+---
+
+## Reviewer Scope Blocked
+**Timestamp**: 2026-11-17T09:33:47Z
+**Event**: REVIEWER_SCOPE_BLOCKED
+**Tool**: Bash
+**Target**: aidlc/spaces/default/intents/261112-gemstone-journey
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-17T09:35:44Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261112-gemstone-journey/.aidlc-engine/reviews/code-generation/units/u1-journey-skeleton/afc005c10aabe925/2.review.md
+**Context**: .aidlc-engine > reviews > code-generation > units > u1-journey-skeleton > afc005c10aabe925 > 2.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-17T09:36:19Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Error Logged
+**Timestamp**: 2026-11-17T09:36:37Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-log
+**Command**: aidlc-log review --stage code-generation --reviewer aidlc-architecture-reviewer-agent --unit u1-journey-skeleton --iteration 2 --verdict NOT-READY --project-dir <project-dir>
+**Error**: Refusing REVIEW_COMPLETED for "code-generation": workspace source changed after REVIEW_REQUESTED iteration 2. Restore the requested source state and re-dispatch the reviewer.
+
+---
+
+## Guard Stood Aside
+**Timestamp**: 2026-11-17T09:51:49Z
+**Event**: GUARD_STOOD_ASIDE
+**Guard**: review-freeze
+**Authority**: instruction
+**Grant**: none
+**Actor**: main
+**Stage**: code-generation
+**Tool**: Bash
+**Details**: <project-dir>/aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-summary.md
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-11-17T09:52:06Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+**Checkpoint**: review-receipt
+**Changed**: (paths unavailable)
+**Recorded**: sha256:a13dc9d4b6e9bf7f2af0f32e300b9f2a6fca0531c2616fa2a816248013bcc0bd
+**Current**: sha256:2742a33aa1d3e996a626fd3ee620b4c2da50802cd2ae3b9fa3e58b9695059f6c
+**Details**: code-generation-plan changed after it was reviewed. Continuing to the gate with the diff (Guard Policy: relaxed or off).
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-11-17T09:52:06Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+**Checkpoint**: review-receipt
+**Changed**: (paths unavailable)
+**Recorded**: 5dc8061fb450ee51b26b2d28e6e90b26ea691dcf937fcbab9b7729e78c967e4f
+**Current**: dd55d9f504b2f143ffd5361ebaa61d0389384242789c389b3b0cde882395408e
+**Details**: Reviewed source changed after it was reviewed. Continuing to the gate with the diff (Guard Policy: relaxed or off).
+
+---
+
+## Error Logged
+**Timestamp**: 2026-11-17T09:52:06Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-log
+**Command**: aidlc-log review --stage code-generation --reviewer aidlc-architecture-reviewer-agent --unit u1-journey-skeleton --iteration 3
+**Error**: Cannot start another review for "code-generation": the one recovery review was already used, and this stage's output document changed again afterward. Ask "What should change?" for stage "code-generation" and end the turn. After the human answers, submit Request Changes with their exact text unchanged as the report reason; that unlocks revision and a fresh review. Only a human Request Changes decision resets the review attempt; do not record that rejection on the human's behalf.\n{"kind":"ask","ask_type":"guard-recovery","response_route":"execute-remedy","question":"The next action for \"code-generation\" would be refused. Choose one authority-preserving recovery action.","stage":"code-generation","unit":"u1-journey-skeleton","reason_codes":["REVIEW_RECOVERY_SPENT"],"remedies":[{"op":"request-changes","action":"Ask \"What should change?\" for stage \"code-generation\" and end the turn. After the human answers, submit Request Changes with their exact text unchanged as the report reason; that unlocks revision and a fresh review.","requiresHuman":true,"executableNow":true,"interaction":"human-input"}]}
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-17T09:54:58Z
+**Event**: HUMAN_TURN
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-17T09:56:13Z
+**Event**: HUMAN_TURN
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Error Logged
+**Timestamp**: 2026-11-17T09:56:32Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-state
+**Command**: aidlc-state reject code-generation --feedback=hãy sửa theo ý bạn đi --project-dir <project-dir>
+**Error**: Refusing to reject "code-generation": received reply "(empty)" did not match an offered choice at the held gate. The reply is cancellation boilerplate, not a decision. Re-present the original held gate with every offered choice and wait for the human to choose one.
+
+---
+
+## Error Logged
+**Timestamp**: 2026-11-17T09:56:40Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-state
+**Command**: aidlc-state reject code-generation --feedback=hãy sửa theo ý bạn đi --user-input hãy sửa theo ý bạn đi --project-dir <project-dir>
+**Error**: Refusing to reject "code-generation": received reply "hãy sửa theo ý bạn đi" did not match an offered choice at the held gate. Re-present the original held gate with every offered choice and wait for the human to choose one.
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-17T09:57:31Z
+**Event**: HUMAN_TURN
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Gate Rejected
+**Timestamp**: 2026-11-17T09:57:42Z
+**Event**: GATE_REJECTED
+**Stage**: code-generation
+**Feedback**: hãy sửa theo ý bạn đi
+
+---
+
+## Stage Revising
+**Timestamp**: 2026-11-17T09:57:42Z
+**Event**: STAGE_REVISING
+**Stage**: code-generation
+**Revision count**: 11
+**Feedback**: hãy sửa theo ý bạn đi
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-17T09:59:30Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-generation-plan.md
+**Context**: construction > u1-journey-skeleton > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-17T09:59:42Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-generation-questions.md
+**Context**: construction > u1-journey-skeleton > code-generation > code-generation-questions.md
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-11-17T10:00:01Z
+**Event**: DECISION_RECORDED
+**Stage**: code-generation
+**Decision**: Approve this exact Code Generation plan?
+**Options**: Approve Plan,Request Changes
+**Checkpoint**: Code Generation Plan Approval
+**Plan Target**: unit:u1-journey-skeleton
+**Intent**: 01a1ceef-97c8-7957-bf14-390c811e957f
+**Directive Epoch**: sha256:676ada07ec63a78a9dcf7f57cc33def338ad94b680be5ed7611afd35b47947e8
+**Run floor**: GATE_REJECTED:2026-11-17T09:57:42Z#1
+**Approval Fingerprint**: sha256:v3:f6d18475ee03615995bbc3f6d7085a88c96f3760728b845b6545fdb23532106d
+**Questions File**: aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-generation-questions.md
+**Questions SHA-256**: 67b32b6a5426b3df715bc50c2c05356f6a9ba61ccf0276da74e24fbeabcc15d3
+**Prompt SHA-256**: a554ce55e22aba63ec52dd298416f7b26308233783ca6f50051d063a0b44a855
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+**Unit**: u1-journey-skeleton
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-17T10:00:01Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-generation-questions.md
+**Context**: construction > u1-journey-skeleton > code-generation > code-generation-questions.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-17T10:00:21Z
+**Event**: HUMAN_TURN
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Plan Approval Recorded
+**Timestamp**: 2026-11-17T10:00:38Z
+**Event**: PLAN_APPROVAL_RECORDED
+**Stage**: code-generation
+**Details**: Approve Plan
+**Unit**: u1-journey-skeleton
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+**Checkpoint**: Code Generation Plan Approval
+**Plan Target**: unit:u1-journey-skeleton
+**Intent**: 01a1ceef-97c8-7957-bf14-390c811e957f
+**Directive Epoch**: sha256:676ada07ec63a78a9dcf7f57cc33def338ad94b680be5ed7611afd35b47947e8
+**Run floor**: GATE_REJECTED:2026-11-17T09:57:42Z#1
+**Approval Fingerprint**: sha256:v3:f6d18475ee03615995bbc3f6d7085a88c96f3760728b845b6545fdb23532106d
+**Questions File**: aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-generation-questions.md
+**Questions SHA-256**: 2ac22f7108b25af40894d76ea83c752c6df5a9888d886835002970d656078422
+**Prompt SHA-256**: a554ce55e22aba63ec52dd298416f7b26308233783ca6f50051d063a0b44a855
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-17T10:00:39Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-generation-questions.md
+**Context**: construction > u1-journey-skeleton > code-generation > code-generation-questions.md
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-17T10:00:52Z
+**Event**: UNIT_STARTED
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+**Run floor**: GATE_REJECTED:2026-11-17T09:57:42Z#1
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-11-17T10:02:01Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+**Checkpoint**: plan-approval
+**Changed**: lib/features/game/controllers/game_controller.dart
+**Recorded**: dd55d9f504b2f143ffd5361ebaa61d0389384242789c389b3b0cde882395408e
+**Current**: 1ca4a450ab7a4f072cd1435ba51ab81fd85e9b94c262efab6d14061c9835eb99
+**Details**: 1 file changed since this plan was approved: lib/features/game/controllers/game_controller.dart. Continuing (Guard Policy: relaxed or off). Say 'review the plan again' to reopen approval.
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-17T10:03:09Z
+**Event**: HUMAN_TURN
+**Session**: d0c794bf-7c78-4c22-aa71-56a43a5ff1dc
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-11-17T10:03:46Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: code-generation
+**Unit**: u1-journey-skeleton
+**Checkpoint**: plan-approval
+**Changed**: .idea/workspace.xml, lib/features/game/controllers/game_controller.dart
+**Recorded**: dd55d9f504b2f143ffd5361ebaa61d0389384242789c389b3b0cde882395408e
+**Current**: 293e76c35ae38a86cb0536549f669ac443e6aebb181bdab2999ca63cd4592d4e
+**Details**: 2 files changed since this plan was approved: .idea/workspace.xml, lib/features/game/controllers/game_controller.dart. Continuing (Guard Policy: relaxed or off). Say 'review the plan again' to reopen approval.
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-17T10:06:29Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261112-gemstone-journey/construction/u1-journey-skeleton/code-generation/code-summary.md
+**Context**: construction > u1-journey-skeleton > code-generation > code-summary.md
+
+---
+
+## Error Logged
+**Timestamp**: 2026-11-17T10:06:41Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-log
+**Command**: aidlc-log review --stage code-generation --reviewer aidlc-architecture-reviewer-agent --unit u1-journey-skeleton --iteration 1
+**Error**: Cannot request another recovery review for "code-generation" because one already exists in this review attempt. If the reviewer has not returned, retry iteration 2 with --retry-pending. If its verdict was recorded, Restart the stage from the top with /aidlc --stage code-generation. This costs more than finishing the current revision: your recorded answers survive, but you re-confirm the summary once and then save every output document again, so each one descends from the new confirmation.\n{"kind":"ask","ask_type":"guard-recovery","response_route":"execute-remedy","question":"The next action for \"code-generation\" would be refused. Choose one authority-preserving recovery action.","stage":"code-generation","unit":"u1-journey-skeleton","reason_codes":["REVIEW_RECOVERY_ALREADY_REQUESTED"],"remedies":[{"op":"redo-jump","action":"Restart the stage from the top with /aidlc --stage code-generation. This costs more than finishing the current revision: your recorded answers survive, but you re-confirm the summary once and then save every output document again, so each one descends from the new confirmation.","operation":{"kind":"restart-stage","stage":"code-generation"},"command":"aidlc engine orchestrate next --stage code-generation","requiresHuman":true,"executableNow":true,"interaction":"command"}]}
+
+---
+
+## Error Logged
+**Timestamp**: 2026-11-17T10:06:53Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-log
+**Command**: aidlc-log review --stage code-generation --reviewer aidlc-architecture-reviewer-agent --unit u1-journey-skeleton --iteration 2 --retry-pending
+**Error**: Refusing review retry for "code-generation": declared artifacts no longer match the bytes from REVIEW_REQUESTED iteration 2. A retry re-dispatches that exact request and cannot rebaseline changed content. Restore the requested artifact bytes before retrying.
+
+---

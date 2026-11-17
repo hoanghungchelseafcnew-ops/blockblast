@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: BoxDecoration(
             color: const Color(0xFF1C1C2E),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: const Text('Sound Effects', style: TextStyle(fontSize: 18)),
                     trailing: Switch(
                       value: !AudioController.isMuted,
-                      activeColor: AppColors.accent,
+                      activeThumbColor: AppColors.accent,
                       onChanged: (val) {
                         AudioController.toggleMute();
                         setStateSB(() {});
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? color.withOpacity(0.3) : Colors.white.withOpacity(0.05),
+          color: isSelected ? color.withValues(alpha: 0.3) : Colors.white.withValues(alpha: 0.05),
           border: Border.all(color: isSelected ? color : Colors.transparent, width: 2),
           borderRadius: BorderRadius.circular(12),
         ),
@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 1.1,
                               shadows: [
                                 BoxShadow(
-                                  color: AppColors.primary.withOpacity(0.8),
+                                  color: AppColors.primary.withValues(alpha: 0.8),
                                   blurRadius: 25,
                                   offset: const Offset(0, 4),
                                 )

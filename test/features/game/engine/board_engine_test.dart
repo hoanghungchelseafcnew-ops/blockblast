@@ -48,10 +48,11 @@ void main() {
       expect(engine.board[0].every((c) => !c.clearing), isTrue);
     });
 
-    test('combo resets after a move that clears nothing', () {
+    test('combo resets after a move that clears nothing', () async {
       final engine = _engine(() => [line(8), single(), single()]);
       engine.place(engine.tray.first, 0, 0);
       expect(engine.comboStreak, 1);
+      await engine.applyClear();
       engine.place(engine.tray.first, 5, 5);
       expect(engine.comboStreak, 0);
     });
@@ -133,23 +134,28 @@ void main() {
       expect(engine.board[0][0].filled, isFalse);
     });
 
-    test('a bomb cell clears its 3x3 neighbourhood when its line clears',
-        () async {
-      final engine = _engine(() => [single(), single(), single()]);
-      final bomb = makeBlock([
-        [1]
-      ], isBomb: true);
-      for (var c = 0; c < 7; c++) {
-        engine.board[0][c].filled = true;
-      }
-      engine.board[1][2].filled = true;
-      engine.tray = [bomb];
-      final result = engine.place(bomb, 0, 7)!;
-      expect(result.linesCleared, 1);
-      await engine.applyClear();
-      expect(engine.board[0].every((c) => !c.filled), isTrue);
-      expect(engine.board[1][2].filled, isTrue,
-          reason: 'bomb at (0,7) only reaches columns 6..7');
-    });
+    test(
+      'a bomb cell clears its 3x3 neighbourhood when its line clears',
+      () async {
+        final engine = _engine(() => [single(), single(), single()]);
+        final bomb = makeBlock([
+          [1],
+        ], isBomb: true);
+        for (var c = 0; c < 7; c++) {
+          engine.board[0][c].filled = true;
+        }
+        engine.board[1][2].filled = true;
+        engine.tray = [bomb];
+        final result = engine.place(bomb, 0, 7)!;
+        expect(result.linesCleared, 1);
+        await engine.applyClear();
+        expect(engine.board[0].every((c) => !c.filled), isTrue);
+        expect(
+          engine.board[1][2].filled,
+          isTrue,
+          reason: 'bomb at (0,7) only reaches columns 6..7',
+        );
+      },
+    );
   });
 }

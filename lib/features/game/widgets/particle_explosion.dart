@@ -93,7 +93,7 @@ class ParticlePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color.withOpacity(1.0 - progress)
+      ..color = color.withValues(alpha: 1.0 - progress)
       ..style = PaintingStyle.fill;
 
     for (var p in particles) {
