@@ -51,6 +51,19 @@ class PlayerProgress {
     );
   }
 
+  /// Bản mới không còn 6 level con của gem thứ [gemOrder] trong
+  /// `completedLevels` (FR2.3a). Các trường khác giữ nguyên.
+  PlayerProgress withoutGem(int gemOrder) {
+    final first = Level.indexOf(gemOrder, 1);
+    final last = Level.indexOf(gemOrder, Level.levelsPerGem);
+    return copyWith(
+      completedLevels: <int>{
+        for (final k in completedLevels)
+          if (k < first || k > last) k,
+      },
+    );
+  }
+
   String toJsonString() {
     final sorted = completedLevels.toList()..sort();
     return jsonEncode({
@@ -97,7 +110,9 @@ class PlayerProgress {
 
     final journeyDone = decoded['journeyCompleted'];
     final highestRaw = decoded['highestLevelReached'];
-    final highest = (highestRaw is int && _inRange(highestRaw)) ? highestRaw : 1;
+    final highest = (highestRaw is int && _inRange(highestRaw))
+        ? highestRaw
+        : 1;
 
     return PlayerProgress(
       currentLevelIndex: current,

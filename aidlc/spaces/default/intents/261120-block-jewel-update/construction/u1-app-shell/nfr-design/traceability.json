@@ -1,0 +1,50 @@
+{
+  "stage": "nfr-design",
+  "unit": "u1-app-shell",
+  "upstream_ids": [
+    "NFR3.1",
+    "NFR4.1",
+    "NFR5.1",
+    "NFR5.2",
+    "NFR5.3",
+    "NFR7.1",
+    "NFR7.2"
+  ],
+  "coverage": [
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "Cập nhật test splash/Home, đo coverage bằng flutter test --coverage"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "Chuỗi tiếng Anh viết trực tiếp ở splash/Home"
+    },
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "flutter analyze và dart format trong lệnh kiểm tra"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "Gỡ flutter_native_splash khỏi pubspec.yaml"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "Sửa tay tài nguyên khởi động chỉ còn nền #0F0C29"
+    },
+    {
+      "id": "NFR7.1",
+      "status": "OK",
+      "target": "Giữ nguyên applicationId, namespace, bundle id, tên package"
+    },
+    {
+      "id": "NFR7.2",
+      "status": "OK",
+      "target": "Không thêm quyền hay gói phụ thuộc"
+    }
+  ]
+}

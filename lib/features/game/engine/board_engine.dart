@@ -1,7 +1,11 @@
-import '../logic/block_generator.dart';
+import 'package:flutter/painting.dart';
+
 import '../logic/board_logic.dart';
+import '../logic/difficulty_constants.dart';
+import '../logic/tray_generator.dart';
 import '../models/block_model.dart';
 import '../models/cell_model.dart';
+import '../models/game_snapshot.dart';
 import 'turn_resolver.dart';
 import 'turn_result.dart';
 
@@ -10,17 +14,26 @@ typedef BlockSource = List<BlockModel> Function();
 
 /// Trạng thái bảng 8×8 và khay khối của một ván (chỉ trong bộ nhớ).
 ///
-/// Không biết gì về level, mốc điểm hay tiến trình: chỉ đặt khối, tính điểm,
-/// xóa dòng và kiểm tra hết nước đi (US2.2).
+/// Không biết gì về mốc điểm hay tiến trình: chỉ đặt khối, tính điểm, xóa dòng
+/// và kiểm tra hết nước đi (US2.2). Controller đặt [difficultyLevel] trước khi
+/// bắt đầu ván; khay mới do `TrayGenerator` sinh theo bảng và mức đó, trừ khi
+/// test truyền `blockSource`.
 class BoardEngine {
   BoardEngine({
     BlockSource? blockSource,
+    TrayGenerator? trayGenerator,
+    this.difficultyLevel = DifficultyConstants.endlessLevel,
     this.clearDelay = const Duration(milliseconds: 180),
-  }) : _blockSource = blockSource ?? BlockGenerator.generateThree {
+  }) : _blockSource = blockSource,
+       _trayGenerator = trayGenerator ?? TrayGenerator() {
     reset();
   }
 
-  final BlockSource _blockSource;
+  final BlockSource? _blockSource;
+  final TrayGenerator _trayGenerator;
+
+  /// Độ khó dùng để sinh khay: levelIndex ở Journey, 18 ở Endless (BR4.2).
+  int difficultyLevel;
 
   /// Thời gian animation xóa dòng (BR5.10).
   final Duration clearDelay;
@@ -30,11 +43,22 @@ class BoardEngine {
   int score = 0;
   int comboStreak = 0;
 
-  /// Bảng trống, khay mới, điểm và combo về 0.
-  void reset() {
+  /// Khay kế tiếp. Khi không còn khay nào đặt hết được, khay rỗng: `hasMoves`
+  /// là false nên controller chuyển sang Game Over (BR1.4).
+  List<BlockModel> _nextTray() {
+    final source = _blockSource;
+    if (source != null) return List<BlockModel>.of(source());
+    return List<BlockModel>.of(
+      _trayGenerator.prepare(board, difficultyLevel).tray,
+    );
+  }
+
+  /// Bảng trống, khay mới, combo về 0. Điểm bắt đầu là [startScore]: 0 ở chế
+  /// độ level, điểm đã lưu ở chế độ endless (FR9.2).
+  void reset({int startScore = 0}) {
     board = BoardLogic.createEmptyBoard();
-    tray = List<BlockModel>.of(_blockSource());
-    score = 0;
+    tray = _nextTray();
+    score = startScore < 0 ? 0 : startScore;
     comboStreak = 0;
   }
 
@@ -90,27 +114,78 @@ class BoardEngine {
   /// Sinh khay mới khi khay trống. Trả true nếu đã sinh.
   bool refillTrayIfEmpty() {
     if (tray.isNotEmpty) return false;
-    tray = List<BlockModel>.of(_blockSource());
+    tray = _nextTray();
     return true;
   }
 
   /// Còn ít nhất một khối trong khay đặt được ở đâu đó trên bảng.
   bool get hasMoves => BoardLogic.canPlaceAnyBlock(board, tray);
 
-  /// REVIVE: xóa vùng 3×3 giữa bảng.
-  void clearCenter() {
-    final size = board.length;
-    final mid = size ~/ 2;
-    for (var r = mid - 1; r <= mid + 1; r++) {
-      for (var c = mid - 1; c <= mid + 1; c++) {
-        if (r >= 0 && r < size && c >= 0 && c < size) {
-          final cell = board[r][c];
-          cell.filled = false;
-          cell.isIce = false;
-          cell.isBomb = false;
-          cell.color = null;
-        }
-      }
-    }
+  /// Bản lưu trạng thái ổn định của ván (điểm, combo, bảng, khay). Chỉ gọi khi
+  /// không còn ô nào đang xóa; hiệu ứng xem trước không được lưu.
+  GameSnapshot snapshot({required GameMode mode, int levelIndex = 0}) {
+    return GameSnapshot(
+      mode: mode,
+      levelIndex: levelIndex,
+      score: score,
+      comboStreak: comboStreak,
+      board: [
+        for (final row in board)
+          [
+            for (final cell in row)
+              cell.filled
+                  ? SavedCell(
+                      color: GameSnapshot.colorToInt(
+                        cell.color ?? const Color(0xFFFFFFFF),
+                      ),
+                      isIce: cell.isIce,
+                      iceHealth: cell.iceHealth,
+                      isBomb: cell.isBomb,
+                    )
+                  : null,
+          ],
+      ],
+      tray: [
+        for (final block in tray)
+          SavedBlock(
+            shape: [for (final row in block.shape) List<int>.of(row)],
+            color: GameSnapshot.colorToInt(block.color),
+            isIce: block.isIce,
+            iceHealth: block.iceHealth,
+            isBomb: block.isBomb,
+          ),
+      ],
+    );
+  }
+
+  /// Nạp lại ván từ [saved]: bảng, khay, điểm và combo.
+  void restore(GameSnapshot saved) {
+    board = [
+      for (final row in saved.board)
+        [
+          for (final cell in row)
+            cell == null
+                ? CellModel()
+                : CellModel(
+                    filled: true,
+                    color: Color(cell.color),
+                    isIce: cell.isIce,
+                    iceHealth: cell.iceHealth,
+                    isBomb: cell.isBomb,
+                  ),
+        ],
+    ];
+    tray = [
+      for (final block in saved.tray)
+        BlockModel(
+          shape: [for (final row in block.shape) List<int>.of(row)],
+          color: Color(block.color),
+          isIce: block.isIce,
+          iceHealth: block.iceHealth,
+          isBomb: block.isBomb,
+        ),
+    ];
+    score = saved.score;
+    comboStreak = saved.comboStreak;
   }
 }

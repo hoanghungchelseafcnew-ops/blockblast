@@ -13,7 +13,7 @@ class BlockBlastApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Block Crush',
+      title: 'Block Jewel',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       home: SplashScreen(bootstrap: bootstrap),

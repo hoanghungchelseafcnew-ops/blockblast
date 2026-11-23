@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/colors.dart';
+import '../../../core/theme/app_typography.dart';
+import '../../../core/theme/gem_theme.dart';
 import '../../home/screens/home_screen.dart';
 import '../../journey/services/app_bootstrap.dart';
 
-/// Màn chờ bootstrap tối đa 3,5 giây rồi chuyển sang Home (WF1).
+/// Màn chờ bootstrap tối đa 3,5 giây rồi chuyển sang Home (WF1, mockup M-0).
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key, required this.bootstrap});
 
@@ -34,37 +36,37 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.backgroundStart,
-              AppColors.backgroundMiddle,
-              AppColors.backgroundEnd,
-            ],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                'assets/icon.png',
-                key: const Key('splash-logo'),
-                width: 140,
-                height: 140,
-                errorBuilder: (_, __, ___) =>
-                    const Icon(Icons.extension, size: 96, color: Colors.white),
-              ),
-              const SizedBox(height: 32),
-              const CircularProgressIndicator(
-                key: Key('splash-progress'),
-                color: AppColors.accent,
-              ),
-            ],
-          ),
+      backgroundColor: GemTheme.backgroundEnd,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/icon.png',
+              key: const Key('splash-logo'),
+              width: 140,
+              height: 140,
+              errorBuilder: (_, __, ___) =>
+                  const Icon(Icons.extension, size: 96, color: Colors.white),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'BLOCK JEWEL',
+              key: const Key('splash-title'),
+              style: AppTypography.display(),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '◆ Gemstone Journey ◆',
+              key: const Key('splash-subtitle'),
+              style: AppTypography.caption(),
+            ),
+            const SizedBox(height: 32),
+            const CircularProgressIndicator(
+              key: Key('splash-progress'),
+              color: AppColors.accent,
+            ),
+          ],
         ),
       ),
     );

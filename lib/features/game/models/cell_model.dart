@@ -4,7 +4,7 @@ class CellModel {
   bool filled;
   bool preview;
   bool clearing;
-  
+
   // Special Properties
   bool isIce;
   int iceHealth;

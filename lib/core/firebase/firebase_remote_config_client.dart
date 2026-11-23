@@ -8,7 +8,7 @@ import '../config/remote_config_client.dart';
 /// `FirebaseRemoteConfig.instance` cần Firebase app đã khởi tạo.
 class FirebaseRemoteConfigClient implements RemoteConfigClient {
   FirebaseRemoteConfigClient({FirebaseRemoteConfig? instance})
-      : _remoteConfig = instance ?? FirebaseRemoteConfig.instance;
+    : _remoteConfig = instance ?? FirebaseRemoteConfig.instance;
 
   final FirebaseRemoteConfig _remoteConfig;
 

@@ -37,10 +37,7 @@ class LevelConfigValidator {
   static const int minTargetScore = 1;
   static const int maxTargetScore = 10000000;
 
-  static ValidationResult validate(
-    String raw, {
-    required ConfigSource source,
-  }) {
+  static ValidationResult validate(String raw, {required ConfigSource source}) {
     try {
       return _validate(raw, source);
     } catch (e) {

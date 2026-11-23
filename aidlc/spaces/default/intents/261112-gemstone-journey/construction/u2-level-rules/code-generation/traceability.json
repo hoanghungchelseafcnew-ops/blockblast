@@ -1,0 +1,37 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-level-rules",
+  "upstream_ids": [
+    "AC1.3.1", "AC1.4.1", "AC1.4.2", "AC1.4.3", "AC1.4.4", "AC1.5.1",
+    "AC1.7.1", "AC1.7.2", "AC2.5.1", "AC2.5.2", "AC2.5.3", "AC2.6.1",
+    "AC2.6.2", "AC2.7.1",
+    "FR2.3", "FR2.3a", "FR2.3b", "FR2.4", "FR2.5", "FR8.1", "FR8.3",
+    "FR11.1", "FR11.2", "FR11.3"
+  ],
+  "coverage": [
+    { "id": "AC1.3.1", "status": "OK", "target": "lib/features/journey/controllers/journey_controller.dart" },
+    { "id": "AC1.4.1", "status": "OK", "target": "lib/features/journey/controllers/journey_controller.dart" },
+    { "id": "AC1.4.2", "status": "OK", "target": "lib/features/journey/models/player_progress.dart" },
+    { "id": "AC1.4.3", "status": "OK", "target": "test/features/journey/journey_controller_test.dart" },
+    { "id": "AC1.4.4", "status": "OK", "target": "test/features/journey/journey_controller_test.dart" },
+    { "id": "AC1.5.1", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "AC1.7.1", "status": "OK", "target": "lib/features/game/screens/game_screen.dart" },
+    { "id": "AC1.7.2", "status": "OK", "target": "lib/features/journey/services/progress_repository.dart" },
+    { "id": "AC2.5.1", "status": "OK", "target": "lib/features/game/widgets/quit_dialog.dart" },
+    { "id": "AC2.5.2", "status": "OK", "target": "test/ui/game_screen_test.dart" },
+    { "id": "AC2.5.3", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "AC2.6.1", "status": "OK", "target": "lib/features/game/widgets/game_over_overlay.dart" },
+    { "id": "AC2.6.2", "status": "OK", "target": "lib/features/game/widgets/game_over_overlay.dart" },
+    { "id": "AC2.7.1", "status": "OK", "target": "lib/features/game/screens/game_screen.dart" },
+    { "id": "FR2.3", "status": "OK", "target": "lib/features/journey/controllers/journey_controller.dart" },
+    { "id": "FR2.3a", "status": "OK", "target": "lib/features/journey/models/player_progress.dart" },
+    { "id": "FR2.3b", "status": "OK", "target": "lib/features/journey/models/high_scores.dart" },
+    { "id": "FR2.4", "status": "OK", "target": "lib/features/game/widgets/game_over_overlay.dart" },
+    { "id": "FR2.5", "status": "OK", "target": "lib/features/journey/controllers/journey_controller.dart" },
+    { "id": "FR8.1", "status": "OK", "target": "lib/features/journey/services/progress_repository.dart" },
+    { "id": "FR8.3", "status": "OK", "target": "lib/features/journey/models/high_scores.dart" },
+    { "id": "FR11.1", "status": "OK", "target": "lib/features/game/screens/game_screen.dart" },
+    { "id": "FR11.2", "status": "OK", "target": "lib/features/game/widgets/quit_dialog.dart" },
+    { "id": "FR11.3", "status": "OK", "target": "lib/features/game/widgets/game_over_overlay.dart" }
+  ]
+}

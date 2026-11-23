@@ -48,17 +48,23 @@ void main() {
     });
 
     test('the level list is unmodifiable (BR2.4)', () {
-      expect(() => catalog.levels.add(catalog.levels.first),
-          throwsUnsupportedError);
+      expect(
+        () => catalog.levels.add(catalog.levels.first),
+        throwsUnsupportedError,
+      );
       expect(() => catalog.levels.removeAt(0), throwsUnsupportedError);
     });
 
-    test('a catalog built earlier is not changed by a later config (BR2.4)',
-        () {
-      final before = catalog.byIndex(1).targetScore;
-      LevelCatalog.from(DefaultLevelConfig.config.withSource(ConfigSource.remote));
-      expect(catalog.byIndex(1).targetScore, before);
-    });
+    test(
+      'a catalog built earlier is not changed by a later config (BR2.4)',
+      () {
+        final before = catalog.byIndex(1).targetScore;
+        LevelCatalog.from(
+          DefaultLevelConfig.config.withSource(ConfigSource.remote),
+        );
+        expect(catalog.byIndex(1).targetScore, before);
+      },
+    );
 
     test('byIndex rejects out-of-range values; byIndexOr falls back', () {
       expect(() => catalog.byIndex(0), throwsRangeError);

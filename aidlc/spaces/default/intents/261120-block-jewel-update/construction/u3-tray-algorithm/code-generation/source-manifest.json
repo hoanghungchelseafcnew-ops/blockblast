@@ -1,0 +1,24 @@
+{
+  "stage": "code-generation",
+  "unit": "u3-tray-algorithm",
+  "version": 1,
+  "writes": [
+    { "path": "lib/features/game/logic/difficulty_constants.dart" },
+    { "path": "lib/features/game/logic/tray_models.dart" },
+    { "path": "lib/features/game/logic/block_catalog.dart" },
+    { "path": "lib/features/game/logic/difficulty_profile.dart" },
+    { "path": "lib/features/game/logic/tray_solver.dart" },
+    { "path": "lib/features/game/logic/tray_generator.dart" },
+    { "path": "lib/features/game/logic/block_generator.dart" },
+    { "path": "lib/features/game/engine/board_engine.dart" },
+    { "path": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "path": "lib/features/endless/controllers/endless_game_controller.dart" },
+    { "path": "test/features/game/logic/block_catalog_test.dart" },
+    { "path": "test/features/game/logic/difficulty_profile_test.dart" },
+    { "path": "test/features/game/logic/tray_solver_test.dart" },
+    { "path": "test/features/game/logic/tray_generator_test.dart" },
+    { "path": "test/features/game/engine/board_engine_test.dart" },
+    { "path": "test/features/journey/level_game_controller_test.dart" },
+    { "path": "test/features/endless/endless_game_controller_test.dart" }
+  ]
+}

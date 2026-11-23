@@ -7,8 +7,10 @@ import 'package:block_blast/features/journey/controllers/level_game_controller.d
 import 'package:block_blast/features/journey/models/level.dart';
 import 'package:block_blast/features/journey/services/level_catalog.dart';
 import 'package:block_blast/features/journey/services/progress_repository.dart';
+import 'package:block_blast/features/victory/models/victory_variant.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../fakes/fake_analytics.dart';
 import '../../fakes/fake_progress_store.dart';
 import '../../fakes/log_capture.dart';
 import '../game/engine/engine_test_helpers.dart';
@@ -18,6 +20,9 @@ class RecordingFeedback extends GameFeedback {
   int clearedCount = 0;
   int comboCount = 0;
   int gameOverCount = 0;
+  int victoryCount = 0;
+  int unlockCount = 0;
+  int stopCount = 0;
 
   @override
   void placed() => placedCount++;
@@ -30,6 +35,15 @@ class RecordingFeedback extends GameFeedback {
 
   @override
   void gameOver() => gameOverCount++;
+
+  @override
+  void victory() => victoryCount++;
+
+  @override
+  void unlock() => unlockCount++;
+
+  @override
+  void stopSfx() => stopCount++;
 }
 
 class _Game {
@@ -55,8 +69,10 @@ class _Game {
     Map<String, Object>? initial,
     Duration clearDelay = Duration.zero,
     Duration resolveTimeout = const Duration(seconds: 3),
+    Duration unlockDelay = const Duration(milliseconds: 600),
     Duration? progressWriteDelay,
     List<BlockModel> Function()? source,
+    FakeAnalytics? analytics,
     bool start = true,
   }) async {
     final store = FakeProgressStore(initial: initial);
@@ -77,7 +93,9 @@ class _Game {
       progress: repo,
       engine: engine,
       feedback: feedback,
+      analytics: analytics ?? FakeAnalytics(),
       resolveTimeout: resolveTimeout,
+      unlockDelay: unlockDelay,
       comboTextDuration: const Duration(milliseconds: 100),
       roundIdFactory: () => 'round-${++rounds}',
     );
@@ -144,6 +162,19 @@ void main() {
     log = LogCapture()..start();
   });
 
+  group('difficulty level (US4.4, BR4.2)', () {
+    test('start gives the engine the level index as its difficulty', () async {
+      final g = await _Game.create(levelIndex: 12);
+      expect(g.engine.difficultyLevel, 12);
+    });
+
+    test('starting another level updates the difficulty', () async {
+      final g = await _Game.create(levelIndex: 3);
+      g.controller.start(g.levelWith(30, 1000));
+      expect(g.engine.difficultyLevel, 30);
+    });
+  });
+
   group('start (WF2, BR5.5)', () {
     test('creates a fresh playing round with the target frozen', () async {
       final g = await _Game.create(target: 700);
@@ -153,13 +184,37 @@ void main() {
       expect(c.score, 0);
       expect(c.progressPercent, 0);
       expect(c.comboStreak, 0);
-      expect(c.revived, isFalse);
       expect(c.clearing, isFalse);
       expect(c.outcome, isNull);
       expect(c.tray.length, 3);
       expect(c.roundId, 'round-1');
       expect(c.bestScore, 0);
       expect(c.level.levelIndex, 1);
+    });
+
+    test(
+      'BEST starts from the saved high score of the level (AC1.7.1)',
+      () async {
+        final g = await _Game.create(
+          levelIndex: 9,
+          target: 100000,
+          initial: {ProgressRepository.highScoresKey: '{"9":1300}'},
+        );
+        final c = g.controller;
+        expect(c.bestScore, 1300);
+        await g.place(c.tray.first, 0, 0);
+        expect(c.bestScore, 1300, reason: 'score 10 is below the best');
+      },
+    );
+
+    test('BEST follows the score once it beats the saved best', () async {
+      final g = await _Game.create(
+        target: 100000,
+        initial: {ProgressRepository.highScoresKey: '{"1":5}'},
+      );
+      final c = g.controller;
+      await g.place(c.tray.first, 0, 0);
+      expect(c.bestScore, 10);
     });
 
     test('a target below 1 is raised to 1 and logged', () async {
@@ -447,14 +502,16 @@ void main() {
       expect(c.roundId, 'round-2');
     });
 
-    test('CONTINUE on level 36 replays level 36 (BR4.2)', () async {
+    test('level 36 has no CONTINUE: the call does nothing (AC3.3.2)', () async {
       final g = await _Game.create(levelIndex: 36, target: 10);
       final c = g.controller;
       await g.place(c.tray.first, 0, 0);
       expect(c.outcome!.nextLevel, isNull);
+      expect(c.victoryVariant, VictoryVariant.journeyComplete);
+      expect(g.repo.progress.journeyCompleted, isTrue, reason: 'AC3.3.3');
       c.continueAfterWin();
-      expect(c.level.levelIndex, 36);
-      expect(c.status, LevelStatus.playing);
+      expect(c.status, LevelStatus.won);
+      expect(c.roundId, 'round-1');
     });
 
     test('CONTINUE does nothing unless the round is won', () async {
@@ -464,26 +521,177 @@ void main() {
     });
   });
 
-  group('running out of moves (WF5, BR5.7)', () {
+  group('victory audio and CONTINUE (FR6.1, FR6.2, AC3.1.3)', () {
+    const delay = Duration(milliseconds: 30);
+    Future<void> wait() =>
+        Future<void>.delayed(const Duration(milliseconds: 60));
+
+    test('a sub-level win plays victory once and no unlock', () async {
+      final g = await _Game.create(
+        levelIndex: 2,
+        target: 10,
+        unlockDelay: delay,
+      );
+      await g.place(g.controller.tray.first, 0, 0);
+      expect(g.controller.victoryVariant, VictoryVariant.sub);
+      expect(g.feedback.victoryCount, 1);
+      await wait();
+      expect(g.feedback.unlockCount, 0);
+    });
+
+    test('a Bling win plays unlock after the delay (AC3.2.1)', () async {
+      final g = await _Game.create(
+        levelIndex: 6,
+        target: 10,
+        unlockDelay: delay,
+      );
+      await g.place(g.controller.tray.first, 0, 0);
+      expect(g.controller.victoryVariant, VictoryVariant.gemUnlock);
+      expect(g.feedback.victoryCount, 1);
+      expect(g.feedback.unlockCount, 0, reason: 'not before the delay');
+      await wait();
+      expect(g.feedback.unlockCount, 1);
+    });
+
+    test('level 36 also plays unlock after victory', () async {
+      final g = await _Game.create(
+        levelIndex: 36,
+        target: 10,
+        unlockDelay: delay,
+      );
+      await g.place(g.controller.tray.first, 0, 0);
+      await wait();
+      expect(g.feedback.victoryCount, 1);
+      expect(g.feedback.unlockCount, 1);
+    });
+
     test(
-      'no moves and below target is lost without touching progress',
+      'CONTINUE before the delay cancels unlock and stops the sound',
       () async {
-        final g = await _Game.create(target: 11);
+        final g = await _Game.create(
+          levelIndex: 6,
+          target: 10,
+          unlockDelay: delay,
+        );
+        await g.place(g.controller.tray.first, 0, 0);
+        g.controller.continueAfterWin();
+        expect(g.feedback.stopCount, 1);
+        await wait();
+        expect(g.feedback.unlockCount, 0);
+        expect(g.controller.level.levelIndex, 7);
+      },
+    );
+
+    test('CONTINUE twice moves on only once', () async {
+      final g = await _Game.create(levelIndex: 2, target: 10);
+      await g.place(g.controller.tray.first, 0, 0);
+      g.controller.continueAfterWin();
+      g.controller.continueAfterWin();
+      expect(g.controller.level.levelIndex, 3);
+      expect(g.controller.roundId, 'round-2');
+      expect(g.feedback.stopCount, 1);
+    });
+
+    test('leaving the level 36 victory stops the celebration', () async {
+      final g = await _Game.create(
+        levelIndex: 36,
+        target: 10,
+        unlockDelay: delay,
+      );
+      await g.place(g.controller.tray.first, 0, 0);
+      expect(g.controller.requestBack(), isTrue);
+      expect(g.feedback.stopCount, 1);
+      await wait();
+      expect(g.feedback.unlockCount, 0);
+    });
+
+    test('disposing before the delay cancels unlock', () async {
+      final g = await _Game.create(
+        levelIndex: 6,
+        target: 10,
+        unlockDelay: delay,
+      );
+      await g.place(g.controller.tray.first, 0, 0);
+      g.controller.dispose();
+      await wait();
+      expect(g.feedback.unlockCount, 0);
+    });
+  });
+
+  group('running out of moves (WF5, FR2.3, ADR-008)', () {
+    // Level 9 = Amethyst · Shaping; Rough Stone của Amethyst là level 7.
+    test(
+      'no moves below target saves the return to Rough Stone, then lost',
+      () async {
+        final g = await _Game.create(levelIndex: 9, target: 100000);
+        g.fillBoardLeavingIsolatedGaps();
+        final c = g.controller;
+        await g.place(c.tray.first, 0, 0);
+        expect(c.status, LevelStatus.lost);
+        expect(g.feedback.gameOverCount, 1);
+        expect(c.outcome!.nextLevel!.levelIndex, 7);
+        expect(c.returnLevel.levelIndex, 7);
+        expect(g.repo.progress.currentLevelIndex, 7);
+        expect(g.store.data[ProgressRepository.progressKey], isNotNull);
+        expect(g.repo.highScore(9), 10, reason: 'AC1.7.2 on a loss');
+      },
+    );
+
+    test('the loss goes through resolving before lost', () async {
+      final g = await _Game.create(
+        levelIndex: 9,
+        target: 100000,
+        progressWriteDelay: const Duration(milliseconds: 40),
+      );
+      g.fillBoardLeavingIsolatedGaps();
+      final c = g.controller;
+      c.onDragStart(c.tray.first);
+      final turn = c.placeAt(0, 0);
+      await Future<void>.delayed(Duration.zero);
+      expect(c.status, LevelStatus.resolving);
+      expect(c.requestBack(), isFalse);
+      expect(c.confirmQuit(), isFalse, reason: 'no quit while resolving');
+      await turn;
+      expect(c.status, LevelStatus.lost);
+    });
+
+    test(
+      'a slow save ends after the timeout with the cached outcome',
+      () async {
+        final g = await _Game.create(
+          levelIndex: 9,
+          target: 100000,
+          resolveTimeout: const Duration(milliseconds: 30),
+          progressWriteDelay: const Duration(milliseconds: 300),
+        );
         g.fillBoardLeavingIsolatedGaps();
         await g.place(g.controller.tray.first, 0, 0);
         expect(g.controller.status, LevelStatus.lost);
-        expect(g.controller.canRevive, isTrue);
-        expect(g.feedback.gameOverCount, 1);
-        // The first placement legitimately saves `tutorial_completed`; a loss
-        // must never write the progress key.
-        expect(
-          g.store.attempts,
-          isNot(contains('progress')),
-          reason: 'U1 never saves progress on a loss',
-        );
-        expect(g.repo.progress.currentLevelIndex, 1);
+        expect(g.controller.outcome!.nextLevel!.levelIndex, 7);
+        expect(log.where('resolving timed out'), hasLength(1));
+        await Future<void>.delayed(const Duration(milliseconds: 350));
       },
     );
+
+    test('a failed save still reaches lost without throwing', () async {
+      final g = await _Game.create(levelIndex: 9, target: 100000);
+      g.store.failingKeys.add(ProgressRepository.progressKey);
+      g.fillBoardLeavingIsolatedGaps();
+      await g.place(g.controller.tray.first, 0, 0);
+      expect(g.controller.status, LevelStatus.lost);
+      expect(g.repo.dirtyKeys, contains(ProgressRepository.progressKey));
+    });
+
+    test('a loss is processed once per round', () async {
+      final g = await _Game.create(levelIndex: 9, target: 100000);
+      g.fillBoardLeavingIsolatedGaps();
+      final c = g.controller;
+      await g.place(c.tray.first, 0, 0);
+      final writes = g.store.attemptsFor(ProgressRepository.progressKey);
+      await g.place(c.tray.first, 0, 4);
+      expect(g.store.attemptsFor(ProgressRepository.progressKey), writes);
+      expect(g.feedback.gameOverCount, 1);
+    });
 
     test('input is ignored once lost (BR5.4)', () async {
       final g = await _Game.create(target: 11);
@@ -497,64 +705,26 @@ void main() {
       expect(c.score, score);
     });
 
-    test('REVIVE clears the centre once and resumes play', () async {
-      final g = await _Game.create(target: 11);
-      g.fillBoardLeavingIsolatedGaps();
-      final c = g.controller;
-      await g.place(c.tray.first, 0, 0);
-      expect(c.status, LevelStatus.lost);
-      expect(c.board[3][4].filled, isTrue);
-      c.revive();
-      expect(c.status, LevelStatus.playing);
-      expect(c.revived, isTrue);
-      expect(c.canRevive, isFalse);
-      expect(c.board[3][4].filled, isFalse);
-      expect(c.board[2][3].filled, isTrue, reason: 'outside the centre 3x3');
-      c.revive();
-      expect(c.status, LevelStatus.playing);
-    });
-
-    test(
-      'REVIVE that frees no room for the tray goes straight back to lost',
-      () async {
-        // Tray: a single (used to lose) plus two 1x4 lines that cannot fit in
-        // the 3x3 centre that REVIVE clears.
-        final g = await _Game.create(
-          target: 100000,
-          source: () => [single(), line(4), line(4)],
-        );
-        g.fillBoardLeavingIsolatedGaps();
-        final c = g.controller;
-        await g.place(c.tray.first, 0, 0);
-        expect(c.status, LevelStatus.lost);
-        expect(g.feedback.gameOverCount, 1);
-        c.revive();
-        expect(c.revived, isTrue);
-        expect(c.status, LevelStatus.lost, reason: 'no 1x4 fits after REVIVE');
-        expect(c.canRevive, isFalse);
-        expect(g.feedback.gameOverCount, 2);
-        expect(g.store.attempts, isNot(contains('progress')));
-      },
-    );
-
-    test('REVIVE is ignored when the round is not lost', () async {
-      final g = await _Game.create();
-      g.controller.revive();
-      expect(g.controller.revived, isFalse);
-    });
-
-    test('PLAY AGAIN opens a new round on the same level', () async {
-      final g = await _Game.create(target: 11);
+    test('PLAY AGAIN starts a new round at the Rough Stone (FR2.3)', () async {
+      final g = await _Game.create(levelIndex: 9, target: 100000);
       g.fillBoardLeavingIsolatedGaps();
       final c = g.controller;
       await g.place(c.tray.first, 0, 0);
       c.playAgain();
       expect(c.status, LevelStatus.playing);
       expect(c.roundId, 'round-2');
-      expect(c.level.levelIndex, 1);
+      expect(c.level.levelIndex, 7);
       expect(c.score, 0);
-      expect(c.revived, isFalse);
       expect(c.board.expand((r) => r).any((cell) => cell.filled), isFalse);
+    });
+
+    test('losing at a Rough Stone replays the same level', () async {
+      final g = await _Game.create(levelIndex: 1, target: 100000);
+      g.fillBoardLeavingIsolatedGaps();
+      final c = g.controller;
+      await g.place(c.tray.first, 0, 0);
+      c.playAgain();
+      expect(c.level.levelIndex, 1);
     });
 
     test('PLAY AGAIN is ignored when not lost', () async {
@@ -564,30 +734,46 @@ void main() {
     });
   });
 
-  group('back and quit (WF6, BR5.8)', () {
-    test('back while playing quits without changing progress', () async {
-      final g = await _Game.create();
+  group('back and quit (WF6, FR11.2)', () {
+    test(
+      'back while playing asks for confirmation and changes nothing',
+      () async {
+        final g = await _Game.create();
+        final c = g.controller;
+        expect(c.needsQuitConfirmation, isTrue);
+        expect(c.requestBack(), isFalse);
+        expect(c.status, LevelStatus.playing);
+      },
+    );
+
+    test('confirmQuit quits and saves only the unfinished game', () async {
+      final g = await _Game.create(levelIndex: 9);
       final c = g.controller;
       c.onDragStart(c.tray.first);
-      expect(c.requestBack(), isTrue);
+      expect(c.confirmQuit(), isTrue);
       expect(c.status, LevelStatus.quit);
       expect(c.activeBlock, isNull);
-      expect(g.store.attempts, isEmpty);
+      expect(c.needsQuitConfirmation, isFalse);
+      await g.repo.flushDirty();
+      expect(g.store.attempts, [ProgressRepository.levelSessionKey]);
       expect(g.repo.progress.currentLevelIndex, 1);
+      expect(c.requestBack(), isTrue);
     });
 
     test('input is ignored after quitting', () async {
       final g = await _Game.create();
       final c = g.controller;
-      c.requestBack();
+      c.confirmQuit();
       c.onDragStart(c.tray.first);
       expect(c.activeBlock, isNull);
+      expect(c.confirmQuit(), isFalse);
     });
 
-    test('back is allowed from won, lost and quit', () async {
+    test('back is allowed from won and lost', () async {
       final won = await _Game.create(target: 10);
       await won.place(won.controller.tray.first, 0, 0);
       expect(won.controller.requestBack(), isTrue);
+      expect(won.controller.confirmQuit(), isFalse);
       expect(won.controller.status, LevelStatus.won);
 
       final lost = await _Game.create(target: 11);
@@ -595,30 +781,119 @@ void main() {
       await lost.place(lost.controller.tray.first, 0, 0);
       expect(lost.controller.requestBack(), isTrue);
       expect(lost.controller.status, LevelStatus.lost);
+    });
 
-      final quit = await _Game.create();
-      quit.controller.requestBack();
-      expect(quit.controller.requestBack(), isTrue);
+    test('QUIT during the clear animation stops the turn (BR5.10)', () async {
+      final g = await _Game.create(
+        target: 100000,
+        clearDelay: const Duration(milliseconds: 40),
+      );
+      final c = g.controller;
+      g.fillRowExcept(0, 0);
+      c.onDragStart(c.tray.first);
+      final turn = c.placeAt(0, 0);
+      expect(c.clearing, isTrue);
+      c.onDragStart(c.tray[0]);
+      expect(c.activeBlock, isNull, reason: 'no new drag while clearing');
+      expect(c.confirmQuit(), isTrue);
+      expect(c.status, LevelStatus.quit);
+      await turn;
+      expect(c.status, LevelStatus.quit);
+    });
+  });
+
+  group('analytics (FR4.1, FR4.2, AC6.3.1, AC6.4.2)', () {
+    Future<void> settle() => Future<void>.delayed(Duration.zero);
+
+    test('start sends level_start once for the level', () async {
+      final a = FakeAnalytics();
+      await _Game.create(levelIndex: 9, analytics: a);
+      await settle();
+      expect(a.calls, ['start:9']);
+    });
+
+    test('a win sends level_complete with score and target, then progress '
+        'properties for the next gem level', () async {
+      final a = FakeAnalytics();
+      final g = await _Game.create(levelIndex: 2, target: 10, analytics: a);
+      await g.place(g.controller.tray.first, 0, 0);
+      await settle();
+      expect(a.calls, ['start:2', 'complete:2:10/10']);
+      expect(a.currentMajorLevel, 'rose_quartz');
+      expect(a.highestLevelReached, 3);
+    });
+
+    test('a Bling win reports the next gem as current major level', () async {
+      final a = FakeAnalytics();
+      final g = await _Game.create(levelIndex: 6, target: 10, analytics: a);
+      await g.place(g.controller.tray.first, 0, 0);
+      await settle();
+      expect(a.currentMajorLevel, 'amethyst');
+      expect(a.highestLevelReached, 7);
+    });
+
+    test('a loss sends level_fail and keeps highest_level_reached', () async {
+      final a = FakeAnalytics();
+      final g = await _Game.create(
+        levelIndex: 9,
+        target: 100000,
+        analytics: a,
+        initial: {
+          ProgressRepository.progressKey:
+              '{"currentLevelIndex":9,"completedLevels":[1,2,3,4,5,6,7,8],'
+              '"unlockedGems":["rose_quartz"],"journeyCompleted":false,'
+              '"highestLevelReached":12}',
+        },
+      );
+      g.fillBoardLeavingIsolatedGaps();
+      await g.place(g.controller.tray.first, 0, 0);
+      await settle();
+      expect(a.calls, ['start:9', 'fail:9:10/100000']);
+      expect(a.currentMajorLevel, 'amethyst');
+      expect(a.highestLevelReached, 12, reason: 'never goes down');
+    });
+
+    test('PLAY AGAIN and CONTINUE each send a new level_start', () async {
+      final a = FakeAnalytics();
+      final won = await _Game.create(levelIndex: 2, target: 10, analytics: a);
+      await won.place(won.controller.tray.first, 0, 0);
+      won.controller.continueAfterWin();
+      await settle();
+      expect(a.calls.last, 'start:3');
+
+      final b = FakeAnalytics();
+      final lost = await _Game.create(
+        levelIndex: 9,
+        target: 100000,
+        analytics: b,
+      );
+      lost.fillBoardLeavingIsolatedGaps();
+      await lost.place(lost.controller.tray.first, 0, 0);
+      lost.controller.playAgain();
+      await settle();
+      expect(b.calls.last, 'start:7');
+    });
+
+    test('QUIT sends no level_fail', () async {
+      final a = FakeAnalytics();
+      final g = await _Game.create(levelIndex: 4, analytics: a);
+      g.controller.confirmQuit();
+      await settle();
+      expect(a.calls, ['start:4']);
     });
 
     test(
-      'back during the clear animation quits and the turn stops (BR5.10)',
+      'a failing analytics service is logged and never breaks the game',
       () async {
         final g = await _Game.create(
-          target: 100000,
-          clearDelay: const Duration(milliseconds: 40),
+          levelIndex: 2,
+          target: 10,
+          analytics: _ThrowingAnalytics(),
         );
-        final c = g.controller;
-        g.fillRowExcept(0, 0);
-        c.onDragStart(c.tray.first);
-        final turn = c.placeAt(0, 0);
-        expect(c.clearing, isTrue);
-        c.onDragStart(c.tray[0]);
-        expect(c.activeBlock, isNull, reason: 'no new drag while clearing');
-        expect(c.requestBack(), isTrue);
-        expect(c.status, LevelStatus.quit);
-        await turn;
-        expect(c.status, LevelStatus.quit);
+        await g.place(g.controller.tray.first, 0, 0);
+        await settle();
+        expect(g.controller.status, LevelStatus.won);
+        expect(log.where('analytics level_complete failed'), hasLength(1));
       },
     );
   });
@@ -656,4 +931,11 @@ void main() {
       },
     );
   });
+}
+
+/// Bản vi phạm contract C4 (ném lỗi), để kiểm lớp bọc của controller.
+class _ThrowingAnalytics extends FakeAnalytics {
+  @override
+  Future<void> logLevelComplete(Level level, int score, int target) async =>
+      throw StateError('broken analytics');
 }

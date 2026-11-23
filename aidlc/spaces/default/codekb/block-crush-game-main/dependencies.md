@@ -1,45 +1,20 @@
-# Dependencies — Block Crush
+# Dependencies
 
-## External (pub)
+## Bên ngoài (pubspec.yaml)
+| Gói | Phiên bản | Dùng cho |
+|---|---|---|
+| provider | ^6.1.2 | State |
+| shared_preferences | ^2.2.3 | Lưu tiến trình |
+| share_plus | ^10.1.3 | Chia sẻ ảnh |
+| screenshot | ^3.0.0 | Chụp widget |
+| path_provider | ^2.1.5 | Thư mục tạm |
+| firebase_core / remote_config / analytics | ^3.15.0 / ^5.4.0 / ^11.6.0 | Cấu hình và số liệu |
+| audioplayers | ^6.0.0 | Âm thanh |
+| flutter_animate, google_fonts, cached_network_image | ^4.5.0, ^6.2.1, ^3.4.1 | UI |
+| flutter_native_splash (dev) | ^2.4.0 | Splash native |
+| flutter_launcher_icons (dev) | ^0.13.1 | Icon |
 
-Danh sách phiên bản xem ở `technology-stack.md`. Dưới đây là thành phần dùng từng package:
-
-| Package | Dùng bởi |
-|---------|----------|
-| provider | `main.dart`, `HomeScreen`, `GameScreen`, `GameBoard`, `BoardCell`, `DraggableBlock` |
-| shared_preferences | `ThemeManager`, `HomeScreen`, `GameScreen` |
-| flutter_animate | `HomeScreen`, `GameScreen` |
-| audioplayers | `AudioController` |
-| google_fonts | `AppTheme` |
-| share_plus, screenshot, path_provider | `GameScreen` (chỉ phục vụ share score) |
-
-**Dependency cần thêm cho intent** (theo requirements NFR-04): `firebase_core`, `firebase_remote_config`, `firebase_analytics`. Có thể thêm `firebase_storage` hoặc `cached_network_image` nếu tải ảnh nền từ Firebase Storage.
-
-## Internal (module → module)
-
-```mermaid
-flowchart LR
-  home[features/home] --> game[features/game/screens]
-  home --> core_theme[core/theme]
-  home --> core_audio[core/audio]
-  home --> core_widgets[core/widgets]
-  game --> game_logic[features/game/logic]
-  game --> game_widgets[features/game/widgets]
-  game --> core_theme
-  game --> core_audio
-  game --> core_widgets
-  game --> core_const[core/constants]
-  game_logic --> game_models[features/game/models]
-  game_logic --> core_const
-  game_widgets --> game_models
-  game_widgets --> core_theme
-```
-
-Text fallback: `home` phụ thuộc `game/screens` và `core/*`. `game/screens` phụ thuộc `game/logic`, `game/widgets` và `core/*`. `logic` và `widgets` phụ thuộc `models`. Không có phụ thuộc vòng.
-
-Lưu ý: `enum GameMode` được khai báo trong `game_screen.dart` và `HomeScreen` import nó từ đó, tức là màn hình phụ thuộc vào kiểu dữ liệu của một màn hình khác.
-
-## Phụ thuộc nền tảng
-
-- Android: `MainActivity.kt` ở package `com.example.block_blast`. Chưa có Google Services plugin hay `google-services.json`.
-- iOS: chưa có `GoogleService-Info.plist`.
+## Nội bộ
+- features/* phụ thuộc core/* và shared/*; core không phụ thuộc features.
+- `game_screen` → `journey/controllers`, `victory/widgets`, `game/services`.
+- `LevelGameController` → `BoardEngine` → `BlockGenerator`, `TurnResolver`, `BoardLogic`.

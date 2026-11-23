@@ -5,7 +5,7 @@ class BlockModel {
   final Color color;
 
   bool isClearing;
-  
+
   final bool isIce;
   final int iceHealth;
   final bool isBomb;
@@ -22,4 +22,3 @@ class BlockModel {
   int get rows => shape.length;
   int get cols => shape[0].length;
 }
-

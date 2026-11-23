@@ -27,9 +27,14 @@ void main() {
       expect(config.version, 1);
       expect(config.source, ConfigSource.remote);
       expect(config.levels.length, 6);
-      expect(config.levels.values.every((g) => g.subLevels.length == 6), isTrue);
-      expect(config.levels['rose_quartz']!.subLevels['rough_stone']!.targetScore,
-          500);
+      expect(
+        config.levels.values.every((g) => g.subLevels.length == 6),
+        isTrue,
+      );
+      expect(
+        config.levels['rose_quartz']!.subLevels['rough_stone']!.targetScore,
+        500,
+      );
     });
 
     test('keeps valid background urls and trims them', () {
@@ -61,8 +66,9 @@ void main() {
 
     test('rejects a gem with a missing sub level', () {
       final cfg = _fixture();
-      final gem = (cfg['levels'] as Map<String, dynamic>)['emerald']
-          as Map<String, dynamic>;
+      final gem =
+          (cfg['levels'] as Map<String, dynamic>)['emerald']
+              as Map<String, dynamic>;
       (gem['sub_levels'] as Map<String, dynamic>).remove('bling');
       expect(_validate(cfg).firstError, 'invalid_sub_levels:emerald');
     });
@@ -70,11 +76,15 @@ void main() {
     test('rejects duplicate sub order and duplicate gem order', () {
       final dupSub = _fixture();
       _sub(dupSub, 'amethyst', 'slabbing')['order'] = 1;
-      expect(_validate(dupSub).firstError, 'invalid_sub_order:amethyst.slabbing');
+      expect(
+        _validate(dupSub).firstError,
+        'invalid_sub_order:amethyst.slabbing',
+      );
 
       final dupGem = _fixture();
       ((dupGem['levels'] as Map<String, dynamic>)['sapphire']
-          as Map<String, dynamic>)['order'] = 1;
+              as Map<String, dynamic>)['order'] =
+          1;
       expect(_validate(dupGem).firstError, 'invalid_gem_order:sapphire');
     });
 
@@ -114,18 +124,24 @@ void main() {
 
     test('rejects malformed JSON, non-object roots and oversized input', () {
       expect(
-        LevelConfigValidator.validate('{not json', source: ConfigSource.cached)
-            .firstError,
+        LevelConfigValidator.validate(
+          '{not json',
+          source: ConfigSource.cached,
+        ).firstError,
         'parse_error',
       );
       expect(
-        LevelConfigValidator.validate('[1,2]', source: ConfigSource.cached)
-            .firstError,
+        LevelConfigValidator.validate(
+          '[1,2]',
+          source: ConfigSource.cached,
+        ).firstError,
         'invalid_root',
       );
       expect(
-        LevelConfigValidator.validate(' ' * 70000, source: ConfigSource.cached)
-            .firstError,
+        LevelConfigValidator.validate(
+          ' ' * 70000,
+          source: ConfigSource.cached,
+        ).firstError,
         'too_large',
       );
     });
@@ -133,7 +149,8 @@ void main() {
     test('rejects a blank gem or sub name', () {
       final gemName = _fixture();
       ((gemName['levels'] as Map<String, dynamic>)['ruby']
-          as Map<String, dynamic>)['name'] = ' ';
+              as Map<String, dynamic>)['name'] =
+          ' ';
       expect(_validate(gemName).firstError, 'invalid_gem_name:ruby');
 
       final subName = _fixture();
@@ -149,15 +166,23 @@ void main() {
       final result = _validate(cfg);
       expect(result.isValid, isTrue);
       final config = result.config!;
-      expect(config.levels['amethyst']!.subLevels['shaping']!.backgroundUrl,
-          isNull);
+      expect(
+        config.levels['amethyst']!.subLevels['shaping']!.backgroundUrl,
+        isNull,
+      );
       // URL hợp lệ của level khác vẫn còn.
       expect(
         config.levels['rose_quartz']!.subLevels['rough_stone']!.backgroundUrl,
         isNotNull,
       );
-      expect(result.warnings, contains('background_url_rejected:amethyst.shaping'));
-      expect(result.warnings, contains('background_url_rejected:emerald.bling'));
+      expect(
+        result.warnings,
+        contains('background_url_rejected:amethyst.shaping'),
+      );
+      expect(
+        result.warnings,
+        contains('background_url_rejected:emerald.bling'),
+      );
       expect(result.warnings.any((w) => w.contains('https://')), isFalse);
     });
 
@@ -166,8 +191,10 @@ void main() {
       _sub(cfg, 'amethyst', 'shaping')['background_url'] = '  ';
       final result = _validate(cfg);
       expect(result.isValid, isTrue);
-      expect(result.warnings.where((w) => w.startsWith('background_url')),
-          isEmpty);
+      expect(
+        result.warnings.where((w) => w.startsWith('background_url')),
+        isEmpty,
+      );
     });
 
     test('non-increasing targets only produce a warning (BR1.6)', () {

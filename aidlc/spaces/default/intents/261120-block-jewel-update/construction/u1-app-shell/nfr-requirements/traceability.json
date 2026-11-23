@@ -1,0 +1,50 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u1-app-shell",
+  "upstream_ids": [
+    "NFR1",
+    "NFR2",
+    "NFR3",
+    "NFR4",
+    "NFR5",
+    "NFR6",
+    "NFR7"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1",
+      "status": "N/A",
+      "target": "unit này không sinh khối, không chạm hiệu năng trò chơi"
+    },
+    {
+      "id": "NFR2",
+      "status": "N/A",
+      "target": "unit này không có logic sinh khay"
+    },
+    {
+      "id": "NFR3",
+      "status": "OK",
+      "target": "NFR3.1"
+    },
+    {
+      "id": "NFR4",
+      "status": "OK",
+      "target": "NFR4.1"
+    },
+    {
+      "id": "NFR5",
+      "status": "OK",
+      "target": "NFR5.1, NFR5.2, NFR5.3"
+    },
+    {
+      "id": "NFR6",
+      "status": "N/A",
+      "target": "unit này không chụp màn hình hay chia sẻ"
+    },
+    {
+      "id": "NFR7",
+      "status": "OK",
+      "target": "NFR7.1, NFR7.2"
+    }
+  ]
+}

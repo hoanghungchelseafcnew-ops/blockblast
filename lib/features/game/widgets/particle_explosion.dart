@@ -33,11 +33,13 @@ class _ParticleExplosionState extends State<ParticleExplosion>
     for (int i = 0; i < 8; i++) {
       double angle = random.nextDouble() * 2 * pi;
       double speed = random.nextDouble() * 30 + 10;
-      particles.add(Particle(
-        dx: cos(angle) * speed,
-        dy: sin(angle) * speed,
-        size: random.nextDouble() * 6 + 4,
-      ));
+      particles.add(
+        Particle(
+          dx: cos(angle) * speed,
+          dy: sin(angle) * speed,
+          size: random.nextDouble() * 6 + 4,
+        ),
+      );
     }
 
     _controller.addListener(() {
@@ -99,7 +101,7 @@ class ParticlePainter extends CustomPainter {
     for (var p in particles) {
       double curX = size.width / 2 + (p.dx * progress * 2);
       double curY = size.height / 2 + (p.dy * progress * 2);
-      
+
       canvas.drawRect(
         Rect.fromCenter(
           center: Offset(curX, curY),

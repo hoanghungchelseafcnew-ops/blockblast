@@ -1,0 +1,33 @@
+{
+  "stage": "nfr-design",
+  "unit": "u3-tray-algorithm",
+  "upstream_ids": [
+    "NFR1.1", "NFR1.2", "NFR1.3",
+    "NFR2.1", "NFR2.2", "NFR2.3", "NFR2.4",
+    "NFR3.1", "NFR3.2",
+    "NFR4.1",
+    "NFR5.1", "NFR5.2", "NFR5.3", "NFR5.4",
+    "NFR6.1", "NFR6.2",
+    "NFR7.1", "NFR7.2"
+  ],
+  "coverage": [
+    { "id": "NFR1.1", "status": "OK", "target": "logical-components.md: ngân sách nút, thoát sớm, bản sao bảng nhẹ, đo bằng test hiệu năng" },
+    { "id": "NFR1.2", "status": "OK", "target": "logical-components.md: solverNodeBudget và giới hạn ứng viên trong DifficultyConstants" },
+    { "id": "NFR1.3", "status": "OK", "target": "logical-components.md: thoát sớm và sắp xếp vị trí cho nghiệm sớm" },
+    { "id": "NFR2.1", "status": "OK", "target": "logical-components.md: khay fallback không cần tìm kiếm khi còn từ 3 ô trống" },
+    { "id": "NFR2.2", "status": "OK", "target": "security-design.md: try/catch ở TrayGenerator.prepare, hạ tier có kiểm soát" },
+    { "id": "NFR2.3", "status": "OK", "target": "logical-components.md: TraySolver kiểm 6 thứ tự; test đối chiếu vét cạn trên bảng nhỏ" },
+    { "id": "NFR2.4", "status": "OK", "target": "logical-components.md: Random tiêm vào, ngân sách theo nút, thứ tự duyệt cố định" },
+    { "id": "NFR3.1", "status": "OK", "target": "logical-components.md: lớp thuần DifficultyProfile, TrayGenerator, TraySolver kiểm thử độc lập" },
+    { "id": "NFR3.2", "status": "OK", "target": "logical-components.md: thành phần thuần, không phụ thuộc UI, dễ đạt coverage 80%" },
+    { "id": "NFR4.1", "status": "OK", "target": "security-design.md: U3 không có chuỗi hiển thị" },
+    { "id": "NFR5.1", "status": "OK", "target": "security-design.md: Dart thuần, không thêm gói" },
+    { "id": "NFR5.2", "status": "OK", "target": "logical-components.md: bảng thành phần, lớp thuần ngoài widget" },
+    { "id": "NFR5.3", "status": "OK", "target": "logical-components.md: DifficultyConstants" },
+    { "id": "NFR5.4", "status": "OK", "target": "logical-components.md: DFS có ngân sách, không dùng isolate" },
+    { "id": "NFR6.1", "status": "OK", "target": "security-design.md: không IO, không import dịch vụ" },
+    { "id": "NFR6.2", "status": "OK", "target": "security-design.md: log chỉ gồm level, độ đầy, tier" },
+    { "id": "NFR7.1", "status": "OK", "target": "security-design.md: kẹp level, không đọc hay ghi lưu trữ" },
+    { "id": "NFR7.2", "status": "OK", "target": "security-design.md: không đổi pubspec hay manifest" }
+  ]
+}

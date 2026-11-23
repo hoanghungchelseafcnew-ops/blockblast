@@ -43,10 +43,88 @@ void main() {
     if (tempDir.existsSync()) tempDir.deleteSync(recursive: true);
   });
 
+  test('văn bản chia sẻ dùng tên Block Jewel (BR1.3, BR1.6)', () {
+    expect(
+      ScoreShareService.scoreShareText(120),
+      'I scored 120 in Block Jewel!',
+    );
+    expect(
+      ScoreShareService.victoryShareText('Rose Quartz · Rough Stone', 450),
+      'I cleared Rose Quartz · Rough Stone with 450 points in Block Jewel!',
+    );
+    expect(ScoreShareService.scoreShareText(0), isNot(contains('Crush')));
+  });
+
   test('controller chưa gắn widget: không ném lỗi, không chia sẻ', () async {
-    await const PlatformScoreShareService()
-        .shareScore(screenshot: ScreenshotController(), score: 120);
+    await const PlatformScoreShareService().shareScore(
+      screenshot: ScreenshotController(),
+      score: 120,
+    );
     expect(shareCalls, isEmpty);
+  });
+
+  test('shareVictory khi chưa chụp được: không chia sẻ, ghi log', () async {
+    await const PlatformScoreShareService().shareVictory(
+      screenshot: ScreenshotController(),
+      levelName: 'Ruby · Bling',
+      score: 999,
+    );
+    expect(shareCalls, isEmpty);
+    expect(logs.join('\n'), contains('sharing the victory failed'));
+  });
+
+  testWidgets('shareVictory chụp được ảnh thì ghi victory.png và chia sẻ '
+      'kèm tên level', (tester) async {
+    final controller = ScreenshotController();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Screenshot(
+          controller: controller,
+          child: const SizedBox(width: 40, height: 40),
+        ),
+      ),
+    );
+    await tester.runAsync(() async {
+      await const PlatformScoreShareService().shareVictory(
+        screenshot: controller,
+        levelName: 'Ruby · Bling',
+        score: 999,
+      );
+    });
+    final sharedFile = File('${tempDir.path}/victory.png');
+    expect(sharedFile.existsSync() || logs.isNotEmpty, isTrue);
+    if (sharedFile.existsSync()) {
+      expect(shareCalls, isNotEmpty);
+      expect(
+        shareCalls.last.arguments.toString(),
+        contains('I cleared Ruby · Bling with 999 points in Block Jewel!'),
+      );
+    }
+  });
+
+  testWidgets('kênh chia sẻ lỗi: ghi log, không ném lỗi (BR1.4)', (
+    tester,
+  ) async {
+    messenger.setMockMethodCallHandler(shareChannel, (call) async {
+      throw PlatformException(code: 'boom');
+    });
+    final controller = ScreenshotController();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Screenshot(
+          controller: controller,
+          child: const SizedBox(width: 40, height: 40),
+        ),
+      ),
+    );
+    await tester.runAsync(() async {
+      await const PlatformScoreShareService().shareVictory(
+        screenshot: controller,
+        levelName: 'Ruby · Bling',
+        score: 1,
+      );
+    });
+    expect(logs, isNotEmpty);
   });
 
   testWidgets('chụp được ảnh thì ghi file và gọi share', (tester) async {
@@ -60,8 +138,10 @@ void main() {
       ),
     );
     await tester.runAsync(() async {
-      await const PlatformScoreShareService()
-          .shareScore(screenshot: controller, score: 120);
+      await const PlatformScoreShareService().shareScore(
+        screenshot: controller,
+        score: 120,
+      );
     });
     final sharedFile = File('${tempDir.path}/score.png');
     expect(sharedFile.existsSync() || logs.isNotEmpty, isTrue);

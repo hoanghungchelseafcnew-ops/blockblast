@@ -12,6 +12,11 @@ abstract class ProgressStore {
   Future<void> writeString(String key, String value);
 
   Future<void> writeBool(String key, bool value);
+
+  Future<void> writeInt(String key, int value);
+
+  /// Xóa [key]. Không lỗi nếu key chưa có.
+  Future<void> remove(String key);
 }
 
 /// Triển khai thật bằng SharedPreferences.
@@ -33,16 +38,24 @@ class SharedPreferencesProgressStore implements ProgressStore {
   Object? read(String key) => _ready.get(key);
 
   @override
-  Future<void> writeString(String key, String value) async {
-    if (!await _ready.setString(key, value)) {
-      throw StateError('setString returned false');
-    }
-  }
+  Future<void> writeString(String key, String value) async =>
+      _check(await _ready.setString(key, value), 'setString');
 
   @override
-  Future<void> writeBool(String key, bool value) async {
-    if (!await _ready.setBool(key, value)) {
-      throw StateError('setBool returned false');
-    }
+  Future<void> writeBool(String key, bool value) async =>
+      _check(await _ready.setBool(key, value), 'setBool');
+
+  @override
+  Future<void> writeInt(String key, int value) async =>
+      _check(await _ready.setInt(key, value), 'setInt');
+
+  @override
+  Future<void> remove(String key) async =>
+      _check(await _ready.remove(key), 'remove');
+
+  /// SharedPreferences báo lỗi ghi bằng `false`; đổi thành exception để
+  /// repository đánh dấu dirty và thử lại (BR3.3).
+  static void _check(bool ok, String operation) {
+    if (!ok) throw StateError('$operation returned false');
   }
 }

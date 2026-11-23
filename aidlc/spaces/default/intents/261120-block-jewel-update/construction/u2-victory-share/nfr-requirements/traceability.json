@@ -1,0 +1,50 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u2-victory-share",
+  "upstream_ids": [
+    "NFR1",
+    "NFR2",
+    "NFR3",
+    "NFR4",
+    "NFR5",
+    "NFR6",
+    "NFR7"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1",
+      "status": "OK",
+      "target": "NFR1.1, NFR1.2"
+    },
+    {
+      "id": "NFR2",
+      "status": "N/A",
+      "target": "unit không sinh khay"
+    },
+    {
+      "id": "NFR3",
+      "status": "OK",
+      "target": "NFR3.1"
+    },
+    {
+      "id": "NFR4",
+      "status": "OK",
+      "target": "NFR4.1"
+    },
+    {
+      "id": "NFR5",
+      "status": "OK",
+      "target": "NFR5.1, NFR5.2"
+    },
+    {
+      "id": "NFR6",
+      "status": "OK",
+      "target": "NFR6.1, NFR6.2"
+    },
+    {
+      "id": "NFR7",
+      "status": "OK",
+      "target": "NFR7.1"
+    }
+  ]
+}

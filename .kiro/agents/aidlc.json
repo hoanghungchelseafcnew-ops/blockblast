@@ -278,7 +278,16 @@
       {
         "capability": "fs_read",
         "effect": "allow"
+      },
+      {
+        "capability": "skill",
+        "effect": "allow"
       }
     ]
+  },
+  "kiroUpgrade": {
+    "revision": 2,
+    "fingerprint": "sha256:86a165dc983f20b9ad3158b1abbeb6626fea3f7078206dcee89595d9ed185ee6",
+    "source": "sha256:d68e438bda9466d3df96663d6077eb588e19318a8c96c05edf851d3a72a85964"
   }
 }

@@ -1,6 +1,12 @@
+import 'package:block_blast/core/audio/audio_controller.dart';
+import 'package:block_blast/core/audio/sfx.dart';
 import 'package:block_blast/features/game/services/game_feedback.dart';
+import 'package:block_blast/features/journey/services/progress_repository.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../../fakes/fake_progress_store.dart';
+import '../../../fakes/fake_sfx_player.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -11,15 +17,6 @@ void main() {
 
   setUp(() {
     haptics.clear();
-    // Plugin âm thanh giả: mọi lệnh trả null, không chạm plugin thật.
-    for (final name in const [
-      'xyz.luan/audioplayers',
-      'xyz.luan/audioplayers.global',
-    ]) {
-      messenger.setMockMethodCallHandler(MethodChannel(name), (call) async {
-        return null;
-      });
-    }
     messenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
       if (call.method == 'HapticFeedback.vibrate') {
         haptics.add(call.arguments as String);
@@ -29,36 +26,59 @@ void main() {
   });
 
   tearDown(() {
-    for (final name in const [
-      'xyz.luan/audioplayers',
-      'xyz.luan/audioplayers.global',
-    ]) {
-      messenger.setMockMethodCallHandler(MethodChannel(name), null);
-    }
     messenger.setMockMethodCallHandler(SystemChannels.platform, null);
   });
 
-  test('NoopGameFeedback không ném lỗi', () {
+  Future<(DeviceGameFeedback, FakeSfxPlayer)> device() async {
+    final repo = ProgressRepository(FakeProgressStore());
+    await repo.load();
+    final player = FakeSfxPlayer();
+    final audio = AudioController(progress: repo, player: player);
+    return (DeviceGameFeedback(audio), player);
+  }
+
+  test('NoopGameFeedback does nothing and never throws', () {
     const feedback = NoopGameFeedback();
     feedback
       ..placed()
       ..cleared()
       ..combo()
-      ..gameOver();
+      ..gameOver()
+      ..victory()
+      ..unlock()
+      ..stopSfx();
   });
 
-  test('DeviceGameFeedback.placed rung mạnh và gọi âm thanh', () async {
-    const DeviceGameFeedback().placed();
+  test('placed vibrates and plays the place sound', () async {
+    final (feedback, player) = await device();
+    feedback.placed();
     await Future<void>.delayed(Duration.zero);
     expect(haptics, ['HapticFeedbackType.heavyImpact']);
+    expect(player.played, [Sfx.place.asset]);
   });
 
-  test('DeviceGameFeedback cleared/combo/gameOver không ném lỗi', () async {
-    const feedback = DeviceGameFeedback();
+  test('each event plays its own sound (FR13.1)', () async {
+    final (feedback, player) = await device();
     feedback
       ..cleared()
       ..combo()
-      ..gameOver();
+      ..gameOver()
+      ..victory()
+      ..unlock();
     await Future<void>.delayed(Duration.zero);
+    expect(player.played, [
+      Sfx.clear.asset,
+      Sfx.combo.asset,
+      Sfx.gameOver.asset,
+      Sfx.victory.asset,
+      Sfx.unlock.asset,
+    ]);
+  });
+
+  test('stopSfx stops the player', () async {
+    final (feedback, player) = await device();
+    feedback.stopSfx();
+    await Future<void>.delayed(Duration.zero);
+    expect(player.stops, 1);
   });
 }

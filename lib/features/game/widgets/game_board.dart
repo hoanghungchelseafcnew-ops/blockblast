@@ -1,10 +1,10 @@
 import 'board_cell.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../core/theme/theme_manager.dart';
+import '../../../core/constants/colors.dart';
 import '../../../core/constants/game_constants.dart';
 import '../models/cell_model.dart';
 
+/// Bảng 8×8. Nền kính mờ cố định, không theo theme (FR12.2).
 class GameBoard extends StatelessWidget {
   final List<List<CellModel>> board;
 
@@ -12,15 +12,13 @@ class GameBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeBg = context.watch<ThemeManager>().boardBackground;
-
     return Padding(
       padding: const EdgeInsets.all(GameConstants.boardPadding),
       child: AspectRatio(
         aspectRatio: 1,
         child: Container(
           decoration: BoxDecoration(
-            color: themeBg,
+            color: AppColors.boardBackground,
             borderRadius: BorderRadius.circular(18),
             border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
             boxShadow: [
@@ -28,7 +26,7 @@ class GameBoard extends StatelessWidget {
                 color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 15,
                 spreadRadius: 2,
-              )
+              ),
             ],
           ),
           padding: const EdgeInsets.all(10),

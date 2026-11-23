@@ -1,7 +1,7 @@
-# 🎮 Block Crush — Premium Mobile Puzzle Game
+# 🎮 Block Jewel — Premium Mobile Puzzle Game
 
 <div align="center">
-  <img src="assets/icon.png" width="140" height="140" style="border-radius: 28px;" alt="Block Crush Logo" />
+  <img src="assets/icon.png" width="140" height="140" style="border-radius: 28px;" alt="Block Jewel Logo" />
   
   <h3>A premium, ultra-performance block matching mobile game built with Flutter & Dart.</h3>
 
@@ -15,7 +15,7 @@
 
 ## 📖 Overview
 
-**Block Crush** is an elegant, high-fidelity block puzzle mobile application. Moving far beyond basic prototypes, this game features production-grade architectural patterns, advanced state management, immersive custom themes, responsive drag-and-drop mechanics, and specialized gameplay elements. 
+**Block Jewel** is an elegant, high-fidelity block puzzle mobile application. Moving far beyond basic prototypes, this game features production-grade architectural patterns, advanced state management, immersive custom themes, responsive drag-and-drop mechanics, and specialized gameplay elements. 
 
 Every pixel, haptic vibration, sound effect, and frame rate render has been optimized to produce an industry-standard product ready for the app store.
 
@@ -23,7 +23,7 @@ Every pixel, haptic vibration, sound effect, and frame rate render has been opti
 
 ## 🎮 Play Live & Download
 
-Experience **Block Crush** across different mediums:
+Experience **Block Jewel** across different mediums:
 
 <table>
   <tr>

@@ -7,20 +7,26 @@ class BoardLogic {
   static List<List<CellModel>> createEmptyBoard() {
     return List.generate(
       GameConstants.boardSize,
-      (_) => List.generate(
-        GameConstants.boardSize,
-        (_) => CellModel(),
-      ),
+      (_) => List.generate(GameConstants.boardSize, (_) => CellModel()),
     );
   }
 
-  static bool canPlaceBlock(List<List<CellModel>> board, BlockModel block, int startRow, int startCol) {
+  static bool canPlaceBlock(
+    List<List<CellModel>> board,
+    BlockModel block,
+    int startRow,
+    int startCol,
+  ) {
     for (int r = 0; r < block.rows; r++) {
       for (int c = 0; c < block.cols; c++) {
         if (block.shape[r][c] == 1) {
           final row = startRow + r;
           final col = startCol + c;
-          if (row < 0 || col < 0 || row >= GameConstants.boardSize || col >= GameConstants.boardSize || board[row][col].filled) {
+          if (row < 0 ||
+              col < 0 ||
+              row >= GameConstants.boardSize ||
+              col >= GameConstants.boardSize ||
+              board[row][col].filled) {
             return false;
           }
         }
@@ -29,7 +35,12 @@ class BoardLogic {
     return true;
   }
 
-  static void placeBlock(List<List<CellModel>> board, BlockModel block, int startRow, int startCol) {
+  static void placeBlock(
+    List<List<CellModel>> board,
+    BlockModel block,
+    int startRow,
+    int startCol,
+  ) {
     for (int r = 0; r < block.rows; r++) {
       for (int c = 0; c < block.cols; c++) {
         if (block.shape[r][c] == 1) {
@@ -137,7 +148,10 @@ class BoardLogic {
     }
   }
 
-  static bool canPlaceAnyBlock(List<List<CellModel>> board, List<BlockModel> blocks) {
+  static bool canPlaceAnyBlock(
+    List<List<CellModel>> board,
+    List<BlockModel> blocks,
+  ) {
     final size = board.length;
     for (final block in blocks) {
       for (int row = 0; row <= size - block.rows; row++) {

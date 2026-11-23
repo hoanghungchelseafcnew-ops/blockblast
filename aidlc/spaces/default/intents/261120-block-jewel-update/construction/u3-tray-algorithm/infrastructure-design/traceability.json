@@ -1,0 +1,33 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u3-tray-algorithm",
+  "upstream_ids": [
+    "NFR1.1", "NFR1.2", "NFR1.3",
+    "NFR2.1", "NFR2.2", "NFR2.3", "NFR2.4",
+    "NFR3.1", "NFR3.2",
+    "NFR4.1",
+    "NFR5.1", "NFR5.2", "NFR5.3", "NFR5.4",
+    "NFR6.1", "NFR6.2",
+    "NFR7.1", "NFR7.2"
+  ],
+  "coverage": [
+    { "id": "NFR1.1", "status": "OK", "target": "cicd-pipeline.md bước 4: đo hiệu năng trên máy thật" },
+    { "id": "NFR1.2", "status": "N/A", "target": "ràng buộc trong mã (DifficultyConstants), không cần hạ tầng" },
+    { "id": "NFR1.3", "status": "OK", "target": "cicd-pipeline.md bước 4: đo thời gian trung bình cùng test hiệu năng" },
+    { "id": "NFR2.1", "status": "OK", "target": "cicd-pipeline.md bước 3: flutter test" },
+    { "id": "NFR2.2", "status": "OK", "target": "cicd-pipeline.md bước 3: flutter test" },
+    { "id": "NFR2.3", "status": "OK", "target": "cicd-pipeline.md bước 3: flutter test" },
+    { "id": "NFR2.4", "status": "OK", "target": "cicd-pipeline.md bước 3: flutter test" },
+    { "id": "NFR3.1", "status": "OK", "target": "cicd-pipeline.md bước 3: flutter test" },
+    { "id": "NFR3.2", "status": "OK", "target": "cicd-pipeline.md bước 3: flutter test --coverage, người dùng chạy" },
+    { "id": "NFR4.1", "status": "N/A", "target": "U3 không có chuỗi hiển thị, không cần hạ tầng" },
+    { "id": "NFR5.1", "status": "OK", "target": "cicd-pipeline.md bước 1 và 2: dart format, flutter analyze" },
+    { "id": "NFR5.2", "status": "N/A", "target": "quyết định cấu trúc mã, không cần hạ tầng" },
+    { "id": "NFR5.3", "status": "N/A", "target": "quyết định cấu trúc mã, không cần hạ tầng" },
+    { "id": "NFR5.4", "status": "N/A", "target": "quyết định thuật toán chạy trong tiến trình, không cần hạ tầng" },
+    { "id": "NFR6.1", "status": "N/A", "target": "không có IO hay bí mật, không cần hạ tầng" },
+    { "id": "NFR6.2", "status": "N/A", "target": "log cục bộ qua GjLog, không có hạ tầng giám sát" },
+    { "id": "NFR7.1", "status": "OK", "target": "cicd-pipeline.md: hoàn tác bằng git, không cần migration" },
+    { "id": "NFR7.2", "status": "N/A", "target": "không thêm gói hay quyền, không cần hạ tầng" }
+  ]
+}

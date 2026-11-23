@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../core/constants/colors.dart';
-import '../../../core/theme/theme_manager.dart';
 
+import '../../../core/constants/colors.dart';
+
+/// Một ô trên bảng. Giữ kiểu vẽ "neon" của app cũ; màu ô theo khối, không
+/// theo đá quý (design-system-mapping [Q5]).
 class BoardCell extends StatelessWidget {
   final bool filled;
   final bool preview;
@@ -23,57 +24,50 @@ class BoardCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeManager = context.watch<ThemeManager>();
-    final theme = themeManager.currentTheme;
-
-    Color color = const Color(0x1AFFFFFF); // Default translucent
-    if (theme == AppThemeType.wood) color = const Color(0x224A3B2C);
-    if (theme == AppThemeType.jewel) color = const Color(0x11FFFFFF);
-
+    Color color = AppColors.cellEmpty;
     if (filled) {
       color = cellColor ?? AppColors.cellFilled;
     } else if (preview && previewColor != null) {
       color = previewColor!;
     }
 
-    BoxDecoration decoration;
-
-    switch (theme) {
-      case AppThemeType.wood:
-        decoration = BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: Colors.brown.withValues(alpha: filled ? 0.8 : 0.2), width: 2),
-          boxShadow: filled ? [BoxShadow(color: Colors.black45, blurRadius: 2, offset: const Offset(1, 1))] : [],
-        );
-        break;
-      case AppThemeType.jewel:
-        decoration = BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(12), // Rounder for jewel
-          border: Border.all(color: Colors.white.withValues(alpha: filled ? 0.5 : 0.1), width: 1),
-          gradient: filled
-              ? RadialGradient(colors: [Colors.white.withValues(alpha: 0.4), color], center: const Alignment(-0.3, -0.3), radius: 0.8)
-              : null,
-          boxShadow: filled ? [BoxShadow(color: color.withValues(alpha: 0.6), blurRadius: 15)] : [],
-        );
-        break;
-      case AppThemeType.neon:
-        decoration = BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: filled ? Colors.white.withValues(alpha: 0.3) : Colors.white.withValues(alpha: 0.05), width: 1),
-          gradient: filled
-              ? LinearGradient(colors: [color.withValues(alpha: 0.8), color], begin: Alignment.topLeft, end: Alignment.bottomRight)
-              : null,
-          boxShadow: [
-            if (preview && previewColor != null) BoxShadow(color: previewColor!.withValues(alpha: 0.6), blurRadius: 10, spreadRadius: 1),
-            if (filled) BoxShadow(color: color.withValues(alpha: 0.4), blurRadius: 8, offset: const Offset(2, 2)),
-            if (filled) BoxShadow(color: Colors.white.withValues(alpha: 0.2), blurRadius: 0, offset: const Offset(-1, -1)),
-          ],
-        );
-        break;
-    }
+    final decoration = BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        color: filled
+            ? Colors.white.withValues(alpha: 0.3)
+            : Colors.white.withValues(alpha: 0.05),
+        width: 1,
+      ),
+      gradient: filled
+          ? LinearGradient(
+              colors: [color.withValues(alpha: 0.8), color],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )
+          : null,
+      boxShadow: [
+        if (preview && previewColor != null)
+          BoxShadow(
+            color: previewColor!.withValues(alpha: 0.6),
+            blurRadius: 10,
+            spreadRadius: 1,
+          ),
+        if (filled)
+          BoxShadow(
+            color: color.withValues(alpha: 0.4),
+            blurRadius: 8,
+            offset: const Offset(2, 2),
+          ),
+        if (filled)
+          BoxShadow(
+            color: Colors.white.withValues(alpha: 0.2),
+            blurRadius: 0,
+            offset: const Offset(-1, -1),
+          ),
+      ],
+    );
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
@@ -82,15 +76,13 @@ class BoardCell extends StatelessWidget {
       child: Stack(
         children: [
           if (filled && cellColor != null)
-            Center(
-              child: _buildSpecialOverlay(context, themeManager),
-            ),
+            Center(child: _buildSpecialOverlay()),
         ],
       ),
     );
   }
 
-  Widget _buildSpecialOverlay(BuildContext context, ThemeManager themeManager) {
+  Widget _buildSpecialOverlay() {
     if (isIce) {
       return Container(
         decoration: BoxDecoration(

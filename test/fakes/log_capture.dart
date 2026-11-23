@@ -12,7 +12,8 @@ class LogCapture {
     addTearDown(() => GjLog.sink = previous);
   }
 
-  Iterable<String> where(String needle) => lines.where((l) => l.contains(needle));
+  Iterable<String> where(String needle) =>
+      lines.where((l) => l.contains(needle));
 
   bool get leaksUrlOrRawJson =>
       lines.any((l) => l.contains('https://') || l.contains('{"'));

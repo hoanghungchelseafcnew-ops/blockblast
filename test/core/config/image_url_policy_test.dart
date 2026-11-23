@@ -16,7 +16,9 @@ void main() {
 
     test('accepts <label>.firebasestorage.app and explicit port 443', () {
       expect(
-        ImageUrlPolicy.isAllowed('https://demo.firebasestorage.app/v0/b/x/o/1.jpg'),
+        ImageUrlPolicy.isAllowed(
+          'https://demo.firebasestorage.app/v0/b/x/o/1.jpg',
+        ),
         isTrue,
       );
       expect(

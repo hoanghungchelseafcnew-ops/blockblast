@@ -97,28 +97,30 @@ void main() {
       expect(result.lineScore, 200);
     });
 
-    test('returns null and leaves the board untouched when it does not fit',
-        () {
-      final board = BoardLogic.createEmptyBoard();
-      board[0][1].filled = true;
-      final overlap = TurnResolver.resolve(
-        board: board,
-        block: line(2),
-        row: 0,
-        col: 0,
-        comboStreak: 1,
-      );
-      final outside = TurnResolver.resolve(
-        board: board,
-        block: line(3),
-        row: 0,
-        col: 7,
-        comboStreak: 1,
-      );
-      expect(overlap, isNull);
-      expect(outside, isNull);
-      expect(board[0][0].filled, isFalse);
-    });
+    test(
+      'returns null and leaves the board untouched when it does not fit',
+      () {
+        final board = BoardLogic.createEmptyBoard();
+        board[0][1].filled = true;
+        final overlap = TurnResolver.resolve(
+          board: board,
+          block: line(2),
+          row: 0,
+          col: 0,
+          comboStreak: 1,
+        );
+        final outside = TurnResolver.resolve(
+          board: board,
+          block: line(3),
+          row: 0,
+          col: 7,
+          comboStreak: 1,
+        );
+        expect(overlap, isNull);
+        expect(outside, isNull);
+        expect(board[0][0].filled, isFalse);
+      },
+    );
 
     test('countCells counts only the filled cells of an L shape', () {
       final block = makeBlock([

@@ -16,7 +16,7 @@ BlockModel makeBlock(
 }
 
 BlockModel single() => makeBlock([
-      [1]
-    ]);
+  [1],
+]);
 
 BlockModel line(int length) => makeBlock([List<int>.filled(length, 1)]);

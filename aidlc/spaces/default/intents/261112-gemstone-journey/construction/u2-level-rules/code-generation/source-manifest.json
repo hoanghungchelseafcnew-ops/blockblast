@@ -1,0 +1,28 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-level-rules",
+  "version": 1,
+  "writes": [
+    { "path": "lib/features/game/engine/board_engine.dart" },
+    { "path": "lib/features/game/screens/game_screen.dart" },
+    { "path": "lib/features/game/widgets/game_over_overlay.dart" },
+    { "path": "lib/features/game/widgets/quit_dialog.dart" },
+    { "path": "lib/features/journey/controllers/journey_controller.dart" },
+    { "path": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "path": "lib/features/journey/models/high_scores.dart" },
+    { "path": "lib/features/journey/models/player_progress.dart" },
+    { "path": "lib/features/journey/services/app_bootstrap.dart" },
+    { "path": "lib/features/journey/services/progress_repository.dart" },
+    { "path": "lib/features/journey/services/progress_store.dart" },
+    { "path": "test/fakes/fake_progress_store.dart" },
+    { "path": "test/features/game/engine/board_engine_test.dart" },
+    { "path": "test/features/journey/app_bootstrap_test.dart" },
+    { "path": "test/features/journey/high_scores_test.dart" },
+    { "path": "test/features/journey/journey_controller_test.dart" },
+    { "path": "test/features/journey/level_catalog_test.dart" },
+    { "path": "test/features/journey/level_game_controller_test.dart" },
+    { "path": "test/features/journey/progress_repository_test.dart" },
+    { "path": "test/ui/game_screen_test.dart" },
+    { "path": "test/ui/splash_home_test.dart" }
+  ]
+}

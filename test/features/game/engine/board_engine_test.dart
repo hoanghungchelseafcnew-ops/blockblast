@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:block_blast/core/constants/game_constants.dart';
 import 'package:block_blast/features/game/engine/board_engine.dart';
+import 'package:block_blast/features/game/logic/difficulty_constants.dart';
+import 'package:block_blast/features/game/logic/tray_generator.dart';
 import 'package:block_blast/features/game/models/block_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -108,23 +112,6 @@ void main() {
       expect(engine.board.expand((r) => r).any((c) => c.preview), isFalse);
     });
 
-    test('clearCenter empties the 3x3 area in the middle only', () {
-      final engine = _engine(() => [single(), single(), single()]);
-      for (final row in engine.board) {
-        for (final cell in row) {
-          cell.filled = true;
-        }
-      }
-      engine.clearCenter();
-      for (var r = 3; r <= 5; r++) {
-        for (var c = 3; c <= 5; c++) {
-          expect(engine.board[r][c].filled, isFalse, reason: '($r,$c)');
-        }
-      }
-      expect(engine.board[2][3].filled, isTrue);
-      expect(engine.board[6][5].filled, isTrue);
-    });
-
     test('reset gives a fresh round', () {
       final engine = _engine(() => [single(), single(), single()]);
       engine.place(engine.tray.first, 0, 0);
@@ -132,6 +119,18 @@ void main() {
       expect(engine.score, 0);
       expect(engine.tray.length, 3);
       expect(engine.board[0][0].filled, isFalse);
+    });
+
+    test('reset with a start score keeps it on an empty board (ER2)', () {
+      final engine = _engine(() => [single(), line(2), line(2)]);
+      engine.place(engine.tray.first, 0, 0);
+      engine.reset(startScore: 1200);
+      expect(engine.score, 1200);
+      expect(engine.comboStreak, 0);
+      expect(engine.tray.length, 3);
+      expect(engine.board.expand((r) => r).any((c) => c.filled), isFalse);
+      engine.reset(startScore: -10);
+      expect(engine.score, 0, reason: 'never negative');
     });
 
     test(
@@ -157,5 +156,49 @@ void main() {
         );
       },
     );
+  });
+
+  group('BoardEngine default tray source (U3)', () {
+    test('without a blockSource the tray comes from TrayGenerator', () {
+      final engine = BoardEngine(
+        trayGenerator: TrayGenerator(random: Random(1)),
+        clearDelay: Duration.zero,
+      );
+      expect(engine.tray.length, 3);
+      expect(engine.hasMoves, isTrue);
+    });
+
+    test('difficultyLevel defaults to the Endless level and can be set', () {
+      final engine = BoardEngine(clearDelay: Duration.zero);
+      expect(engine.difficultyLevel, DifficultyConstants.endlessLevel);
+      engine.difficultyLevel = 7;
+      engine.reset();
+      expect(engine.difficultyLevel, 7);
+      expect(engine.tray.length, 3);
+    });
+
+    test('a full board leaves an empty tray so hasMoves is false', () {
+      final engine = BoardEngine(
+        trayGenerator: TrayGenerator(random: Random(2)),
+        clearDelay: Duration.zero,
+      );
+      for (final row in engine.board) {
+        for (final cell in row) {
+          cell.filled = true;
+        }
+      }
+      engine.tray.clear();
+      expect(engine.refillTrayIfEmpty(), isTrue);
+      expect(engine.tray, isEmpty);
+      expect(engine.hasMoves, isFalse);
+    });
+
+    test('a supplied blockSource still wins over the generator', () {
+      final engine = BoardEngine(
+        blockSource: () => [single(), single(), single()],
+        clearDelay: Duration.zero,
+      );
+      expect(engine.tray.every((b) => b.rows == 1 && b.cols == 1), isTrue);
+    });
   });
 }

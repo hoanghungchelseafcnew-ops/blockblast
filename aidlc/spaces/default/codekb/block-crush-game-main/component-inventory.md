@@ -1,81 +1,46 @@
-# Component Inventory — Block Crush
+# Component Inventory
 
 ## BlockBlastApp
-- **File**: `lib/app.dart`
-- **Trách nhiệm**: MaterialApp, theme tối, màn hình đầu tiên là `HomeScreen`
-- **Phụ thuộc**: AppTheme, HomeScreen
-
+MaterialApp gốc (title 'Block Crush'); nhận `AppBootstrap`. Phụ thuộc: SplashScreen.
+## SplashScreen
+Splash trong code: logo, 'BLOCK CRUSH', '◆ Gemstone Journey ◆', chờ bootstrap rồi sang HomeScreen.
 ## HomeScreen
-- **File**: `lib/features/home/screens/home_screen.dart`
-- **Trách nhiệm**: hai thẻ chế độ chơi (Classic, Time Attack) kèm BEST, popup Daily Gift, bottom sheet Settings (mute, theme), điều hướng sang GameScreen
-- **Phụ thuộc**: ThemeManager, AudioController, AnimatedBackground, SharedPreferences, GameScreen
-
+Menu chính, chọn Journey hoặc Endless; theo dõi vòng đời phiên.
 ## GameScreen
-- **File**: `lib/features/game/screens/game_screen.dart`
-- **Trách nhiệm**: toàn bộ state ván chơi (board, blocks, score, combo, timer, high score), kéo-thả, game over, revive, share, tutorial, header SCORE/BEST
-- **Phụ thuộc**: BoardLogic, BlockGenerator, GameBoard, BlockPalette, AudioController, ThemeManager, AnimatedBackground, SharedPreferences, share_plus, screenshot, path_provider
-
-## BoardLogic
-- **File**: `lib/features/game/logic/board_logic.dart`
-- **Trách nhiệm**: luật bảng (đặt khối, xóa dòng, bomb, kiểm tra còn nước đi)
-- **Phụ thuộc**: CellModel, BlockModel, GameConstants
-
+Màn chơi level; bọc `Screenshot`, hiện Victory/GameOver/Tutorial overlay. Phụ thuộc: LevelGameController, ScoreShareService.
+## EndlessGameScreen
+Màn chơi endless với cơ chế chia sẻ tương tự.
+## LevelGameController
+Trạng thái level (`LevelStatus`), điểm, mốc, combo, thắng/thua. Phụ thuộc: BoardEngine, JourneyController, ProgressRepository, GameFeedback.
+## EndlessGameController
+Trạng thái endless. Phụ thuộc: BoardEngine.
+## JourneyController
+Tiến trình 36 level, `JourneyOutcome`, level kế. Phụ thuộc: LevelCatalog, ProgressRepository.
+## BoardEngine
+Bảng 8×8, khay 3 khối, điểm, combo. Phụ thuộc: BlockGenerator, TurnResolver, BoardLogic.
 ## BlockGenerator
-- **File**: `lib/features/game/logic/block_generator.dart`
-- **Trách nhiệm**: sinh ngẫu nhiên 3 khối mỗi lượt
-- **Phụ thuộc**: BlockModel
-
-## GameBoard
-- **File**: `lib/features/game/widgets/game_board.dart`
-- **Trách nhiệm**: render lưới 8×8
-- **Phụ thuộc**: BoardCell, ThemeManager, GameConstants
-
-## BoardCell
-- **File**: `lib/features/game/widgets/board_cell.dart`
-- **Trách nhiệm**: render một ô (filled, preview, ice, bomb) theo theme
-- **Phụ thuộc**: ThemeManager
-
-## BlockPalette
-- **File**: `lib/features/game/widgets/block_palette.dart`
-- **Trách nhiệm**: khay 3 khối
-- **Phụ thuộc**: DraggableBlock
-
-## DraggableBlock
-- **File**: `lib/features/game/widgets/draggable_block.dart`
-- **Trách nhiệm**: khối kéo-thả, phát callback vị trí
-- **Phụ thuộc**: BlockModel, ThemeManager
-
-## ParticleExplosion
-- **File**: `lib/features/game/widgets/particle_explosion.dart`
-- **Trách nhiệm**: hiệu ứng hạt nổ. **Không được sử dụng**
-- **Phụ thuộc**: —
-
-## AnimatedBackground
-- **File**: `lib/core/widgets/animated_background.dart`
-- **Trách nhiệm**: nền gradient có hạt chuyển động
-- **Phụ thuộc**: —
-
-## ThemeManager
-- **File**: `lib/core/theme/theme_manager.dart`
-- **Trách nhiệm**: theme Neon/Wood/Jewel, lưu `theme_index`
-- **Phụ thuộc**: SharedPreferences, AppColors
-
+Sinh 3 khối (tĩnh, ngẫu nhiên, 30/50/20 nhỏ/vừa/lớn, 5% băng, 5% bom).
+## BoardLogic
+`canPlaceBlock`, `placeBlock`, `clearCompletedLines`, `applyClearAnimated`, `canPlaceAnyBlock`.
+## TurnResolver
+Tính điểm lượt: 10 điểm/ô, 100 điểm/dòng nhân combo.
+## BoardGeometry
+Đổi tọa độ chạm thành ô lưới.
+## VictoryOverlay
+Màn thắng 3 biến thể; ConfettiLayer, GemUnlockAnimation.
+## GameOverOverlay
+Điểm, target, nút Share, Play again, Menu.
+## ScoreShareService
+Chụp ảnh và mở share sheet (`PlatformScoreShareService`).
+## LevelCatalog
+Dựng 36 `Level` từ `LevelConfig`.
+## LevelConfigService
+Tải và kiểm tra cấu hình Remote Config, fallback mặc định.
+## ProgressRepository
+Lưu tiến trình, điểm cao, cờ tutorial, âm thanh.
 ## AudioController
-- **File**: `lib/core/audio/audio_controller.dart`
-- **Trách nhiệm**: phát SFX, mute trong bộ nhớ
-- **Phụ thuộc**: audioplayers
-
-## AppTheme
-- **File**: `lib/core/theme/app_theme.dart`
-- **Trách nhiệm**: ThemeData tối, font chữ
-- **Phụ thuộc**: google_fonts
-
-## Models
-- **File**: `lib/features/game/models/block_model.dart`, `cell_model.dart`
-- **Trách nhiệm**: `BlockModel` (shape, color, ice, bomb), `CellModel` (filled, preview, clearing, ice, bomb, các màu)
-- **Phụ thuộc**: —
-
-## Placeholder rỗng
-- **File**: `game_controller.dart`, `game_helpers.dart`, `game_button.dart`, `score_panel.dart`
-- **Trách nhiệm**: chưa có (0 dòng)
-- **Phụ thuộc**: —
+Phát hiệu ứng âm thanh (`Sfx`).
+## GemTheme
+Bảng màu theo gem (`GemPalette`).
+## AppBootstrap
+Khởi tạo Firebase, cấu hình, tiến trình; có timeout 3,5 giây ở splash.

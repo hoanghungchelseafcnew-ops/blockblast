@@ -66,6 +66,8 @@ None (affirmed 2026-11-13)
 
 - ALWAYS dùng tiếng Anh cho mọi chuỗi hiển thị trên UI của game (không hỗ trợ đa ngôn ngữ) (affirmed 2026-11-13)
 
+- ALWAYS dùng tiếng Anh cho mọi chuỗi hiển thị trên UI của game, không hỗ trợ đa ngôn ngữ. (affirmed 2026-11-20)
+
 ## Corrections
 
 <!-- Project-specific corrections from human feedback. -->

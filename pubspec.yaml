@@ -42,13 +42,14 @@ dependencies:
   screenshot: ^3.0.0
   firebase_core: ^3.15.0
   firebase_remote_config: ^5.4.0
+  cached_network_image: ^3.4.1
+  firebase_analytics: ^11.6.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^5.0.0
-  flutter_native_splash: ^2.4.0
   flutter_launcher_icons: ^0.13.1
 
 # For information on the generic Dart part of this file, see the
@@ -66,6 +67,23 @@ flutter:
   assets:
     - assets/sounds/
     - assets/icon.png
+    # Ảnh nền 36 level (FR5.2). Flutter không khai báo thư mục con đệ quy.
+    - assets/design/Level1/
+    - assets/design/Level2/
+    - assets/design/Level3/
+    - assets/design/Level4/
+    - assets/design/Level5/
+    - assets/design/Level6/
+
+  # Font đóng gói để chạy offline (design-system-mapping, Typography).
+  # Giấy phép OFL nằm cạnh file font trong assets/fonts/.
+  fonts:
+    - family: Righteous
+      fonts:
+        - asset: assets/fonts/Righteous-Regular.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Variable.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -98,10 +116,3 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/icon.png"
   min_sdk_android: 21
-
-flutter_native_splash:
-  color: "#0F0C29"
-  image: "assets/icon.png"
-  android_12:
-    color: "#0F0C29"
-    image: "assets/icon.png"

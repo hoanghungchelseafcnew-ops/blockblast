@@ -1,0 +1,40 @@
+{
+  "stage": "code-generation",
+  "unit": "u4-visual-theme",
+  "upstream_ids": [
+    "AC5.2.1", "AC5.3.1", "AC5.4.1", "AC5.4.2", "AC7.1.1", "AC7.2.1",
+    "AC7.2.2", "AC7.2.3", "AC7.3.1", "AC7.4.1", "AC8.3.1", "AC8.6.1",
+    "AC8.6.2",
+    "FR5.1", "FR5.2", "FR5.3", "FR5.4", "FR10.1", "FR10.2", "FR10.3",
+    "FR12.1", "FR12.2", "NFR2", "NFR4", "NFR6", "NFR8", "NFR9"
+  ],
+  "coverage": [
+    { "id": "AC5.2.1", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "AC5.3.1", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "AC5.4.1", "status": "OK", "target": "lib/core/theme/gem_theme.dart" },
+    { "id": "AC5.4.2", "status": "OK", "target": "test/core/theme/legacy_theme_removed_test.dart" },
+    { "id": "AC7.1.1", "status": "OK", "target": "lib/shared/widgets/level_background.dart" },
+    { "id": "AC7.2.1", "status": "OK", "target": "lib/features/journey/services/background_image_service.dart" },
+    { "id": "AC7.2.2", "status": "OK", "target": "lib/shared/widgets/level_background.dart" },
+    { "id": "AC7.2.3", "status": "OK", "target": "test/features/journey/background_image_service_test.dart" },
+    { "id": "AC7.3.1", "status": "OK", "target": "lib/features/game/screens/game_screen.dart" },
+    { "id": "AC7.4.1", "status": "OK", "target": "lib/core/theme/app_typography.dart" },
+    { "id": "AC8.3.1", "status": "OK", "target": "pubspec.yaml" },
+    { "id": "AC8.6.1", "status": "OK", "target": "lib/app_composition.dart" },
+    { "id": "AC8.6.2", "status": "OK", "target": "test/core/theme/gem_theme_test.dart" },
+    { "id": "FR5.1", "status": "OK", "target": "lib/features/journey/services/background_image_service.dart" },
+    { "id": "FR5.2", "status": "OK", "target": "lib/shared/widgets/level_background.dart" },
+    { "id": "FR5.3", "status": "OK", "target": "lib/shared/widgets/level_background.dart" },
+    { "id": "FR5.4", "status": "OK", "target": "lib/features/journey/services/background_image_service.dart" },
+    { "id": "FR10.1", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "FR10.2", "status": "OK", "target": "lib/features/journey/services/progress_repository.dart" },
+    { "id": "FR10.3", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "FR12.1", "status": "OK", "target": "lib/core/theme/gem_theme.dart" },
+    { "id": "FR12.2", "status": "OK", "target": "lib/app_composition.dart" },
+    { "id": "NFR2", "status": "OK", "target": "pubspec.yaml" },
+    { "id": "NFR4", "status": "OK", "target": "pubspec.yaml" },
+    { "id": "NFR6", "status": "OK", "target": "lib/core/theme/app_typography.dart" },
+    { "id": "NFR8", "status": "OK", "target": "android/app/src/main/AndroidManifest.xml" },
+    { "id": "NFR9", "status": "OK", "target": "lib/shared/widgets/level_progress_bar.dart" }
+  ]
+}

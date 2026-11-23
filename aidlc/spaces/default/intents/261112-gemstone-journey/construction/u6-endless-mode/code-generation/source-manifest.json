@@ -1,0 +1,52 @@
+{
+  "stage": "code-generation",
+  "unit": "u6-endless-mode",
+  "version": 1,
+  "writes": [
+    {
+      "path": "lib/features/endless/models/endless_state.dart"
+    },
+    {
+      "path": "lib/features/endless/controllers/endless_game_controller.dart"
+    },
+    {
+      "path": "lib/features/endless/screens/endless_game_screen.dart"
+    },
+    {
+      "path": "lib/features/game/widgets/board_play_area.dart"
+    },
+    {
+      "path": "lib/features/game/widgets/game_over_overlay.dart"
+    },
+    {
+      "path": "lib/features/game/widgets/quit_dialog.dart"
+    },
+    {
+      "path": "lib/features/game/screens/game_screen.dart"
+    },
+    {
+      "path": "lib/features/game/engine/board_engine.dart"
+    },
+    {
+      "path": "lib/features/home/screens/home_screen.dart"
+    },
+    {
+      "path": "lib/features/journey/services/progress_repository.dart"
+    },
+    {
+      "path": "test/features/endless/endless_state_test.dart"
+    },
+    {
+      "path": "test/features/endless/endless_game_controller_test.dart"
+    },
+    {
+      "path": "test/features/game/engine/board_engine_test.dart"
+    },
+    {
+      "path": "test/features/journey/progress_repository_test.dart"
+    },
+    {
+      "path": "test/ui/endless_game_screen_test.dart"
+    }
+  ]
+}

@@ -1,11 +1,10 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 import 'app.dart';
 import 'core/config/remote_config_client.dart';
 import 'core/firebase/firebase_gateway.dart';
 import 'core/firebase/firebase_remote_config_client.dart';
-import 'core/theme/theme_manager.dart';
 import 'features/journey/services/app_bootstrap.dart';
 import 'features/journey/services/progress_repository.dart';
 import 'features/journey/services/progress_store.dart';
@@ -30,10 +29,16 @@ AppBootstrap createAppBootstrap({
   );
 }
 
-/// Cây widget gốc: Provider của theme bọc [BlockBlastApp].
+/// Khóa màn hình dọc (NFR8, AC8.6.1). Android và iOS cũng khóa trong
+/// `AndroidManifest.xml` và `Info.plist`.
+Future<void> configureSystemUi() {
+  return SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+    DeviceOrientation.portraitUp,
+  ]);
+}
+
+/// Cây widget gốc. Màu theo đá quý lấy trực tiếp từ `GemTheme`, nên không còn
+/// Provider theme.
 Widget buildRootApp(AppBootstrap bootstrap) {
-  return MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => ThemeManager())],
-    child: BlockBlastApp(bootstrap: bootstrap),
-  );
+  return BlockBlastApp(bootstrap: bootstrap);
 }

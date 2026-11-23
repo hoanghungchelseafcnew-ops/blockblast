@@ -1,61 +1,71 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 
-class AudioController {
-  static final AudioPlayer _bgmPlayer = AudioPlayer();
-  static final AudioPlayer _sfxPlayer = AudioPlayer();
-  
-  static bool _isMuted = false;
+import '../../features/journey/services/progress_repository.dart';
+import '../log/gj_log.dart';
+import 'sfx.dart';
 
-  static bool get isMuted => _isMuted;
+/// Phát một file âm thanh ngắn. Bọc plugin để test thay bằng bản giả.
+abstract class SfxPlayer {
+  Future<void> play(String asset);
+  Future<void> stop();
+}
 
-  static void toggleMute() {
-    _isMuted = !_isMuted;
-    if (_isMuted) {
-      _bgmPlayer.pause();
-    } else {
-      _bgmPlayer.resume();
+/// Triển khai thật bằng `audioplayers`. Player chỉ được tạo ở lần phát đầu
+/// tiên, nên dựng app không gọi plugin nền tảng.
+class AudioplayersSfxPlayer implements SfxPlayer {
+  AudioPlayer? _player;
+
+  AudioPlayer get _ready => _player ??= AudioPlayer();
+
+  @override
+  Future<void> play(String asset) => _ready.play(AssetSource(asset));
+
+  @override
+  Future<void> stop() async {
+    final player = _player;
+    if (player != null) await player.stop();
+  }
+}
+
+/// Âm thanh của game (FR13). Trạng thái tắt âm thanh lưu ở key `sound_muted`
+/// qua [ProgressRepository] (FR13.2). Khi tắt, không có lệnh phát nào tới
+/// player (AC5.3.3). Lỗi phát được log, không bị nuốt (FR13.3).
+class AudioController extends ChangeNotifier {
+  AudioController({required ProgressRepository progress, SfxPlayer? player})
+    : _progress = progress,
+      _player = player ?? AudioplayersSfxPlayer();
+
+  final ProgressRepository _progress;
+  final SfxPlayer _player;
+
+  bool get isMuted => _progress.soundMuted;
+
+  /// Bật hoặc tắt âm thanh và lưu lại. Tắt thì dừng âm thanh đang phát.
+  Future<void> setMuted(bool muted) async {
+    if (muted == isMuted) return;
+    final save = _progress.setSoundMuted(muted);
+    notifyListeners();
+    if (muted) await stopSfx();
+    await save;
+  }
+
+  /// Phát [sfx], trừ khi đang tắt âm thanh. Không bao giờ ném lỗi.
+  Future<void> play(Sfx sfx) async {
+    if (isMuted) return;
+    try {
+      await _player.play(sfx.asset);
+    } catch (e) {
+      GjLog.warn('Audio', 'play failed: ${sfx.name}', e);
     }
   }
 
-  // Pre-load sounds to avoid delay
-  static Future<void> init() async {
-    // In a real scenario, we'd preload assets here using AudioCache
-    // For now we just set up the audio pool structure
-  }
-
-  static Future<void> playPlace() async {
-    if (_isMuted) return;
+  /// Dừng âm thanh đang phát (khi rời màn Victory). Không bao giờ ném lỗi.
+  Future<void> stopSfx() async {
     try {
-      await _sfxPlayer.play(AssetSource('sounds/place.wav'));
+      await _player.stop();
     } catch (e) {
-      // Ignored if asset missing
-    }
-  }
-
-  static Future<void> playClear() async {
-    if (_isMuted) return;
-    try {
-      await _sfxPlayer.play(AssetSource('sounds/clear.wav'));
-    } catch (e) {
-      // Ignored if asset missing
-    }
-  }
-
-  static Future<void> playCombo() async {
-    if (_isMuted) return;
-    try {
-      await _sfxPlayer.play(AssetSource('sounds/combo.wav'));
-    } catch (e) {
-      // Ignored if asset missing
-    }
-  }
-
-  static Future<void> playGameOver() async {
-    if (_isMuted) return;
-    try {
-      await _sfxPlayer.play(AssetSource('sounds/gameover.wav'));
-    } catch (e) {
-      // Ignored if asset missing
+      GjLog.warn('Audio', 'stop failed', e);
     }
   }
 }

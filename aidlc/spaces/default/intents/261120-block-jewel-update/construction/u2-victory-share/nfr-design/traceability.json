@@ -1,0 +1,62 @@
+{
+  "stage": "nfr-design",
+  "unit": "u2-victory-share",
+  "upstream_ids": [
+    "NFR1.1",
+    "NFR1.2",
+    "NFR3.1",
+    "NFR4.1",
+    "NFR5.1",
+    "NFR5.2",
+    "NFR6.1",
+    "NFR6.2",
+    "NFR7.1"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "VictoryOverlay giữ cờ _sharing, onShare bất đồng bộ"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "Chụp một lần ở pixelRatio mặc định rồi mở share sheet"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "Fake ScoreShareService cho widget test"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "Hàm tĩnh victoryShareText/scoreShareText"
+    },
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "flutter analyze và dart format"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "Dùng lại screenshot, share_plus, path_provider"
+    },
+    {
+      "id": "NFR6.1",
+      "status": "OK",
+      "target": "Thư mục tạm, tên cố định victory.png"
+    },
+    {
+      "id": "NFR6.2",
+      "status": "OK",
+      "target": "Chỉ gọi khi bấm SHARE"
+    },
+    {
+      "id": "NFR7.1",
+      "status": "OK",
+      "target": "Không thêm gói hay quyền"
+    }
+  ]
+}

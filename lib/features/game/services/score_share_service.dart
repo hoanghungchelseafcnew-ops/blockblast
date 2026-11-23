@@ -12,13 +12,34 @@ import '../../../core/log/gj_log.dart';
 abstract class ScoreShareService {
   const ScoreShareService();
 
+  /// Tên game dùng trong văn bản chia sẻ (FR2.4).
+  static const String gameName = 'Block Jewel';
+
+  /// Văn bản chia sẻ ở Game Over (BR1.6).
+  static String scoreShareText(int score) => 'I scored $score in $gameName!';
+
+  /// Văn bản chia sẻ ở Victory (BR1.3).
+  static String victoryShareText(String levelName, int score) =>
+      'I cleared $levelName with $score points in $gameName!';
+
+  /// Chia sẻ ảnh màn Game Over.
   Future<void> shareScore({
     required ScreenshotController screenshot,
+    required int score,
+  });
+
+  /// Chia sẻ ảnh toàn màn hình khi vượt level (FR3.2).
+  Future<void> shareVictory({
+    required ScreenshotController screenshot,
+    required String levelName,
     required int score,
   });
 }
 
 /// Triển khai thật bằng `screenshot`, `path_provider` và `share_plus`.
+///
+/// Ảnh chỉ ghi vào thư mục tạm và chỉ gửi khi người chơi bấm SHARE (NFR6).
+/// Lỗi chụp, ghi file hay mở khung chia sẻ chỉ được ghi log (BR1.4).
 class PlatformScoreShareService extends ScoreShareService {
   const PlatformScoreShareService();
 
@@ -26,19 +47,43 @@ class PlatformScoreShareService extends ScoreShareService {
   Future<void> shareScore({
     required ScreenshotController screenshot,
     required int score,
+  }) => _captureAndShare(
+    screenshot: screenshot,
+    fileName: 'score.png',
+    text: ScoreShareService.scoreShareText(score),
+    what: 'the score',
+  );
+
+  @override
+  Future<void> shareVictory({
+    required ScreenshotController screenshot,
+    required String levelName,
+    required int score,
+  }) => _captureAndShare(
+    screenshot: screenshot,
+    fileName: 'victory.png',
+    text: ScoreShareService.victoryShareText(levelName, score),
+    what: 'the victory',
+  );
+
+  Future<void> _captureAndShare({
+    required ScreenshotController screenshot,
+    required String fileName,
+    required String text,
+    required String what,
   }) async {
     try {
       final Uint8List? image = await screenshot.capture();
-      if (image == null) return;
+      if (image == null) {
+        GjLog.error('Game', 'sharing $what failed: no screenshot');
+        return;
+      }
       final directory = await getTemporaryDirectory();
-      final path = '${directory.path}/score.png';
+      final path = '${directory.path}/$fileName';
       await File(path).writeAsBytes(image);
-      await Share.shareXFiles(
-        [XFile(path)],
-        text: 'I scored $score in Block Crush! 🎮✨',
-      );
+      await Share.shareXFiles([XFile(path)], text: text);
     } catch (e) {
-      GjLog.error('Game', 'sharing the score failed', e);
+      GjLog.error('Game', 'sharing $what failed', e);
     }
   }
 }

@@ -1,0 +1,23 @@
+{
+  "stage": "code-generation",
+  "unit": "u5-analytics",
+  "upstream_ids": [
+    "AC6.3.1", "AC6.3.2", "AC6.4.1", "AC6.4.2", "AC6.4.3", "AC1.6.2",
+    "FR4.1", "FR4.2", "FR4.3", "FR4.4", "FR8.1", "FR8.2", "NFR4"
+  ],
+  "coverage": [
+    { "id": "AC6.3.1", "status": "OK", "target": "lib/core/analytics/firebase_analytics_service.dart" },
+    { "id": "AC6.3.2", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "AC6.4.1", "status": "OK", "target": "lib/core/analytics/session_tracker.dart" },
+    { "id": "AC6.4.2", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "AC6.4.3", "status": "OK", "target": "lib/core/analytics/firebase_analytics_service.dart" },
+    { "id": "AC1.6.2", "status": "OK", "target": "lib/core/analytics/session_tracker.dart" },
+    { "id": "FR4.1", "status": "OK", "target": "lib/core/analytics/analytics_service.dart" },
+    { "id": "FR4.2", "status": "OK", "target": "lib/core/analytics/firebase_analytics_service.dart" },
+    { "id": "FR4.3", "status": "OK", "target": "lib/core/analytics/firebase_analytics_service.dart" },
+    { "id": "FR4.4", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "FR8.1", "status": "OK", "target": "lib/features/journey/services/progress_repository.dart" },
+    { "id": "FR8.2", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "NFR4", "status": "OK", "target": "pubspec.yaml" }
+  ]
+}

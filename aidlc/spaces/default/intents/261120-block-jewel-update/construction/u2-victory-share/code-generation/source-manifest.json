@@ -1,0 +1,28 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-victory-share",
+  "version": 1,
+  "writes": [
+    {
+      "path": "lib/features/game/services/score_share_service.dart"
+    },
+    {
+      "path": "lib/features/victory/widgets/victory_overlay.dart"
+    },
+    {
+      "path": "lib/features/game/screens/game_screen.dart"
+    },
+    {
+      "path": "test/ui/ui_test_helpers.dart"
+    },
+    {
+      "path": "test/features/game/services/score_share_service_test.dart"
+    },
+    {
+      "path": "test/features/victory/victory_overlay_test.dart"
+    },
+    {
+      "path": "test/ui/game_screen_test.dart"
+    }
+  ]
+}

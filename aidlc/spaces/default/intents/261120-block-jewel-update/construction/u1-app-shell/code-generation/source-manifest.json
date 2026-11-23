@@ -1,0 +1,88 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-app-shell",
+  "version": 1,
+  "writes": [
+    {
+      "path": "pubspec.yaml"
+    },
+    {
+      "path": "README.md"
+    },
+    {
+      "path": "lib/app.dart"
+    },
+    {
+      "path": "lib/features/splash/screens/splash_screen.dart"
+    },
+    {
+      "path": "test/ui/splash_home_test.dart"
+    },
+    {
+      "path": "android/app/src/main/AndroidManifest.xml"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/launch_background.xml"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/splash_empty.xml"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/background.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-v21/launch_background.xml"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-v21/background.png"
+    },
+    {
+      "path": "android/app/src/main/res/values-v31/styles.xml"
+    },
+    {
+      "path": "android/app/src/main/res/values-night-v31/styles.xml"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-hdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-mdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xhdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xxhdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xxxhdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-night-hdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-night-mdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-night-xhdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-night-xxhdpi/"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-night-xxxhdpi/"
+    },
+    {
+      "path": "ios/Runner/Info.plist"
+    },
+    {
+      "path": "ios/Runner/Base.lproj/LaunchScreen.storyboard"
+    },
+    {
+      "path": "ios/Runner/Assets.xcassets/LaunchImage.imageset/"
+    },
+    {
+      "path": "ios/Runner/Assets.xcassets/LaunchBackground.imageset/"
+    }
+  ]
+}

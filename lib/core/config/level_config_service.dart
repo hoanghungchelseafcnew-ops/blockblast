@@ -60,8 +60,9 @@ class LevelConfigService {
       GjLog.warn('LevelConfig', 'fetch skipped: no time budget left');
     }
 
-    final source =
-        fetch == FetchStatus.ok ? ConfigSource.remote : ConfigSource.cached;
+    final source = fetch == FetchStatus.ok
+        ? ConfigSource.remote
+        : ConfigSource.cached;
     final config = _readAndValidate(source);
     if (config == null) return fallbackToDefault(fetch);
     GjLog.info('LevelConfig', 'config_source=${config.source.label}');

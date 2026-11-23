@@ -5,7 +5,7 @@ import 'package:block_blast/features/journey/services/progress_store.dart';
 /// Kho lưu trữ giả: giả lập đọc lỗi, ghi lỗi và ghi chậm.
 class FakeProgressStore implements ProgressStore {
   FakeProgressStore({Map<String, Object>? initial})
-      : data = Map<String, Object>.of(initial ?? const {});
+    : data = Map<String, Object>.of(initial ?? const {});
 
   final Map<String, Object> data;
 
@@ -52,11 +52,13 @@ class FakeProgressStore implements ProgressStore {
   Object? read(String key) => data[key];
 
   @override
-  Future<void> writeString(String key, String value) =>
-      _write(key, value);
+  Future<void> writeString(String key, String value) => _write(key, value);
 
   @override
   Future<void> writeBool(String key, bool value) => _write(key, value);
+
+  @override
+  Future<void> writeInt(String key, int value) => _write(key, value);
 
   Future<void> _write(String key, Object value) async {
     attempts.add(key);
@@ -65,6 +67,19 @@ class FakeProgressStore implements ProgressStore {
     if (failingKeys.contains(key)) throw StateError('write failed');
     data[key] = value;
     completed.add(key);
+  }
+
+  /// Các key mà `remove` sẽ ném lỗi.
+  final Set<String> failingRemovals = <String>{};
+
+  /// Các key đã bị `remove` thành công, theo thứ tự.
+  final List<String> removed = <String>[];
+
+  @override
+  Future<void> remove(String key) async {
+    if (failingRemovals.contains(key)) throw StateError('remove failed');
+    data.remove(key);
+    removed.add(key);
   }
 
   int attemptsFor(String key) => attempts.where((k) => k == key).length;

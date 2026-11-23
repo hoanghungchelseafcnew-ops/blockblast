@@ -5,5 +5,13 @@
     "dirName": "261112-gemstone-journey",
     "scope": "feature",
     "status": "in-flight"
+  },
+  {
+    "uuid": "01a1f7d3-1f1b-7765-b5c1-d6555610d2b4",
+    "slug": "block-jewel-update",
+    "dirName": "261120-block-jewel-update",
+    "scope": "classic",
+    "status": "in-flight",
+    "request": "a8c2821b"
   }
 ]
