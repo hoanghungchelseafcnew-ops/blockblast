@@ -132,11 +132,7 @@ double _plan(List<int> rows, List<BlockModel> tray, Set<int> used, int k) {
   return best == -1e9 ? -500 : best;
 }
 
-_Cand? _choose(
-  BoardEngine engine,
-  _Skill skill,
-  Random rng,
-) {
+_Cand? _choose(BoardEngine engine, _Skill skill, Random rng) {
   final rows = TraySolver.rowsOf(engine.board);
   final tray = engine.tray;
   final all = <_Cand>[];
@@ -209,8 +205,10 @@ class _RecordingGenerator extends TrayGenerator {
         budget: NodeBudget(2000000),
       );
       if (outcome == SolveOutcome.unsolvable) {
-        violations.add('khay ${result.tier!.name} không giải được '
-            '(level $level)');
+        violations.add(
+          'khay ${result.tier!.name} không giải được '
+          '(level $level)',
+        );
       }
     }
     return result;
@@ -328,10 +326,14 @@ void main() {
 
       // --- Bảng sống sót / điểm theo level ---
       final lines = StringBuffer();
-      lines.writeln('\n=== Kết quả theo level (mỗi mức $_gamesPerLevel ván, '
-          'tối đa $_moveCap nước) ===');
-      lines.writeln('level | skill   | thua% | điểm TB   | điểm P50  | '
-          'điểm P90   | nước TB | điểm/nước');
+      lines.writeln(
+        '\n=== Kết quả theo level (mỗi mức $_gamesPerLevel ván, '
+        'tối đa $_moveCap nước) ===',
+      );
+      lines.writeln(
+        'level | skill   | thua% | điểm TB   | điểm P50  | '
+        'điểm P90   | nước TB | điểm/nước',
+      );
       for (final level in _levelsToSimulate) {
         for (final skill in _Skill.values) {
           final games = perLevel[level]![skill]!;
@@ -363,8 +365,10 @@ void main() {
             if (g.end == 'cap') cap++;
           }
         }
-        lines.writeln('${skill.name}: hết chỗ giữa khay=$stuck, '
-            'không có khay mới=$refill, chạm giới hạn nước=$cap');
+        lines.writeln(
+          '${skill.name}: hết chỗ giữa khay=$stuck, '
+          'không có khay mới=$refill, chạm giới hạn nước=$cap',
+        );
       }
 
       // --- Mức bảo đảm của khay ---
@@ -411,16 +415,16 @@ void main() {
       }
       lines.writeln('\n=== Mốc điểm đề xuất (level: điểm) ===');
       for (var gem = 0; gem < 6; gem++) {
-        final row = [
-          for (var s = 1; s <= 6; s++) targets[gem * 6 + s],
-        ];
+        final row = [for (var s = 1; s <= 6; s++) targets[gem * 6 + s]];
         lines.writeln('gem ${gem + 1}: $row');
       }
 
       // --- Tỉ lệ thắng với mốc đề xuất ---
       lines.writeln('\n=== Tỉ lệ thắng với mốc đề xuất (level mô phỏng) ===');
-      lines.writeln('level | mốc    | casual | average | expert | nước TB '
-          '(average, ván thắng)');
+      lines.writeln(
+        'level | mốc    | casual | average | expert | nước TB '
+        '(average, ván thắng)',
+      );
       for (final level in _levelsToSimulate) {
         final target = targets[level]!;
         String winRate(_Skill s) {
@@ -460,9 +464,9 @@ void main() {
         for (final e in targets.entries) '${e.key}': e.value,
       };
       report['violations'] = violations.toList();
-      File(_outPath).writeAsStringSync(
-        const JsonEncoder.withIndent('  ').convert(report),
-      );
+      File(
+        _outPath,
+      ).writeAsStringSync(const JsonEncoder.withIndent('  ').convert(report));
       stdout.writeln(lines.toString());
       File('$_outPath.txt').writeAsStringSync(lines.toString());
 

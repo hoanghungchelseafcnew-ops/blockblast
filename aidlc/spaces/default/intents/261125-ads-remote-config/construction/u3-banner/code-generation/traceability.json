@@ -1,0 +1,36 @@
+{
+  "stage": "code-generation",
+  "unit": "u3-banner",
+  "upstream_ids": [
+    "AC4.1.1", "AC4.1.2", "AC4.1.3", "AC4.1.4", "AC4.1.5", "AC4.1.6",
+    "BR7.1", "BR7.2", "BR7.3", "BR7.4", "BR7.5", "BR7.6", "BR7.7", "BR7.8", "BR7.9",
+    "NFR2.15", "NFR2.16", "NFR2.17", "NFR2.18", "NFR2.19", "NFR2.20", "NFR2.21", "NFR2.22",
+    "NFR3.3"
+  ],
+  "coverage": [
+    { "id": "AC4.1.1", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "AC4.1.2", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "AC4.1.3", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "AC4.1.4", "status": "OK", "target": "lib/features/endless/screens/endless_game_screen.dart" },
+    { "id": "AC4.1.5", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "AC4.1.6", "status": "OK", "target": "lib/features/game/screens/game_screen.dart" },
+    { "id": "BR7.1", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "BR7.2", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "BR7.3", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "BR7.4", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "BR7.5", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "BR7.6", "status": "OK", "target": "lib/features/game/screens/game_screen.dart" },
+    { "id": "BR7.7", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "BR7.8", "status": "OK", "target": "lib/features/endless/screens/endless_game_screen.dart" },
+    { "id": "BR7.9", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "NFR2.15", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "NFR2.16", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "NFR2.17", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "NFR2.18", "status": "OK", "target": "lib/features/ads/services/admob_adapter.dart" },
+    { "id": "NFR2.19", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "NFR2.20", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "NFR2.21", "status": "OK", "target": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "id": "NFR2.22", "status": "OK", "target": "lib/features/ads/services/ad_unit_ids.dart" },
+    { "id": "NFR3.3", "status": "OK", "target": "test/features/ads/ads_fakes.dart" }
+  ]
+}

@@ -45,5 +45,20 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<!-- AdMob: ID ứng dụng thử của Google (u1-ads-core, BR5.2).
+		     TODO(release): thay bằng ID ứng dụng AdMob thật trước khi phát hành. -->
+		<key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-3940256099942544~1458002511</string>
+		<key>NSUserTrackingUsageDescription</key>
+		<string>This lets us show you ads that are more relevant to you.</string>
+		<!-- Danh sách SKAdNetwork tối thiểu cho AdMob. Bổ sung danh sách của Unity
+		     và AppLovin theo tài liệu của từng mạng trước khi phát hành. -->
+		<key>SKAdNetworkItems</key>
+		<array>
+			<dict>
+				<key>SKAdNetworkIdentifier</key>
+				<string>cstr6suwn9.skadnetwork</string>
+			</dict>
+		</array>
 	</dict>
 </plist>

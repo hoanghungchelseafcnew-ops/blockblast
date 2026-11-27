@@ -51,4 +51,32 @@ class FakeRemoteConfigClient implements RemoteConfigClient {
     if (error != null) throw error;
     return activatedValue;
   }
+
+  /// Giá trị remote theo khóa cho các tham số ngoài `level_config`
+  /// (u1-ads-core). Giá trị là `String`, `int` hoặc `bool`, như Firebase trả.
+  final Map<String, Object> values = <String, Object>{};
+
+  @override
+  String? readString(String key) {
+    final error = readError;
+    if (error != null) throw error;
+    final value = values[key];
+    if (value == null) return null;
+    final text = value.toString();
+    return text.isEmpty ? null : text;
+  }
+
+  @override
+  int? readInt(String key) {
+    final text = readString(key);
+    return text == null ? null : int.tryParse(text.trim());
+  }
+
+  @override
+  bool? readBool(String key) {
+    final text = readString(key)?.trim().toLowerCase();
+    if (text == 'true') return true;
+    if (text == 'false') return false;
+    return null;
+  }
 }

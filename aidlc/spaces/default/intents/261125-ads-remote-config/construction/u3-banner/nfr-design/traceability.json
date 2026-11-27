@@ -1,0 +1,16 @@
+{
+  "stage": "nfr-design",
+  "unit": "u3-banner",
+  "upstream_ids": ["NFR2.15", "NFR2.16", "NFR2.17", "NFR2.18", "NFR2.19", "NFR2.20", "NFR2.21", "NFR2.22", "NFR3.3"],
+  "coverage": [
+    { "id": "NFR2.15", "status": "OK", "target": "Vùng banner cao 0, tải ở nền sau khung hình đầu" },
+    { "id": "NFR2.16", "status": "OK", "target": "banner(width) thử AdMob rồi AppLovin, 5 giây mỗi mạng, một yêu cầu tại một thời điểm" },
+    { "id": "NFR2.17", "status": "OK", "target": "Banner sống suốt lần vào màn chơi, SDK tự làm mới" },
+    { "id": "NFR2.18", "status": "OK", "target": "Chiều cao thích ứng tính trước khi tải" },
+    { "id": "NFR2.19", "status": "OK", "target": "Trả hidden khi đồng ý chưa xử lý, truyền lựa chọn cá nhân hóa" },
+    { "id": "NFR2.20", "status": "OK", "target": "Adapter bắt mọi lỗi, lỗi khi hiện chuyển sang ẩn" },
+    { "id": "NFR2.21", "status": "OK", "target": "Giải phóng khi màn đóng, kể cả banner tải xong muộn" },
+    { "id": "NFR2.22", "status": "OK", "target": "ID banner thử ở bản debug" },
+    { "id": "NFR3.3", "status": "OK", "target": "Đối tượng banner trừu tượng, bản giả trong FakeAdNetwork" }
+  ]
+}

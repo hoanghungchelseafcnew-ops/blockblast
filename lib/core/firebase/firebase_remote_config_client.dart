@@ -2,10 +2,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 import '../config/remote_config_client.dart';
 
-/// Triển khai [RemoteConfigClient] bằng `firebase_remote_config`.
-///
-/// Chỉ được tạo sau khi `FirebaseGateway.init()` báo `ok`, vì
-/// `FirebaseRemoteConfig.instance` cần Firebase app đã khởi tạo.
+/// Adapter thật của [RemoteConfigClient] trên `firebase_remote_config`.
 class FirebaseRemoteConfigClient implements RemoteConfigClient {
   FirebaseRemoteConfigClient({FirebaseRemoteConfig? instance})
     : _remoteConfig = instance ?? FirebaseRemoteConfig.instance;
@@ -26,10 +23,36 @@ class FirebaseRemoteConfigClient implements RemoteConfigClient {
   Future<bool> fetchAndActivate() => _remoteConfig.fetchAndActivate();
 
   @override
-  String? readLevelConfig() {
-    final value = _remoteConfig.getValue(levelConfigKey);
+  String? readLevelConfig() => readString(levelConfigKey);
+
+  @override
+  String? readString(String key) {
+    final value = _remoteConfig.getValue(key);
     if (value.source != ValueSource.valueRemote) return null;
     final text = value.asString();
     return text.isEmpty ? null : text;
+  }
+
+  /// Đọc từ chuỗi thô thay vì `asInt()`: `asInt()` trả 0 cho giá trị không
+  /// phải số, không phân biệt được với số 0 thật.
+  @override
+  int? readInt(String key) {
+    final text = readString(key);
+    if (text == null) return null;
+    return int.tryParse(text.trim());
+  }
+
+  @override
+  bool? readBool(String key) {
+    final text = readString(key);
+    if (text == null) return null;
+    switch (text.trim().toLowerCase()) {
+      case 'true':
+        return true;
+      case 'false':
+        return false;
+      default:
+        return null;
+    }
   }
 }

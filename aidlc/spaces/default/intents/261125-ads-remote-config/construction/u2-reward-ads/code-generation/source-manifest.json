@@ -1,0 +1,27 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-reward-ads",
+  "version": 1,
+  "writes": [
+    { "path": "lib/features/ads/services/ad_network_adapter.dart" },
+    { "path": "lib/features/ads/services/ad_unit_ids.dart" },
+    { "path": "lib/features/ads/services/admob_adapter.dart" },
+    { "path": "lib/features/ads/services/unity_adapter.dart" },
+    { "path": "lib/features/ads/services/applovin_adapter.dart" },
+    { "path": "lib/features/ads/services/ad_mediator.dart" },
+    { "path": "lib/features/ads/services/pending_loss_store.dart" },
+    { "path": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "path": "lib/features/journey/services/app_bootstrap.dart" },
+    { "path": "lib/app_composition.dart" },
+    { "path": "lib/features/game/widgets/game_over_overlay.dart" },
+    { "path": "lib/features/game/screens/game_screen.dart" },
+    { "path": "lib/features/home/screens/home_screen.dart" },
+    { "path": "test/features/ads/ads_fakes.dart" },
+    { "path": "test/features/ads/ad_mediator_test.dart" },
+    { "path": "test/features/ads/pending_loss_store_test.dart" },
+    { "path": "test/features/journey/level_game_reward_test.dart" },
+    { "path": "test/features/journey/app_bootstrap_test.dart" },
+    { "path": "test/ui/ui_test_helpers.dart" },
+    { "path": "test/ui/game_screen_test.dart" }
+  ]
+}

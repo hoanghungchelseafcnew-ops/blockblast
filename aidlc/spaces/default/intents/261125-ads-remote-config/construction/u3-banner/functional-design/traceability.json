@@ -1,0 +1,13 @@
+{
+  "stage": "functional-design",
+  "unit": "u3-banner",
+  "upstream_ids": ["AC4.1.1", "AC4.1.2", "AC4.1.3", "AC4.1.4", "AC4.1.5", "AC4.1.6"],
+  "coverage": [
+    { "id": "AC4.1.1", "status": "OK", "target": "BR7.1" },
+    { "id": "AC4.1.2", "status": "OK", "target": "BR7.1, BR7.3, BR7.7" },
+    { "id": "AC4.1.3", "status": "OK", "target": "BR7.2" },
+    { "id": "AC4.1.4", "status": "OK", "target": "BR7.8" },
+    { "id": "AC4.1.5", "status": "OK", "target": "BR7.5, BR7.9" },
+    { "id": "AC4.1.6", "status": "OK", "target": "BR7.4, BR7.6" }
+  ]
+}

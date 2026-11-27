@@ -1,0 +1,22 @@
+{
+  "stage": "code-generation",
+  "unit": "u4-update-and-share",
+  "version": 1,
+  "writes": [
+    { "path": "pubspec.yaml" },
+    { "path": "pubspec.lock" },
+    { "path": "android/app/src/main/AndroidManifest.xml" },
+    { "path": "lib/features/update/" },
+    { "path": "lib/features/ads/services/ad_mediator.dart" },
+    { "path": "lib/features/journey/services/app_bootstrap.dart" },
+    { "path": "lib/app_composition.dart" },
+    { "path": "lib/features/game/services/score_share_service.dart" },
+    { "path": "lib/features/home/screens/home_screen.dart" },
+    { "path": "test/features/update/" },
+    { "path": "test/features/ads/ads_fakes.dart" },
+    { "path": "test/features/ads/ad_mediator_test.dart" },
+    { "path": "test/features/journey/app_bootstrap_test.dart" },
+    { "path": "test/features/game/services/score_share_service_test.dart" },
+    { "path": "test/ui/ui_test_helpers.dart" }
+  ]
+}

@@ -6,7 +6,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/theme/gem_theme.dart';
 import '../../../shared/widgets/gem_primary_button.dart';
 
-/// Màn Game Over của chế độ level (FR11.3, AC2.6.1, AC2.6.2). Không có REVIVE.
+/// Màn Game Over của chế độ level (FR11.3, AC2.6.1, AC2.6.2). Khi có
+/// [onWatchAd], nút WATCH AD TO TRY AGAIN là nút chính và PLAY AGAIN thành
+/// nút phụ (u2-reward-ads, BR6.1).
 class GameOverOverlay extends StatelessWidget {
   const GameOverOverlay({
     super.key,
@@ -17,6 +19,8 @@ class GameOverOverlay extends StatelessWidget {
     required this.onShare,
     required this.onPlayAgain,
     required this.onMenu,
+    this.onWatchAd,
+    this.watchAdBusy = false,
   }) : best = null;
 
   /// Game Over của chế độ endless (FR9): FINAL SCORE và BEST, không có Target
@@ -30,7 +34,9 @@ class GameOverOverlay extends StatelessWidget {
     required this.onPlayAgain,
     required this.onMenu,
   }) : target = null,
-       returnLevelName = null;
+       returnLevelName = null,
+       onWatchAd = null,
+       watchAdBusy = false;
 
   final int score;
   final int? target;
@@ -46,6 +52,14 @@ class GameOverOverlay extends StatelessWidget {
   final VoidCallback onShare;
   final VoidCallback onPlayAgain;
   final VoidCallback onMenu;
+
+  /// WATCH AD TO TRY AGAIN; null thì không có nút reward (BR6.1). Bản
+  /// endless không bao giờ có nút này.
+  final VoidCallback? onWatchAd;
+
+  /// Quảng cáo reward đang hiện: nút reward bị khóa, các nút khác vẫn bấm
+  /// được.
+  final bool watchAdBusy;
 
   @override
   Widget build(BuildContext context) {
@@ -103,13 +117,7 @@ class GameOverOverlay extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: 32),
-              GemPrimaryButton(
-                key: const Key('game-over-play-again-button'),
-                label: 'PLAY AGAIN',
-                icon: Icons.replay,
-                palette: palette,
-                onPressed: onPlayAgain,
-              ),
+              ..._playButtons(),
               const SizedBox(height: 12),
               OverlayButton(
                 label: 'SHARE SCORE',
@@ -133,6 +141,44 @@ class GameOverOverlay extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Nút reward (nếu có) và PLAY AGAIN theo frontend-components.md.
+  List<Widget> _playButtons() {
+    final watchAd = onWatchAd;
+    final playAgainPrimary = GemPrimaryButton(
+      key: const Key('game-over-play-again-button'),
+      label: 'PLAY AGAIN',
+      icon: Icons.replay,
+      palette: palette,
+      onPressed: onPlayAgain,
+    );
+    if (watchAd == null) return [playAgainPrimary];
+    return [
+      const Text(
+        'Watch an ad to stay on this level',
+        key: Key('game-over-reward-hint'),
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.white70, fontSize: 14),
+      ),
+      const SizedBox(height: 8),
+      GemPrimaryButton(
+        key: const Key('game-over-reward-button'),
+        label: 'WATCH AD TO TRY AGAIN',
+        icon: Icons.ondemand_video,
+        palette: palette,
+        width: 260,
+        onPressed: watchAdBusy ? null : watchAd,
+      ),
+      const SizedBox(height: 12),
+      OverlayButton(
+        key: const Key('game-over-play-again-button'),
+        label: 'PLAY AGAIN',
+        icon: Icons.replay,
+        color: Colors.white24,
+        onPressed: onPlayAgain,
+      ),
+    ];
   }
 }
 

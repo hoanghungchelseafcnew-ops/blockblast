@@ -119,8 +119,9 @@ class EndlessGameController extends ChangeNotifier {
     _feedback.placed();
     final round = _epoch;
     if (result.clearedAnyLine) {
-      _feedback.cleared();
-      if (result.comboStreak > 1) _feedback.combo();
+      _feedback.clearedLines(result.linesCleared);
+      if (_engine.hasBombClearing) _feedback.bombExploded();
+      if (result.comboStreak > 1) _feedback.comboStreak(result.comboStreak);
       _clearing = true;
       _notify();
       await _engine.applyClear();

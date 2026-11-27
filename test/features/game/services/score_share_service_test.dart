@@ -149,4 +149,52 @@ void main() {
       expect(shareCalls, isNotEmpty);
     }
   });
+
+  group('store link in the shared text (u4-update-and-share, US6.1)', () {
+    const play = 'https://play.google.com/store/apps/details?id=com.h2.game';
+
+    test('a valid link goes on its own line at the end (AC6.1.1)', () {
+      expect(
+        ScoreShareService.withStoreLink('I scored 120 in Block Jewel!', play),
+        'I scored 120 in Block Jewel!\n$play',
+      );
+    });
+
+    test('an empty or invalid link keeps the text unchanged (AC6.1.3)', () {
+      for (final bad in [null, '', 'http://x.com', 'javascript:alert(1)']) {
+        expect(
+          ScoreShareService.withStoreLink('I scored 1 in Block Jewel!', bad),
+          'I scored 1 in Block Jewel!',
+          reason: '$bad',
+        );
+      }
+    });
+
+    testWidgets('a real share sends the text with the link (AC6.1.2)', (
+      tester,
+    ) async {
+      final controller = ScreenshotController();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Screenshot(
+            controller: controller,
+            child: const SizedBox(width: 40, height: 40),
+          ),
+        ),
+      );
+      await tester.runAsync(() async {
+        await const PlatformScoreShareService(
+          storeUrl: play,
+        ).shareScore(screenshot: controller, score: 120);
+      });
+      if (shareCalls.isNotEmpty) {
+        expect(
+          shareCalls.last.arguments.toString(),
+          contains('I scored 120 in Block Jewel!\n$play'),
+        );
+      } else {
+        expect(logs, isNotEmpty);
+      }
+    });
+  });
 }

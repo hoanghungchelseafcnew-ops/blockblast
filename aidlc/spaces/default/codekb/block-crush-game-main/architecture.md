@@ -19,14 +19,14 @@ flowchart TD
   es --> egc[EndlessGameController]
   lgc --> eng[BoardEngine]
   egc --> eng
-  eng --> gen[BlockGenerator]
+  eng --> gen[TrayGenerator]
   eng --> tr[TurnResolver]
   tr --> bl[BoardLogic]
   gs --> vo[VictoryOverlay]
   gs --> go[GameOverOverlay]
   go --> share[ScoreShareService]
 ```
-Văn bản: main → app_composition → BlockBlastApp → SplashScreen (AppBootstrap) → HomeScreen → GameScreen/EndlessGameScreen → controller → BoardEngine → BlockGenerator/TurnResolver/BoardLogic.
+Văn bản: main → app_composition → BlockBlastApp → SplashScreen (AppBootstrap) → HomeScreen → GameScreen/EndlessGameScreen → controller → BoardEngine → TrayGenerator/TurnResolver/BoardLogic.
 
 ## Interaction Diagrams
 ### Một lượt đặt khối (Journey)
@@ -59,8 +59,31 @@ Remote Config → LevelConfigService → LevelCatalog (36 Level) → JourneyCont
 ## Quyết định thiết kế đáng chú ý
 - `BoardEngine` không biết level hay mốc điểm; nguồn khối là `BlockSource = List<BlockModel> Function()`.
 - Điểm thắng được kiểm tra ngay sau khi tính điểm, trước animation xóa dòng.
-- Hai splash: native (`flutter_native_splash`) rồi `SplashScreen` trong code.
+- `pubspec.yaml` hiện không còn `flutter_native_splash`; chỉ còn `SplashScreen` trong code (xác nhận ở lần quét 261125).
 
 ## Cơ hội cải thiện
-- `BlockGenerator` tĩnh, không nhận board/level, khó test và khó điều chỉnh độ khó.
-- Chuỗi tên game rải nhiều nơi, chưa có một hằng số trung tâm.
+- Lần quét 261125 thấy `BlockGenerator` đã được thay bằng `TrayGenerator` cùng `TraySolver` và `DifficultyProfile` (`lib/features/game/logic/`); nhận định cũ rằng generator tĩnh không còn đúng.
+- Tên game hiển thị xuất hiện ở nhiều nơi (`MaterialApp.title`, Android label, iOS `CFBundleDisplayName`, `ScoreShareService.gameName`), chưa có một hằng số trung tâm.
+
+## Luồng thua ván (quan trọng cho reward ads)
+```mermaid
+sequenceDiagram
+  participant C as LevelGameController
+  participant J as JourneyController
+  participant P as ProgressRepository
+  participant G as GameScreen
+  C->>C: hết nước đi, _resolve(won false)
+  C->>P: saveLevelSession(null)
+  C->>J: onLevelLost(level, score)
+  J->>P: savePlayerProgress(đã hạ về level đầu của viên đá), saveHighScore
+  C-->>G: status lost, outcome.nextLevel = returnLevel
+  G->>G: hiện GameOverOverlay
+```
+Nghĩa là phiên chơi đã bị xóa và tiến trình đã bị hạ **trước khi** lớp phủ Game Over hiện. Reward ads kiểu "xóa sạch ô và chơi tiếp ở level đó" cần chặn hoặc hoàn tác hai bước lưu này (`level_game_controller.dart`, `journey_controller.dart`). `playAgain()` chỉ chạy khi `status == lost` và gọi `start(outcome.nextLevel ?? returnLevel)`.
+
+## Điểm gắn cho intent 261125-ads-remote-config
+- **Khởi tạo**: `AppBootstrap.run` (hạn chót 3,5 giây) dựng `AppServices`; dịch vụ quảng cáo và phiên bản nên cùng chỗ hoặc ngay sau.
+- **Cấu hình**: `RemoteConfigClient` chỉ đọc khóa `level_config`, với `minimumFetchInterval` 12 giờ và `fetchTimeout` 2 giây (`firebase_remote_config_client.dart`).
+- **Màn chơi**: `GameScreen` là `Stack` gồm nền, `Column` trong `SafeArea` (header, vùng combo cao 44, `Expanded` bảng và khay), và các lớp phủ.
+- **Đếm Start**: `HomeScreen._startGame` (và `_startEndless`) tạo controller rồi `Navigator.push`.
+- **Chia sẻ**: `ScoreShareService.scoreShareText` và `victoryShareText`.

@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/analytics/analytics_service.dart';
 import '../../../core/log/gj_log.dart';
+import '../../ads/services/ad_mediator.dart';
+import '../../ads/services/pending_loss_store.dart';
 import '../../game/engine/board_engine.dart';
 import '../../game/models/block_model.dart';
 import '../../game/models/cell_model.dart';
@@ -33,7 +35,13 @@ class LevelGameController extends ChangeNotifier {
     this.comboTextDuration = const Duration(seconds: 1),
     this.unlockDelay = const Duration(milliseconds: 600),
     String Function()? roundIdFactory,
+    AdsService ads = const NoopAdsService(),
+    bool rewardEnabled = false,
+    PendingLossStore? pendingLoss,
   }) : _journey = journey,
+       _ads = ads,
+       _rewardEnabled = rewardEnabled,
+       _pendingLoss = pendingLoss,
        _progress = progress,
        _engine = engine ?? BoardEngine(),
        _feedback = feedback,
@@ -46,6 +54,15 @@ class LevelGameController extends ChangeNotifier {
   final GameFeedback _feedback;
   final AnalyticsService _analytics;
   final String Function() _roundIdFactory;
+
+  /// Quảng cáo reward (u2-reward-ads). Mặc định không có quảng cáo.
+  final AdsService _ads;
+
+  /// Cờ `reward_enabled` đã kiểm tra từ Remote Config (FR3.2).
+  final bool _rewardEnabled;
+
+  /// Dấu lần thua chưa ghi nhận (BR6.7). Null thì không lưu dấu.
+  final PendingLossStore? _pendingLoss;
 
   /// Trần chờ `onLevelWon` ở trạng thái `resolving` (BR5.9).
   final Duration resolveTimeout;
@@ -72,6 +89,11 @@ class LevelGameController extends ChangeNotifier {
   Timer? _unlockTimer;
   int _epoch = 0;
   bool _disposed = false;
+
+  /// Ván đã thua nhưng tiến trình chưa bị hạ (BR6.2).
+  bool _lossPending = false;
+  int _lostScore = 0;
+  bool _watchingAd = false;
 
   // ----- State cho UI -----
 
@@ -113,6 +135,15 @@ class LevelGameController extends ChangeNotifier {
     return math.min(99, (score * 100) ~/ _targetScore);
   }
 
+  /// True khi lớp phủ Game Over có nút WATCH AD TO TRY AGAIN (BR6.1, BR6.5).
+  bool get canWatchAd => _status == LevelStatus.lost && _lossPending;
+
+  /// True khi quảng cáo reward đang hiện: nút reward bị khóa.
+  bool get watchingAd => _watchingAd;
+
+  /// Nút reward có thể hiện khi quảng cáo đang chạy và cờ bật (BR6.1).
+  bool get _rewardAvailable => _rewardEnabled && _ads.isActive;
+
   /// Back hệ thống khi đang chơi phải hỏi "Quit this level?" trước (FR11.2).
   bool get needsQuitConfirmation => _status == LevelStatus.playing;
 
@@ -133,6 +164,8 @@ class LevelGameController extends ChangeNotifier {
     _epoch++;
     _comboTimer?.cancel();
     _unlockTimer?.cancel();
+    if (_lossPending) unawaited(_commitLoss());
+    _watchingAd = false;
     _level = level;
     if (level.targetScore < 1) {
       GjLog.error(
@@ -162,6 +195,7 @@ class LevelGameController extends ChangeNotifier {
     if (!resumed) {
       _track('level_start', () => _analytics.logLevelStart(level));
     }
+    if (_rewardAvailable) _preloadReward();
     final round = _epoch;
     if (resumed) {
       // Bản lưu cũ có thể đã đạt mốc mới (mốc bị hạ) hoặc hết nước đi.
@@ -174,6 +208,16 @@ class LevelGameController extends ChangeNotifier {
       }
     }
     _notify();
+  }
+
+  /// Tải trước reward khi bắt đầu level để nút không phải chờ (NFR2.9).
+  void _preloadReward() {
+    void report(Object e) => GjLog.warn('Game', 'reward preload failed', e);
+    try {
+      unawaited(_ads.preloadReward().catchError(report));
+    } catch (e) {
+      report(e);
+    }
   }
 
   /// Gửi analytics mà không chặn ván chơi. Contract C4 cam kết không throw;
@@ -254,9 +298,10 @@ class LevelGameController extends ChangeNotifier {
       unawaited(_progress.setTutorialCompleted(true));
     }
     if (result.clearedAnyLine) {
-      _feedback.cleared();
+      _feedback.clearedLines(result.linesCleared);
+      if (_engine.hasBombClearing) _feedback.bombExploded();
       if (result.comboStreak > 1) {
-        _feedback.combo();
+        _feedback.comboStreak(result.comboStreak);
         _showCombo(result.comboStreak);
       }
     }
@@ -314,6 +359,9 @@ class LevelGameController extends ChangeNotifier {
         _stopCelebration();
         return true;
       case LevelStatus.lost:
+        // Rời lớp phủ Game Over là chấp nhận thua (BR6.2).
+        if (_lossPending) unawaited(_commitLoss());
+        return true;
       case LevelStatus.quit:
         return true;
     }
@@ -344,18 +392,76 @@ class LevelGameController extends ChangeNotifier {
     if (_disposed || _level == null || _clearing) return;
     unawaited(
       _progress.saveLevelSession(
-        _engine.snapshot(
-          mode: GameMode.level,
-          levelIndex: _level!.levelIndex,
-        ),
+        _engine.snapshot(mode: GameMode.level, levelIndex: _level!.levelIndex),
       ),
     );
   }
 
   /// PLAY AGAIN sau khi thua: round mới ở Rough Stone của gem (FR2.3).
+  /// Nếu lần thua chưa được ghi nhận thì ghi nhận trước (BR6.2, BR6.8).
   void playAgain() {
     if (_status != LevelStatus.lost) return;
-    start(_outcome?.nextLevel ?? returnLevel);
+    final next = _outcome?.nextLevel ?? returnLevel;
+    if (_lossPending) unawaited(_commitLoss());
+    start(next);
+  }
+
+  /// WATCH AD TO TRY AGAIN (US3.1). Nhận thưởng hoặc không có quảng cáo thì
+  /// chơi lại cùng level từ đầu, không hạ tiến trình (BR6.3, ADR-007). Đóng
+  /// sớm thì giữ lớp phủ để thử lại (BR6.4).
+  Future<void> watchAd() async {
+    if (!canWatchAd || _watchingAd) return;
+    _watchingAd = true;
+    _notify();
+    final round = _epoch;
+    RewardOutcome result;
+    try {
+      result = await _ads.reward();
+    } catch (e) {
+      GjLog.warn('Game', 'reward failed, rewarding anyway', e);
+      result = RewardOutcome.noAd;
+    }
+    if (_isStale(round)) return;
+    _watchingAd = false;
+    if (!_lossPending) return;
+    if (result == RewardOutcome.closedEarly) {
+      _notify();
+      return;
+    }
+    final played = level;
+    _lossPending = false;
+    // BR6.6: giữ điểm cao của ván vừa thua trước khi điểm về 0.
+    unawaited(
+      _progress
+          .saveHighScore(played.levelIndex, _lostScore)
+          .catchError(
+            (Object e) => GjLog.warn('Game', 'saving high score failed', e),
+          ),
+    );
+    final store = _pendingLoss;
+    if (store != null) unawaited(store.clear());
+    GjLog.info(
+      'Game',
+      'reward ${result.name}, replaying levelId=${played.levelIndex}',
+    );
+    start(played);
+  }
+
+  /// Ghi nhận lần thua đang hoãn đúng một lần (BR6.8). Phần cập nhật cache của
+  /// [JourneyController.onLevelLost] chạy đồng bộ trước lần `await` đầu tiên,
+  /// nên round kế tiếp đã thấy tiến trình mới.
+  Future<void> _commitLoss() async {
+    if (!_lossPending) return;
+    _lossPending = false;
+    final played = level;
+    try {
+      _outcome = await _journey.onLevelLost(played, _lostScore);
+    } catch (e) {
+      GjLog.error('Game', 'recording loss failed', e);
+      return;
+    }
+    final store = _pendingLoss;
+    if (store != null) await store.clear();
   }
 
   /// CONTINUE sau Victory: dừng hiệu ứng và âm thanh, sang level kế
@@ -386,6 +492,10 @@ class LevelGameController extends ChangeNotifier {
     final finalScore = score;
     // Ván đã có kết quả: không còn gì để chơi tiếp.
     unawaited(_progress.saveLevelSession(null));
+    if (!won && _rewardAvailable) {
+      await _resolveDeferredLoss(round, played, finalScore);
+      return;
+    }
     JourneyOutcome? saved;
     final save =
         (won
@@ -436,6 +546,38 @@ class LevelGameController extends ChangeNotifier {
     _notify();
   }
 
+  /// Thua khi nút reward có thể hiện: chưa hạ tiến trình (BR6.2). Ghi dấu
+  /// trước rồi mới mở các nút của lớp phủ, để app bị tắt lúc này vẫn ghi
+  /// nhận thua ở lần mở sau (BR6.7).
+  Future<void> _resolveDeferredLoss(
+    int round,
+    Level played,
+    int finalScore,
+  ) async {
+    final store = _pendingLoss;
+    if (store != null) {
+      try {
+        final saved = await store
+            .mark(played.levelIndex, finalScore)
+            .timeout(resolveTimeout);
+        if (!saved) {
+          GjLog.warn('Game', 'pending loss not saved: ${played.levelIndex}');
+        }
+      } catch (e) {
+        GjLog.warn('Game', 'saving pending loss timed out', e);
+      }
+    }
+    if (_isStale(round)) return;
+    _lostScore = finalScore;
+    _lossPending = true;
+    _outcome = _journey.lostOutcomeFor(played);
+    _trackResult(played, finalScore, false, _outcome!);
+    _clearing = false;
+    _status = LevelStatus.lost;
+    _feedback.gameOver();
+    _notify();
+  }
+
   void _showCombo(int streak) {
     _comboText = streak > 2 ? 'INCREDIBLE!' : 'COMBO x$streak';
     _comboTimer?.cancel();
@@ -454,6 +596,8 @@ class LevelGameController extends ChangeNotifier {
   @override
   void dispose() {
     if (_disposed) return;
+    // Màn chơi đóng khi còn lần thua đang hoãn: ghi nhận ngay (BR6.2).
+    if (_lossPending) unawaited(_commitLoss());
     _disposed = true;
     _comboTimer?.cancel();
     _unlockTimer?.cancel();

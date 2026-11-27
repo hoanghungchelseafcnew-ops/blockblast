@@ -44,6 +44,14 @@ dependencies:
   firebase_remote_config: ^5.4.0
   cached_network_image: ^3.4.1
   firebase_analytics: ^11.6.0
+  # Quảng cáo và đồng ý (u1-ads-core, tech-stack-decisions.md).
+  google_mobile_ads: ^9.2.0
+  unity_ads_plugin: ^0.6.0
+  applovin_max: ^4.6.4
+  app_tracking_transparency: ^2.0.7
+  package_info_plus: ^9.0.1
+  # Mở trang cửa hàng từ popup cập nhật (u4-update-and-share).
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:

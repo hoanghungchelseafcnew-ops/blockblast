@@ -1,0 +1,22 @@
+{
+  "stage": "code-generation",
+  "unit": "u3-banner",
+  "version": 1,
+  "writes": [
+    { "path": "lib/features/ads/services/ad_network_adapter.dart" },
+    { "path": "lib/features/ads/services/ad_unit_ids.dart" },
+    { "path": "lib/features/ads/services/admob_adapter.dart" },
+    { "path": "lib/features/ads/services/applovin_adapter.dart" },
+    { "path": "lib/features/ads/services/unity_adapter.dart" },
+    { "path": "lib/features/ads/services/ad_mediator.dart" },
+    { "path": "lib/features/ads/widgets/ad_banner_slot.dart" },
+    { "path": "lib/features/game/screens/game_screen.dart" },
+    { "path": "lib/features/endless/screens/endless_game_screen.dart" },
+    { "path": "test/features/ads/ads_fakes.dart" },
+    { "path": "test/features/ads/ad_mediator_test.dart" },
+    { "path": "test/features/ads/ad_banner_slot_test.dart" },
+    { "path": "test/features/journey/app_bootstrap_test.dart" },
+    { "path": "test/ui/game_screen_test.dart" },
+    { "path": "test/ui/endless_game_screen_test.dart" }
+  ]
+}

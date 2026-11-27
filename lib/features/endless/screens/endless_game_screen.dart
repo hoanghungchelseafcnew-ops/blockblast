@@ -6,6 +6,8 @@ import 'package:screenshot/screenshot.dart';
 
 import '../../../core/theme/gem_theme.dart';
 import '../../../shared/widgets/level_background.dart';
+import '../../ads/services/ad_mediator.dart';
+import '../../ads/widgets/ad_banner_slot.dart';
 import '../../game/services/score_share_service.dart';
 import '../../game/widgets/board_play_area.dart';
 import '../../game/widgets/game_over_overlay.dart';
@@ -23,7 +25,11 @@ class EndlessGameScreen extends StatefulWidget {
     required this.background,
     this.shareService = const PlatformScoreShareService(),
     this.images,
+    this.ads = const NoopAdsService(),
   });
+
+  /// Quảng cáo (u1-ads-core): interstitial trước PLAY AGAIN (BR4.3).
+  final AdsService ads;
 
   /// Level dùng làm ảnh nền (level 36).
   final Level background;
@@ -119,6 +125,9 @@ class _EndlessGameScreenState extends State<EndlessGameScreen>
                         onCancel: controller.cancelDrag,
                       ),
                     ),
+                    // Banner dưới cùng (u3-banner): cao 0 khi không có
+                    // banner; lớp phủ phía trên Stack vẫn che nó (BR7.6).
+                    AdBannerSlot(ads: widget.ads),
                   ],
                 ),
               ),
@@ -127,13 +136,17 @@ class _EndlessGameScreenState extends State<EndlessGameScreen>
                   score: controller.score,
                   best: controller.bestScore,
                   palette: _palette,
-                  onShare: () => unawaited(
-                    widget.shareService.shareScore(
-                      screenshot: _screenshotController,
-                      score: controller.score,
-                    ),
-                  ),
-                  onPlayAgain: controller.playAgain,
+                  onShare: () {
+                    // Bảng chia sẻ đóng lại không phải một lần mở (BR5.3).
+                    widget.ads.suppressNextResume();
+                    unawaited(
+                      widget.shareService.shareScore(
+                        screenshot: _screenshotController,
+                        score: controller.score,
+                      ),
+                    );
+                  },
+                  onPlayAgain: () => _playAgain(controller),
                   onMenu: () => unawaited(_leave(controller)),
                 ),
             ],
@@ -185,6 +198,25 @@ class _EndlessGameScreenState extends State<EndlessGameScreen>
           ),
         ],
       ),
+    );
+  }
+
+  bool _playingAgain = false;
+
+  /// PLAY AGAIN là một lần bấm Start (BR4.1, BR4.3).
+  void _playAgain(EndlessGameController controller) {
+    final ads = widget.ads;
+    if (!ads.isActive) {
+      controller.playAgain();
+      return;
+    }
+    if (_playingAgain) return;
+    _playingAgain = true;
+    unawaited(
+      ads.interstitialIfDue().whenComplete(() {
+        _playingAgain = false;
+        if (mounted) controller.playAgain();
+      }),
     );
   }
 }

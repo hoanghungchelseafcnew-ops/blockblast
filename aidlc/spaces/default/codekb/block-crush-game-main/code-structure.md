@@ -1,6 +1,6 @@
 # Code Structure
 
-Tổng cộng khoảng 6.400 dòng Dart trong `lib/` và 7.700 dòng trong `test/`.
+Tổng cộng khoảng 6.600 dòng Dart trong `lib/` (73 tệp) và khoảng 10.800 dòng trong `test/` (xác nhận ở lần quét 261125).
 
 ```
 lib/
@@ -27,3 +27,7 @@ test/  (phản chiếu cấu trúc lib, thêm fakes/, fixtures/, ui/)
 - Interface trừu tượng + bản `Noop`/fake để test (`AnalyticsService`, `ProgressStore`, `SfxPlayer`, `ScoreShareService`).
 - Tiêm phụ thuộc qua constructor, composition ở `app_composition.dart`.
 - Doc comment bằng tiếng Việt, tham chiếu mã yêu cầu (FR, BR, AC).
+
+## Ghi chú lần quét 261125
+- Có 3 tệp chỉ 1 dòng, có vẻ là phần còn sót: `lib/shared/widgets/game_button.dart`, `lib/shared/widgets/score_panel.dart`, `lib/core/utils/game_helpers.dart`.
+- Vị trí các điểm cần sửa cho quảng cáo: `lib/features/home/screens/home_screen.dart`, `lib/features/game/screens/game_screen.dart`, `lib/features/game/widgets/game_over_overlay.dart`, `lib/features/endless/screens/endless_game_screen.dart`, `lib/features/game/services/score_share_service.dart`, `lib/core/firebase/*`, `lib/core/config/remote_config_client.dart`, `lib/features/journey/services/app_bootstrap.dart`.

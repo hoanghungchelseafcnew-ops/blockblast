@@ -63,11 +63,7 @@ class TrayGenerator {
       }
     } catch (e) {
       // Lỗi bất ngờ trong bộ giải không được làm hỏng ván: rơi về khay 1x1.
-      GjLog.error(
-        'Tray',
-        'solver failed: level=$level filled=$filled',
-        e,
-      );
+      GjLog.error('Tray', 'solver failed: level=$level filled=$filled', e);
     }
     return _fallback(rows, filled);
   }
@@ -164,9 +160,8 @@ class TrayGenerator {
   }
 
   BlockModel _makeBlock(List<List<int>> shape, bool rescued) {
-    final color = BlockCatalog.colors[_random.nextInt(
-      BlockCatalog.colors.length,
-    )];
+    final color =
+        BlockCatalog.colors[_random.nextInt(BlockCatalog.colors.length)];
     final specialRoll = _random.nextInt(100);
     var isIce = false;
     var iceHealth = 0;

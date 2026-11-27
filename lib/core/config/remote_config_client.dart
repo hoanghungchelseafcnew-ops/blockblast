@@ -12,4 +12,16 @@ abstract class RemoteConfigClient {
   /// JSON `level_config` đang activate từ nguồn remote, hoặc null nếu chưa có.
   /// Không bao giờ trả giá trị mặc định của SDK.
   String? readLevelConfig();
+
+  /// Giá trị chuỗi của [key] từ nguồn remote, hoặc null nếu chưa có hay rỗng
+  /// (u1-ads-core, ADR-004). Không bao giờ trả giá trị mặc định của SDK.
+  String? readString(String key);
+
+  /// Giá trị số nguyên của [key] từ nguồn remote, hoặc null nếu chưa có hay
+  /// không phải số nguyên. Kiểm tra miền giá trị là việc của caller.
+  int? readInt(String key);
+
+  /// Giá trị bật/tắt của [key] từ nguồn remote, hoặc null nếu chưa có hay
+  /// không phải `true`/`false`.
+  bool? readBool(String key);
 }

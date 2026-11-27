@@ -11,10 +11,14 @@
 | firebase_core / remote_config / analytics | ^3.15.0 / ^5.4.0 / ^11.6.0 | Cấu hình và số liệu |
 | audioplayers | ^6.0.0 | Âm thanh |
 | flutter_animate, google_fonts, cached_network_image | ^4.5.0, ^6.2.1, ^3.4.1 | UI |
-| flutter_native_splash (dev) | ^2.4.0 | Splash native |
 | flutter_launcher_icons (dev) | ^0.13.1 | Icon |
 
 ## Nội bộ
 - features/* phụ thuộc core/* và shared/*; core không phụ thuộc features.
 - `game_screen` → `journey/controllers`, `victory/widgets`, `game/services`.
-- `LevelGameController` → `BoardEngine` → `BlockGenerator`, `TurnResolver`, `BoardLogic`.
+- `LevelGameController` → `BoardEngine` → `TrayGenerator`, `TurnResolver`, `BoardLogic`.
+
+## Còn thiếu cho intent 261125-ads-remote-config
+- Thư viện quảng cáo cho AdMob, Unity và AppLovin (chưa có).
+- `AndroidManifest.xml` chưa có `uses-permission` hay meta-data application ID của mạng quảng cáo.
+- `Info.plist` chưa có `GADApplicationIdentifier`, `NSUserTrackingUsageDescription` và `SKAdNetworkItems`.

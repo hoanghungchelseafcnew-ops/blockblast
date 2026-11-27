@@ -121,6 +121,10 @@ class BoardEngine {
   /// Còn ít nhất một khối trong khay đặt được ở đâu đó trên bảng.
   bool get hasMoves => BoardLogic.canPlaceAnyBlock(board, tray);
 
+  /// Có ô bom nằm trong dòng vừa đầy (đang chờ xóa), tức là sắp nổ.
+  bool get hasBombClearing =>
+      board.any((row) => row.any((cell) => cell.clearing && cell.isBomb));
+
   /// Bản lưu trạng thái ổn định của ván (điểm, combo, bảng, khay). Chỉ gọi khi
   /// không còn ô nào đang xóa; hiệu ứng xem trước không được lưu.
   GameSnapshot snapshot({required GameMode mode, int levelIndex = 0}) {

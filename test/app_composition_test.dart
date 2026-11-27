@@ -1,6 +1,8 @@
 import 'package:block_blast/app.dart';
 import 'package:block_blast/app_composition.dart';
 import 'package:block_blast/core/firebase/firebase_gateway.dart';
+import 'package:block_blast/features/ads/models/ads_settings.dart';
+import 'package:block_blast/features/ads/services/ad_mediator.dart';
 import 'package:block_blast/features/home/screens/home_screen.dart';
 import 'package:block_blast/features/journey/services/app_bootstrap.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +29,12 @@ void main() {
         progressStore: FakeProgressStore(),
       );
       expect(bootstrap, isA<AppBootstrap>());
+    });
+
+    test('builds the real ad service without touching any SDK (NFR1.1)', () {
+      final ads = createAdsService(AdsSettings.defaults);
+      expect(ads, isA<AdMediator>());
+      expect(ads.isActive, isTrue);
     });
   });
 
@@ -62,6 +70,8 @@ void main() {
           gateway: FirebaseGateway(initializer: () async {}),
           remoteConfigFactory: () => FakeRemoteConfigClient(),
           progressStore: FakeProgressStore(),
+          // SDK quảng cáo không có trong môi trường test (u1-ads-core).
+          adsFactory: (_) => const NoopAdsService(),
         ),
       );
       expect(root, isA<BlockBlastApp>());
@@ -85,6 +95,7 @@ void main() {
             ),
             remoteConfigFactory: () => FakeRemoteConfigClient(),
             progressStore: FakeProgressStore(),
+            adsFactory: (_) => const NoopAdsService(),
           ),
         ),
       );

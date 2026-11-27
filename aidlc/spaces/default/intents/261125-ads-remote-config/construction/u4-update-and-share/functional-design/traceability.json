@@ -1,0 +1,18 @@
+{
+  "stage": "functional-design",
+  "unit": "u4-update-and-share",
+  "upstream_ids": ["AC5.1.1", "AC5.1.2", "AC5.1.3", "AC5.1.4", "AC5.1.5", "AC6.1.1", "AC6.1.2", "AC6.1.3"],
+  "coverage": [
+    { "id": "AC5.1.1", "status": "OK", "target": "BR8.1, BR8.2, BR8.4" },
+    { "id": "AC5.1.2", "status": "OK", "target": "BR8.4" },
+    { "id": "AC5.1.3", "status": "OK", "target": "BR8.6" },
+    { "id": "AC5.1.4", "status": "OK", "target": "BR8.6" },
+    { "id": "AC5.1.5", "status": "OK", "target": "BR8.1, BR8.2, BR8.3" },
+    { "id": "AC6.1.1", "status": "OK", "target": "BR9.1" },
+    { "id": "AC6.1.2", "status": "OK", "target": "BR9.1" },
+    { "id": "AC6.1.3", "status": "OK", "target": "BR8.3, BR9.1" }
+  ],
+  "reverse": [
+    { "id": "BR8.5", "status": "N/A", "target": "Thứ tự hộp thoại theo Q2, không có AC riêng" }
+  ]
+}

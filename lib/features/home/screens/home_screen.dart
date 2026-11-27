@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -9,19 +10,33 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/gem_theme.dart';
 import '../../../shared/widgets/gem_primary_button.dart';
 import '../../../shared/widgets/level_background.dart';
+import '../../ads/services/ad_lifecycle_observer.dart';
+import '../../ads/services/ad_mediator.dart';
 import '../../endless/controllers/endless_game_controller.dart';
 import '../../endless/screens/endless_game_screen.dart';
 import '../../game/screens/game_screen.dart';
 import '../../game/services/game_feedback.dart';
+import '../../game/services/score_share_service.dart';
 import '../../journey/controllers/level_game_controller.dart';
 import '../../journey/models/level.dart';
 import '../../journey/services/app_bootstrap.dart';
 import '../../journey/services/progress_lifecycle_observer.dart';
+import '../../update/logic/version_check.dart';
+import '../../update/services/store_launcher.dart';
+import '../../update/widgets/update_popup.dart';
 
 /// Home (mockup M-1, State A/B): level hiện tại, nút PLAY, Settings.
 /// Không có Daily Gift (FR10.2) và không có chọn theme (FR10.3).
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.services, this.feedback});
+  const HomeScreen({
+    super.key,
+    required this.services,
+    this.feedback,
+    this.storeLauncher = const UrlStoreLauncher(),
+  });
+
+  /// Mở trang cửa hàng từ popup cập nhật (u4-update-and-share).
+  final StoreLauncher storeLauncher;
 
   /// Dịch vụ dựng ở bootstrap (constructor DI).
   final AppServices services;
@@ -36,6 +51,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final ProgressLifecycleObserver _lifecycleObserver;
   late final _SessionLifecycleObserver _sessionObserver;
+  late final AdLifecycleObserver _adObserver;
+
+  /// Chặn bấm PLAY hai lần trong lúc interstitial đang hiện.
+  bool _starting = false;
+
+  AdsService get _ads => widget.services.ads;
+
+  /// Chia sẻ kèm link cửa hàng của nền tảng đang chạy (FR7, BR9.1).
+  ScoreShareService get _shareService => PlatformScoreShareService(
+    storeUrl: VersionCheck.storeUrlFor(
+      widget.services.adsSettings,
+      ios: defaultTargetPlatform == TargetPlatform.iOS,
+    ),
+  );
 
   @override
   void initState() {
@@ -46,12 +75,55 @@ class _HomeScreenState extends State<HomeScreen> {
     // FR4.1, AC1.6.2: đo phiên chơi từ lúc vào Home.
     _sessionObserver = _SessionLifecycleObserver(widget.services.session)
       ..attach();
+    // u1-ads-core: đếm lần quay lại từ nền (BR5.1), và sau khung hình đầu
+    // của Home thì hỏi đồng ý rồi tải trước quảng cáo (BR3.4, BR4.6).
+    _adObserver = AdLifecycleObserver(_ads)..attach();
+    if (_ads.isActive) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) unawaited(_ads.start());
+      });
+    }
+    // u4-update-and-share: kiểm tra bản mới sau khung hình đầu, sau khi luồng
+    // đồng ý xong và sau mỗi lần mở được ghi (BR8.4, BR8.5, NFR1.2).
+    _ads.bannerChanges.addListener(_maybeShowUpdate);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeShowUpdate());
+  }
+
+  bool _checkingUpdate = false;
+
+  /// Hiện popup cập nhật khi có bản mới, tối đa một lần mỗi lần mở ứng dụng,
+  /// chỉ khi Home là màn trên cùng (BR8.4, BR8.5). Không chặn PLAY.
+  Future<void> _maybeShowUpdate() async {
+    final updates = widget.services.updates;
+    if (updates == null || _checkingUpdate || !mounted) return;
+    if (_ads.isActive && !_ads.startupSettled) return;
+    final appOpen = _ads.appOpenCount;
+    if (!updates.canShowFor(appOpen)) return;
+    _checkingUpdate = true;
+    final url = await updates.check();
+    _checkingUpdate = false;
+    if (url == null || !mounted || _starting) return;
+    if (!(ModalRoute.of(context)?.isCurrent ?? false)) return;
+    if (!updates.canShowFor(appOpen)) return;
+    updates.markShown(appOpen);
+    final palette = GemTheme.forGem(widget.services.journey.currentLevel.gemId);
+    await showUpdatePopup(
+      context,
+      palette: palette,
+      onUpdate: () {
+        // Quay lại từ cửa hàng không phải một lần mở mới (BR5.3).
+        _ads.suppressNextResume();
+        unawaited(widget.storeLauncher.open(url));
+      },
+    );
   }
 
   @override
   void dispose() {
+    _ads.bannerChanges.removeListener(_maybeShowUpdate);
     _lifecycleObserver.detach();
     _sessionObserver.detach();
+    _adObserver.detach();
     super.dispose();
   }
 
@@ -270,7 +342,26 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _startEndless() {
+  /// Mỗi lần bấm PLAY là một lần bấm Start: interstitial có thể hiện trước
+  /// khi vào màn chơi (BR4.1 đến BR4.3). Không có quảng cáo thì mở ngay.
+  void _withInterstitial(VoidCallback open) {
+    if (!_ads.isActive) {
+      open();
+      return;
+    }
+    if (_starting) return;
+    _starting = true;
+    unawaited(
+      _ads.interstitialIfDue().whenComplete(() {
+        _starting = false;
+        if (mounted) open();
+      }),
+    );
+  }
+
+  void _startEndless() => _withInterstitial(_openEndless);
+
+  void _openEndless() {
     final services = widget.services;
     final background = services.journey.currentLevel;
     Navigator.push(
@@ -281,16 +372,23 @@ class _HomeScreenState extends State<HomeScreen> {
             progress: services.progress,
             feedback: widget.feedback ?? DeviceGameFeedback(services.audio),
           )..start(resumeSaved: true),
-          child: EndlessGameScreen(background: background),
+          child: EndlessGameScreen(
+            background: background,
+            ads: services.ads,
+            shareService: _shareService,
+          ),
         ),
       ),
     ).then((_) {
       // BEST có thể đã đổi sau ván endless.
       if (mounted) setState(() {});
+      unawaited(_maybeShowUpdate());
     });
   }
 
-  void _startGame() {
+  void _startGame() => _withInterstitial(_openGame);
+
+  void _openGame() {
     final services = widget.services;
     final level = services.journey.currentLevel;
     Navigator.push(
@@ -302,13 +400,17 @@ class _HomeScreenState extends State<HomeScreen> {
             progress: services.progress,
             feedback: widget.feedback ?? DeviceGameFeedback(services.audio),
             analytics: services.analytics,
+            ads: services.ads,
+            rewardEnabled: services.adsSettings.rewardEnabled,
+            pendingLoss: services.pendingLoss,
           )..start(level, resumeSaved: true),
-          child: const GameScreen(),
+          child: GameScreen(ads: services.ads, shareService: _shareService),
         ),
       ),
     ).then((_) {
       // Level hiện tại (và màu gem) có thể đã đổi sau ván chơi.
       if (mounted) setState(() {});
+      unawaited(_maybeShowUpdate());
     });
   }
 }

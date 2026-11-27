@@ -1,0 +1,37 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-reward-ads",
+  "upstream_ids": [
+    "AC3.1.1", "AC3.1.2", "AC3.1.3", "AC3.1.4", "AC3.1.5", "AC3.1.6", "AC3.1.7",
+    "BR6.1", "BR6.2", "BR6.3", "BR6.4", "BR6.5", "BR6.6", "BR6.7", "BR6.8",
+    "NFR2.8", "NFR2.9", "NFR2.10", "NFR2.11", "NFR2.12", "NFR2.13", "NFR2.14",
+    "NFR3.2", "NFR4", "NFR7.2"
+  ],
+  "coverage": [
+    { "id": "AC3.1.1", "status": "OK", "target": "lib/features/game/widgets/game_over_overlay.dart" },
+    { "id": "AC3.1.2", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "AC3.1.3", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "AC3.1.4", "status": "OK", "target": "lib/features/journey/services/app_bootstrap.dart" },
+    { "id": "AC3.1.5", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "AC3.1.6", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "AC3.1.7", "status": "OK", "target": "lib/features/game/widgets/game_over_overlay.dart" },
+    { "id": "BR6.1", "status": "OK", "target": "lib/features/game/screens/game_screen.dart" },
+    { "id": "BR6.2", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "BR6.3", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "BR6.4", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "BR6.5", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "BR6.6", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "BR6.7", "status": "OK", "target": "lib/features/ads/services/pending_loss_store.dart" },
+    { "id": "BR6.8", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "NFR2.8", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "NFR2.9", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "NFR2.10", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "NFR2.11", "status": "OK", "target": "lib/features/ads/services/ad_mediator.dart" },
+    { "id": "NFR2.12", "status": "OK", "target": "lib/features/ads/services/pending_loss_store.dart" },
+    { "id": "NFR2.13", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "NFR2.14", "status": "OK", "target": "lib/features/ads/services/pending_loss_store.dart" },
+    { "id": "NFR3.2", "status": "OK", "target": "lib/features/journey/controllers/level_game_controller.dart" },
+    { "id": "NFR4", "status": "OK", "target": "lib/features/game/widgets/game_over_overlay.dart" },
+    { "id": "NFR7.2", "status": "OK", "target": "test/features/journey/level_game_reward_test.dart" }
+  ]
+}

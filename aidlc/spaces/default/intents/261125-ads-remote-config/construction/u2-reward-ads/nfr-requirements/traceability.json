@@ -1,0 +1,14 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u2-reward-ads",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7"],
+  "coverage": [
+    { "id": "NFR1", "status": "N/A", "target": "u2-reward-ads không chạy ở khởi động; khởi tạo quảng cáo thuộc u1-ads-core" },
+    { "id": "NFR2", "status": "OK", "target": "NFR2.8, NFR2.9, NFR2.10, NFR2.11, NFR2.12, NFR2.13, NFR2.14" },
+    { "id": "NFR3", "status": "OK", "target": "NFR3.2" },
+    { "id": "NFR4", "status": "N/A", "target": "Chuỗi giao diện tiếng Anh đã chốt trong mockups.md và kiểm ở bước viết mã" },
+    { "id": "NFR5", "status": "N/A", "target": "Không thêm màn hình mới, hướng dọc đã khóa từ trước" },
+    { "id": "NFR6", "status": "N/A", "target": "Không thêm tham số Remote Config mới; reward_enabled đã có ở u1-ads-core" },
+    { "id": "NFR7", "status": "OK", "target": "NFR7.2" }
+  ]
+}

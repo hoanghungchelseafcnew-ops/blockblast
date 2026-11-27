@@ -1,0 +1,16 @@
+{
+  "stage": "nfr-design",
+  "unit": "u2-reward-ads",
+  "upstream_ids": ["NFR2.8", "NFR2.9", "NFR2.10", "NFR2.11", "NFR2.12", "NFR2.13", "NFR2.14", "NFR3.2", "NFR7.2"],
+  "coverage": [
+    { "id": "NFR2.8", "status": "OK", "target": "Lớp phủ hiện ngay, nút mở sau khi ghi dấu xong" },
+    { "id": "NFR2.9", "status": "OK", "target": "Ô reward tải trước khi bắt đầu level Journey" },
+    { "id": "NFR2.10", "status": "OK", "target": "reward() trả no_ad ngay khi chưa sẵn sàng" },
+    { "id": "NFR2.11", "status": "OK", "target": "Đồng hồ 5 giây cho mỗi mạng" },
+    { "id": "NFR2.12", "status": "OK", "target": "Khóa pending_loss_level và hàm ghi nhận thua duy nhất" },
+    { "id": "NFR2.13", "status": "OK", "target": "Nhánh thưởng không gọi onLevelLost" },
+    { "id": "NFR2.14", "status": "OK", "target": "Lỗi ghi khóa được log, nút vẫn mở" },
+    { "id": "NFR3.2", "status": "OK", "target": "AdsService tiêm qua constructor của LevelGameController" },
+    { "id": "NFR7.2", "status": "OK", "target": "Cập nhật test hiện có theo thời điểm ghi nhận thua mới" }
+  ]
+}

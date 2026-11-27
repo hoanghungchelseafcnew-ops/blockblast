@@ -3,6 +3,7 @@ import 'package:block_blast/core/audio/audio_controller.dart';
 import 'package:block_blast/core/config/remote_config_client.dart';
 import 'package:block_blast/core/firebase/default_level_config.dart';
 import 'package:block_blast/core/firebase/firebase_gateway.dart';
+import 'package:block_blast/features/ads/services/ad_mediator.dart';
 import 'package:block_blast/features/game/engine/board_engine.dart';
 import 'package:block_blast/features/game/models/block_model.dart';
 import 'package:block_blast/features/game/screens/game_screen.dart';
@@ -15,6 +16,8 @@ import 'package:block_blast/features/journey/services/app_bootstrap.dart';
 import 'package:block_blast/features/journey/services/background_image_service.dart';
 import 'package:block_blast/features/journey/services/level_catalog.dart';
 import 'package:block_blast/features/journey/services/progress_repository.dart';
+import 'package:block_blast/features/update/services/app_update_checker.dart';
+import 'package:block_blast/features/ads/models/ads_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -68,6 +71,9 @@ Future<AppServices> buildServices({
   FakeSfxPlayer? player,
   FakeAnalytics? analytics,
   FakeClock? clock,
+  AdsService ads = const NoopAdsService(),
+  AdsSettings adsSettings = AdsSettings.defaults,
+  AppUpdateChecker? updates,
 }) async {
   final repo = ProgressRepository(store ?? FakeProgressStore());
   await repo.load();
@@ -85,6 +91,9 @@ Future<AppServices> buildServices({
       progress: repo,
       clock: clock ?? FakeClock(),
     ),
+    ads: ads,
+    adsSettings: adsSettings,
+    updates: updates,
   );
 }
 
@@ -139,6 +148,8 @@ class GameHarness {
     int target = 1000,
     Map<String, Object>? initial,
     List<BlockModel> Function()? source,
+    AdsService ads = const NoopAdsService(),
+    bool rewardEnabled = false,
   }) async {
     final store = FakeProgressStore(initial: initial);
     final repo = ProgressRepository(store);
@@ -154,6 +165,8 @@ class GameHarness {
       engine: engine,
       feedback: const NoopGameFeedback(),
       comboTextDuration: const Duration(milliseconds: 100),
+      ads: ads,
+      rewardEnabled: rewardEnabled,
     );
     addTearDown(controller.dispose);
     final base = catalog.byIndex(levelIndex);
@@ -200,6 +213,7 @@ Future<GlobalKey<NavigatorState>> pumpGameScreen(
   WidgetTester tester,
   GameHarness harness, {
   BackgroundImageService? images,
+  AdsService ads = const NoopAdsService(),
 }) async {
   useMobileScreen(tester);
   mockEmptyPrefs();
@@ -214,7 +228,11 @@ Future<GlobalKey<NavigatorState>> pumpGameScreen(
     MaterialPageRoute<void>(
       builder: (_) => ChangeNotifierProvider<LevelGameController>.value(
         value: harness.controller,
-        child: GameScreen(shareService: harness.share, images: images),
+        child: GameScreen(
+          shareService: harness.share,
+          images: images,
+          ads: ads,
+        ),
       ),
     ),
   );

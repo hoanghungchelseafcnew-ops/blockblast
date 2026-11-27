@@ -504,8 +504,7 @@ void main() {
       expect(log.where('key $high invalid'), hasLength(1));
     });
 
-    test('saveEndlessState survives a restart, 0 included (AC4.2.3)',
-        () async {
+    test('saveEndlessState survives a restart, 0 included (AC4.2.3)', () async {
       final store = FakeProgressStore();
       final repo = await _loaded(store);
       await repo.saveEndlessState(

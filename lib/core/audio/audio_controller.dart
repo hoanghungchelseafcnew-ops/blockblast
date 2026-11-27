@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,20 +13,37 @@ abstract class SfxPlayer {
   Future<void> stop();
 }
 
-/// Triển khai thật bằng `audioplayers`. Player chỉ được tạo ở lần phát đầu
-/// tiên, nên dựng app không gọi plugin nền tảng.
+/// Triển khai thật bằng `audioplayers`. Dùng một nhóm player xoay vòng để các
+/// âm (đặt khối, ăn dòng, combo, bom) phát chồng lên nhau thay vì cắt nhau.
+/// Player chỉ được tạo ở lần phát đầu tiên, nên dựng app không gọi plugin
+/// nền tảng.
 class AudioplayersSfxPlayer implements SfxPlayer {
-  AudioPlayer? _player;
+  AudioplayersSfxPlayer({this.poolSize = 4});
 
-  AudioPlayer get _ready => _player ??= AudioPlayer();
+  final int poolSize;
+  final List<AudioPlayer> _players = <AudioPlayer>[];
+  int _next = 0;
+
+  AudioPlayer get _ready {
+    if (_players.length < poolSize) {
+      final player = AudioPlayer();
+      unawaited(player.setPlayerMode(PlayerMode.lowLatency));
+      _players.add(player);
+      return player;
+    }
+    final player = _players[_next];
+    _next = (_next + 1) % _players.length;
+    return player;
+  }
 
   @override
   Future<void> play(String asset) => _ready.play(AssetSource(asset));
 
   @override
   Future<void> stop() async {
-    final player = _player;
-    if (player != null) await player.stop();
+    for (final player in _players) {
+      await player.stop();
+    }
   }
 }
 

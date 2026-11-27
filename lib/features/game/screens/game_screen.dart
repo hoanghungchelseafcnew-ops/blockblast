@@ -8,6 +8,8 @@ import 'package:screenshot/screenshot.dart';
 import '../../../core/theme/gem_theme.dart';
 import '../../../shared/widgets/level_background.dart';
 import '../../../shared/widgets/level_progress_bar.dart';
+import '../../ads/services/ad_mediator.dart';
+import '../../ads/widgets/ad_banner_slot.dart';
 import '../../journey/controllers/level_game_controller.dart';
 import '../../journey/services/background_image_service.dart';
 import '../../victory/widgets/victory_overlay.dart';
@@ -23,9 +25,13 @@ class GameScreen extends StatefulWidget {
     super.key,
     this.shareService = const PlatformScoreShareService(),
     this.images,
+    this.ads = const NoopAdsService(),
   });
 
   final ScoreShareService shareService;
+
+  /// Quảng cáo (u1-ads-core): interstitial trước PLAY AGAIN.
+  final AdsService ads;
 
   /// Nạp ảnh nền; mặc định là bản dùng chung của app.
   final BackgroundImageService? images;
@@ -159,6 +165,9 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                         onCancel: controller.cancelDrag,
                       ),
                     ),
+                    // Banner dưới cùng (u3-banner): cao 0 khi không có
+                    // banner; lớp phủ phía trên Stack vẫn che nó (BR7.6).
+                    AdBannerSlot(ads: widget.ads),
                   ],
                 ),
               ),
@@ -257,11 +266,15 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       images: _images,
       onContinue: controller.continueAfterWin,
       onBackToMenu: () => unawaited(_leave(controller)),
-      onShare: () => widget.shareService.shareVictory(
-        screenshot: _screenshotController,
-        levelName: controller.level.displayName,
-        score: controller.score,
-      ),
+      onShare: () {
+        // Bảng chia sẻ đóng lại không phải một lần mở ứng dụng (BR5.3).
+        widget.ads.suppressNextResume();
+        return widget.shareService.shareVictory(
+          screenshot: _screenshotController,
+          levelName: controller.level.displayName,
+          score: controller.score,
+        );
+      },
     );
   }
 
@@ -276,14 +289,42 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
       target: controller.targetScore,
       returnLevelName: returnTo.displayName,
       palette: palette,
-      onShare: () => unawaited(
-        widget.shareService.shareScore(
-          screenshot: _screenshotController,
-          score: controller.score,
-        ),
-      ),
-      onPlayAgain: controller.playAgain,
+      onShare: () {
+        widget.ads.suppressNextResume();
+        unawaited(
+          widget.shareService.shareScore(
+            screenshot: _screenshotController,
+            score: controller.score,
+          ),
+        );
+      },
+      onPlayAgain: () => _playAgain(controller),
       onMenu: () => unawaited(_leave(controller)),
+      // Nút reward chỉ có khi ván thua này còn được thưởng (BR6.1, BR6.5).
+      onWatchAd: controller.canWatchAd
+          ? () => unawaited(controller.watchAd())
+          : null,
+      watchAdBusy: controller.watchingAd,
+    );
+  }
+
+  bool _playingAgain = false;
+
+  /// PLAY AGAIN là một lần bấm Start (BR4.1): interstitial có thể hiện trước
+  /// khi bắt đầu lại. Không có quảng cáo thì bắt đầu ngay.
+  void _playAgain(LevelGameController controller) {
+    final ads = widget.ads;
+    if (!ads.isActive) {
+      controller.playAgain();
+      return;
+    }
+    if (_playingAgain) return;
+    _playingAgain = true;
+    unawaited(
+      ads.interstitialIfDue().whenComplete(() {
+        _playingAgain = false;
+        if (mounted) controller.playAgain();
+      }),
     );
   }
 

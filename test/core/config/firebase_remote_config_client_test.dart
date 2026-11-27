@@ -12,6 +12,9 @@ class _FakeFirebaseRemoteConfig implements FirebaseRemoteConfig {
   bool fetchResult = true;
   RemoteConfigValue value = RemoteConfigValue(null, ValueSource.valueStatic);
 
+  /// Giá trị theo khóa cho các tham số ngoài `level_config` (u1-ads-core).
+  final Map<String, RemoteConfigValue> byKey = <String, RemoteConfigValue>{};
+
   @override
   Future<void> setConfigSettings(RemoteConfigSettings configSettings) async {
     appliedSettings = configSettings;
@@ -25,6 +28,8 @@ class _FakeFirebaseRemoteConfig implements FirebaseRemoteConfig {
 
   @override
   RemoteConfigValue getValue(String key) {
+    final keyed = byKey[key];
+    if (keyed != null) return keyed;
     expect(key, levelConfigKey);
     return value;
   }
@@ -86,6 +91,54 @@ void main() {
     test('readLevelConfig treats an empty remote value as missing', () {
       sdk.value = RemoteConfigValue(utf8.encode(''), ValueSource.valueRemote);
       expect(client.readLevelConfig(), isNull);
+    });
+  });
+
+  group('FirebaseRemoteConfigClient typed reads (u1-ads-core)', () {
+    RemoteConfigValue remote(String text) =>
+        RemoteConfigValue(utf8.encode(text), ValueSource.valueRemote);
+
+    test('readString returns remote text and ignores default values', () {
+      sdk.byKey['ads_priority'] = remote('unity,admob');
+      sdk.byKey['android_url'] = RemoteConfigValue(
+        utf8.encode('https://example.com'),
+        ValueSource.valueDefault,
+      );
+      expect(client.readString('ads_priority'), 'unity,admob');
+      expect(client.readString('android_url'), isNull);
+    });
+
+    test('readInt parses integers and rejects non-numbers', () {
+      sdk.byKey['banner_start_visit'] = remote(' 5 ');
+      sdk.byKey['interstitial_every_n_starts'] = remote('three');
+      expect(client.readInt('banner_start_visit'), 5);
+      expect(client.readInt('interstitial_every_n_starts'), isNull);
+    });
+
+    test('readInt keeps a real zero distinct from a missing value', () {
+      sdk.byKey['banner_start_visit'] = remote('0');
+      expect(client.readInt('banner_start_visit'), 0);
+      sdk.byKey['banner_start_visit'] = remote('');
+      expect(client.readInt('banner_start_visit'), isNull);
+    });
+
+    test('readBool accepts true and false only', () {
+      sdk.byKey['reward_enabled'] = remote('FALSE');
+      expect(client.readBool('reward_enabled'), isFalse);
+      sdk.byKey['reward_enabled'] = remote('true');
+      expect(client.readBool('reward_enabled'), isTrue);
+      sdk.byKey['reward_enabled'] = remote('yes');
+      expect(client.readBool('reward_enabled'), isNull);
+    });
+
+    test('typed reads return null for a static (never fetched) value', () {
+      sdk.byKey['reward_enabled'] = RemoteConfigValue(
+        null,
+        ValueSource.valueStatic,
+      );
+      expect(client.readBool('reward_enabled'), isNull);
+      expect(client.readInt('reward_enabled'), isNull);
+      expect(client.readString('reward_enabled'), isNull);
     });
   });
 }

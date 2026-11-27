@@ -1,0 +1,18 @@
+{
+  "stage": "nfr-design",
+  "unit": "u1-ads-core",
+  "upstream_ids": ["NFR1.1", "NFR2.1", "NFR2.2", "NFR2.3", "NFR2.4", "NFR2.5", "NFR2.6", "NFR2.7", "NFR3.1", "NFR6.1", "NFR7.1"],
+  "coverage": [
+    { "id": "NFR1.1", "status": "OK", "target": "Khởi tạo quảng cáo và đồng ý chạy nền sau Splash" },
+    { "id": "NFR2.1", "status": "OK", "target": "Lớp bọc mỗi SDK biến mọi lỗi thành kết quả" },
+    { "id": "NFR2.2", "status": "OK", "target": "Đồng hồ 5 giây cho mỗi mạng ở AdMediator" },
+    { "id": "NFR2.3", "status": "OK", "target": "Tệp hằng số riêng cho từng nền tảng và mạng, không có khóa bí mật" },
+    { "id": "NFR2.4", "status": "OK", "target": "Cờ build chọn ID thử hoặc ID thật" },
+    { "id": "NFR2.5", "status": "OK", "target": "AdMediator hỏi ConsentService trước mọi yêu cầu quảng cáo" },
+    { "id": "NFR2.6", "status": "OK", "target": "Trạng thái từ chối truyền xuống mỗi adapter" },
+    { "id": "NFR2.7", "status": "OK", "target": "AdCounters chỉ lưu hai số và một cờ" },
+    { "id": "NFR3.1", "status": "OK", "target": "Interface và bản giả cho mỗi SDK" },
+    { "id": "NFR6.1", "status": "OK", "target": "Giữ minimumFetchInterval 12 giờ" },
+    { "id": "NFR7.1", "status": "OK", "target": "Mở rộng RemoteConfigClient và cập nhật bản giả" }
+  ]
+}

@@ -7,8 +7,14 @@ import 'package:block_blast/core/config/level_config.dart';
 import 'package:block_blast/core/config/level_config_service.dart';
 import 'package:block_blast/core/config/remote_config_client.dart';
 import 'package:block_blast/core/firebase/firebase_gateway.dart';
+import 'package:block_blast/features/ads/models/ads_settings.dart';
+import 'package:block_blast/features/ads/services/ad_mediator.dart';
+import 'package:block_blast/features/ads/services/ads_config.dart';
+import 'package:block_blast/features/ads/services/pending_loss_store.dart';
+import 'package:block_blast/features/update/services/app_update_checker.dart';
 import 'package:block_blast/features/journey/services/app_bootstrap.dart';
 import 'package:block_blast/features/journey/services/progress_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../fakes/fake_analytics.dart';
@@ -45,6 +51,9 @@ AppBootstrap _bootstrap({
   Duration progressTimeout = const Duration(milliseconds: 500),
   Duration fetchMax = const Duration(seconds: 2),
   AnalyticsService Function()? analytics,
+  AdsService Function(AdsSettings settings)? ads,
+  PendingLossStore? pendingLoss,
+  AppUpdateChecker Function(AdsSettings settings)? updates,
 }) {
   return AppBootstrap(
     gateway: gateway,
@@ -55,6 +64,9 @@ AppBootstrap _bootstrap({
     deadline: deadline,
     progressTimeout: progressTimeout,
     fetchMax: fetchMax,
+    adsFactory: ads,
+    pendingLoss: pendingLoss,
+    updateCheckerFactory: updates,
   );
 }
 
@@ -353,4 +365,210 @@ void main() {
       },
     );
   });
+
+  group('AppBootstrap ads (u1-ads-core)', () {
+    test('without an ads factory the app has no ads', () async {
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: FakeProgressStore(),
+      ).run();
+      expect(result.services.ads, isA<NoopAdsService>());
+      expect(result.services.adsSettings.interstitialEveryNStarts, 3);
+    });
+
+    test('reads ad settings from the fetched config (BR1.1)', () async {
+      AdsSettings? received;
+      final client = FakeRemoteConfigClient()
+        ..values[AdsConfigKeys.interstitialEveryNStarts] = '5'
+        ..values[AdsConfigKeys.adsPriority] = 'applovin';
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: FakeProgressStore(),
+        factory: () => client,
+        ads: (settings) {
+          received = settings;
+          return const NoopAdsService();
+        },
+      ).run();
+      expect(received!.interstitialEveryNStarts, 5);
+      expect(received!.adsPriority, [AdNetwork.applovin]);
+      expect(result.services.adsSettings.interstitialEveryNStarts, 5);
+    });
+
+    test('uses ad defaults when Firebase is down (BR1.2)', () async {
+      AdsSettings? received;
+      await _bootstrap(
+        gateway: FirebaseGateway(
+          initializer: () async => throw StateError('offline'),
+        ),
+        store: FakeProgressStore(),
+        ads: (settings) {
+          received = settings;
+          return const NoopAdsService();
+        },
+      ).run();
+      expect(received!.interstitialEveryNStarts, 3);
+      expect(received!.adsPriority, AdsSettings.defaultAdsPriority);
+    });
+
+    test('a failing ads factory falls back to no ads (NFR2.1)', () async {
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: FakeProgressStore(),
+        ads: (_) => throw StateError('sdk missing'),
+      ).run();
+      expect(result.services.ads, isA<NoopAdsService>());
+      expect(log.where('ads unavailable'), hasLength(1));
+    });
+
+    test('building ads does not slow the deadline (NFR1.1)', () async {
+      final stopwatch = Stopwatch()..start();
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: FakeProgressStore(),
+        ads: (settings) => AdMediatorProbe(),
+      ).run();
+      expect(result.deadlineHit, isFalse);
+      expect(result.services.ads, isA<AdMediatorProbe>());
+      expect(stopwatch.elapsedMilliseconds, lessThan(1500));
+    });
+  });
+
+  _pendingLossTests(() => log);
+  _updateTests();
+}
+
+void _updateTests() {
+  group('AppBootstrap update checker (u4-update-and-share)', () {
+    test('no factory means no update check', () async {
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: FakeProgressStore(),
+      ).run();
+      expect(result.services.updates, isNull);
+    });
+
+    test('the factory receives the ad settings read at start-up', () async {
+      AdsSettings? received;
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: FakeProgressStore(),
+        updates: (settings) {
+          received = settings;
+          return AppUpdateChecker(settings: settings);
+        },
+      ).run();
+      expect(result.services.updates, isNotNull);
+      expect(received, same(result.services.adsSettings));
+    });
+
+    test('a failing factory falls back to no update check', () async {
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: FakeProgressStore(),
+        updates: (_) => throw StateError('x'),
+      ).run();
+      expect(result.services.updates, isNull);
+    });
+  });
+}
+
+void _pendingLossTests(LogCapture Function() log) {
+  // Level 6 = Rose Quartz · Bling; Rough Stone của Rose Quartz là level 1.
+  const atLevel6 =
+      '{"currentLevelIndex":6,"completedLevels":[1,2,3,4,5],'
+      '"unlockedGems":[],"journeyCompleted":false,"highestLevelReached":6}';
+
+  group('AppBootstrap pending loss (u2-reward-ads, BR6.7)', () {
+    test('a pending loss is recorded and cleared before Home', () async {
+      final pendingStore = FakeProgressStore(
+        initial: {PendingLossStore.key: '6:250'},
+      );
+      final store = FakeProgressStore(
+        initial: {ProgressRepository.progressKey: atLevel6},
+      );
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: store,
+        pendingLoss: PendingLossStore(pendingStore),
+      ).run();
+      final progress = result.services.progress;
+      expect(progress.progress.currentLevelIndex, 1);
+      expect(progress.highScore(6), 250);
+      expect(pendingStore.data.containsKey(PendingLossStore.key), isFalse);
+      expect(result.services.pendingLoss, isNotNull);
+    });
+
+    test('no mark leaves the progress unchanged', () async {
+      final store = FakeProgressStore(
+        initial: {ProgressRepository.progressKey: atLevel6},
+      );
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: store,
+        pendingLoss: PendingLossStore(FakeProgressStore()),
+      ).run();
+      expect(result.services.progress.progress.currentLevelIndex, 6);
+    });
+
+    test('a store that fails to open does not block start-up', () async {
+      final pendingStore = FakeProgressStore()..initHangs = true;
+      final store = FakeProgressStore(
+        initial: {ProgressRepository.progressKey: atLevel6},
+      );
+      final result = await _bootstrap(
+        gateway: _okGateway(),
+        store: store,
+        pendingLoss: PendingLossStore(pendingStore),
+        progressTimeout: const Duration(milliseconds: 50),
+      ).run();
+      expect(result.services.progress.progress.currentLevelIndex, 6);
+      expect(
+        log().lines.where((l) => l.contains('pending loss not recorded')),
+        isNotEmpty,
+      );
+    });
+  });
+}
+
+/// Dịch vụ quảng cáo có `start()` không bao giờ xong: bootstrap không được
+/// chờ nó.
+class AdMediatorProbe extends AdsService {
+  @override
+  bool get isActive => true;
+
+  @override
+  Future<void> start() => Completer<void>().future;
+
+  @override
+  Future<InterstitialOutcome> interstitialIfDue() async =>
+      InterstitialOutcome.notDue;
+
+  @override
+  Future<void> preloadReward() async {}
+
+  @override
+  Future<RewardOutcome> reward() async => RewardOutcome.noAd;
+
+  @override
+  bool get bannerEligible => false;
+
+  @override
+  Listenable get bannerChanges => ChangeNotifier();
+
+  @override
+  Future<BannerResult> banner(double width) async =>
+      const BannerResult.hidden();
+
+  @override
+  int get appOpenCount => 0;
+
+  @override
+  bool get startupSettled => false;
+
+  @override
+  Future<void> onAppResumed() async {}
+
+  @override
+  void suppressNextResume() {}
 }

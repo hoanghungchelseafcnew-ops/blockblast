@@ -11,7 +11,15 @@
     "slug": "block-jewel-update",
     "dirName": "261120-block-jewel-update",
     "scope": "classic",
-    "status": "in-flight",
+    "status": "archived",
     "request": "a8c2821b"
+  },
+  {
+    "uuid": "01a21093-8838-75fd-8b5f-0b48d1a0236f",
+    "slug": "ads-remote-config",
+    "dirName": "261125-ads-remote-config",
+    "scope": "feature",
+    "status": "in-flight",
+    "request": "e7bd459c"
   }
 ]

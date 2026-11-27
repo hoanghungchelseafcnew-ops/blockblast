@@ -1,4 +1,5 @@
 import 'package:block_blast/core/theme/gem_theme.dart';
+import 'package:block_blast/features/ads/services/ad_mediator.dart';
 import 'package:block_blast/features/endless/controllers/endless_game_controller.dart';
 import 'package:block_blast/features/endless/screens/endless_game_screen.dart';
 import 'package:block_blast/features/game/engine/board_engine.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
+import '../features/ads/ads_fakes.dart';
 import '../features/game/engine/engine_test_helpers.dart';
 import '../fakes/fake_progress_store.dart';
 import '../fakes/log_capture.dart';
@@ -68,8 +70,9 @@ class _Endless {
 
 Future<GlobalKey<NavigatorState>> _pumpEndless(
   WidgetTester tester,
-  _Endless e,
-) async {
+  _Endless e, {
+  AdsService ads = const NoopAdsService(),
+}) async {
   useMobileScreen(tester);
   mockEmptyPrefs();
   final catalog = LevelCatalog.from(DefaultLevelConfig.config);
@@ -87,6 +90,7 @@ Future<GlobalKey<NavigatorState>> _pumpEndless(
         child: EndlessGameScreen(
           background: catalog.byIndex(Level.totalLevels),
           shareService: e.share,
+          ads: ads,
         ),
       ),
     ),
@@ -220,6 +224,29 @@ void main() {
       expect(find.byKey(const Key('game-over-overlay')), findsNothing);
     });
 
+    testWidgets('PLAY AGAIN asks for an interstitial first and SHARE is not '
+        'counted as an app open (u1-ads-core, AC2.1.3, BR5.3)', (tester) async {
+      final ads = FakeAdsService();
+      final e = await _Endless.create(initial: {_saved: 800, _high: 700});
+      await _pumpEndless(tester, e, ads: ads);
+      e.fillBoardLeavingIsolatedGaps();
+      e.controller.onDragStart(e.controller.tray.first);
+      await e.controller.placeAt(0, 0);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+
+      await tester.tap(find.byKey(const Key('game-over-share-button')));
+      await tester.pump();
+      expect(ads.suppressCalls, 1);
+
+      await tester.tap(find.byKey(const Key('game-over-play-again-button')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(ads.interstitialCalls, 1);
+      expect(_text(tester, 'endless-score'), 'SCORE 0');
+      expect(find.byKey(const Key('game-over-overlay')), findsNothing);
+    });
+
     testWidgets('BACK TO MENU after a loss leaves without asking', (
       tester,
     ) async {
@@ -304,6 +331,17 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.byType(HomeScreen), findsOneWidget);
       expect(_text(tester, 'home-endless-best'), 'Endless · Best 12400');
+    });
+  });
+
+  group('banner in Endless (u3-banner)', () {
+    testWidgets('the banner also shows in Endless (AC4.1.4)', (tester) async {
+      final ads = FakeAdsService()..eligible = true;
+      final e = await _Endless.create(initial: {_saved: 300});
+      await _pumpEndless(tester, e, ads: ads);
+      await tester.pump();
+      expect(find.byKey(const Key('ad-banner-slot')), findsOneWidget);
+      expect(ads.bannerCalls, 1);
     });
   });
 }

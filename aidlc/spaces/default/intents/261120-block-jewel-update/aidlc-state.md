@@ -145,10 +145,12 @@
 - **Lifecycle Phase**: CONSTRUCTION
 - **Current Stage**: functional-design
 - **Next Stage**: nfr-requirements
-- **Status**: Running
-- **Last Updated**: 2026-11-23T04:23:04Z
+- **Status**: Archived
+- **Last Updated**: 2026-11-25T02:36:00Z
 
 - **Construction Autonomy Mode**: autonomous
+
+- **Archived From**: Running
 
 ## Session Resume Point
 - **Last Completed Stage**: delivery-planning

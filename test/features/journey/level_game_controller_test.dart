@@ -33,6 +33,25 @@ class RecordingFeedback extends GameFeedback {
   @override
   void combo() => comboCount++;
 
+  int bombCount = 0;
+  final List<int> clearedLinesLog = <int>[];
+  final List<int> comboStreakLog = <int>[];
+
+  @override
+  void clearedLines(int lines) {
+    clearedLinesLog.add(lines);
+    super.clearedLines(lines);
+  }
+
+  @override
+  void comboStreak(int streak) {
+    comboStreakLog.add(streak);
+    super.comboStreak(streak);
+  }
+
+  @override
+  void bombExploded() => bombCount++;
+
   @override
   void gameOver() => gameOverCount++;
 
@@ -160,6 +179,48 @@ void main() {
 
   setUp(() {
     log = LogCapture()..start();
+  });
+
+  group('sound cues (feedback)', () {
+    test('a line clear reports how many lines, with no bomb sound', () async {
+      final g = await _Game.create(
+        source: () => [single(), single(), single()],
+      );
+      for (var c = 1; c < 8; c++) {
+        g.engine.board[0][c].filled = true;
+      }
+      await g.place(g.controller.tray.first, 0, 0);
+      expect(g.feedback.clearedLinesLog, [1]);
+      expect(g.feedback.bombCount, 0);
+      expect(g.feedback.clearedCount, 1);
+    });
+
+    test('a bomb inside a cleared line plays the bomb sound', () async {
+      final bomb = makeBlock([
+        [1],
+      ], isBomb: true);
+      final g = await _Game.create(source: () => [bomb, single(), single()]);
+      for (var c = 1; c < 8; c++) {
+        g.engine.board[0][c].filled = true;
+      }
+      await g.place(g.controller.tray.first, 0, 0);
+      expect(g.feedback.bombCount, 1);
+      expect(g.feedback.clearedLinesLog, [1]);
+    });
+
+    test('a streak of clears reports its combo step', () async {
+      final g = await _Game.create(
+        source: () => [single(), single(), single()],
+      );
+      for (var c = 1; c < 8; c++) {
+        g.engine.board[0][c].filled = true;
+        g.engine.board[1][c].filled = true;
+      }
+      await g.place(g.controller.tray.first, 0, 0);
+      await g.place(g.controller.tray.first, 1, 0);
+      expect(g.feedback.comboStreakLog, [2]);
+      expect(g.feedback.comboCount, 1);
+    });
   });
 
   group('difficulty level (US4.4, BR4.2)', () {

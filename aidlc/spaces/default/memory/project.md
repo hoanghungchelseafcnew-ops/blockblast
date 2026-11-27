@@ -58,6 +58,8 @@
 
 None (affirmed 2026-11-13)
 
+None. (affirmed 2026-11-25)
+
 ## Mandated
 
 <!-- Populated by practices-discovery affirmation gate. -->
@@ -67,6 +69,8 @@ None (affirmed 2026-11-13)
 - ALWAYS dùng tiếng Anh cho mọi chuỗi hiển thị trên UI của game (không hỗ trợ đa ngôn ngữ) (affirmed 2026-11-13)
 
 - ALWAYS dùng tiếng Anh cho mọi chuỗi hiển thị trên UI của game, không hỗ trợ đa ngôn ngữ. (affirmed 2026-11-20)
+
+None. (affirmed 2026-11-25)
 
 ## Corrections
 

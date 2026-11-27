@@ -1,53 +1,41 @@
 # Reverse Engineering Timestamp
 
-- **Ngày**: 2026-11-20 (intent 261120-block-jewel-update)
-- **Commit**: a8eea3f7b8e667b9c29c88bd2feca0b0f2916cfe
-- **Kiểu quét**: full rescan
+- **Ngày**: 2026-11-25 (intent 261125-ads-remote-config)
+- **Commit**: 0cbba990f3a2101989911b5ceb6fcfc8379cf735
+- **Kiểu quét**: focused scan trên kho đã cũ (STALE). Prior prose được giữ lại, các đường dẫn đã phân tích sâu ở lần trước (261120-block-jewel-update) được hạ xuống shallow vì không thể kiểm lại hết.
 
 ## Scope of Analysis
 
 ```yaml
 scope_version: 1
 kind: partial
-intent: 261120-block-jewel-update
-fingerprint: 3287781ff0f601d2dbc5658e7eacc8267a01bc60
+intent: 261125-ads-remote-config
+fingerprint: 7430ed35f345f237a2a72eb5ea5baba4b32f5b32
 analyzed:
   paths:
     - lib/
     - test/
     - pubspec.yaml
-    - analysis_options.yaml
     - android/app/src/main/AndroidManifest.xml
-    - android/app/src/main/res/
     - android/app/build.gradle.kts
     - ios/Runner/Info.plist
-    - ios/Runner/Base.lproj/LaunchScreen.storyboard
-    - README.md
   components:
     - BlockBlastApp
-    - SplashScreen
     - HomeScreen
     - GameScreen
-    - EndlessGameScreen
     - LevelGameController
-    - EndlessGameController
     - JourneyController
-    - BoardEngine
-    - BlockGenerator
-    - BoardLogic
-    - TurnResolver
-    - BoardGeometry
-    - VictoryOverlay
     - GameOverOverlay
     - ScoreShareService
-    - LevelCatalog
-    - LevelConfigService
-    - ProgressRepository
-    - AudioController
-    - GemTheme
     - AppBootstrap
+    - FirebaseRemoteConfigClient
+    - FirebaseGateway
 shallow:
   paths:
+    - analysis_options.yaml
+    - android/app/src/main/res/
+    - ios/Runner/Base.lproj/LaunchScreen.storyboard
+    - README.md
     - assets/
     - web/
     - linux/

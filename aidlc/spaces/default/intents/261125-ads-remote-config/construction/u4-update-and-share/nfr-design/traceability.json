@@ -1,0 +1,14 @@
+{
+  "stage": "nfr-design",
+  "unit": "u4-update-and-share",
+  "upstream_ids": ["NFR1.2", "NFR6.2", "NFR2.23", "NFR8.1", "NFR8.2", "NFR8.3", "NFR3.4"],
+  "coverage": [
+    { "id": "NFR1.2", "status": "OK", "target": "Kiểm tra sau khung hình đầu, không chặn PLAY" },
+    { "id": "NFR6.2", "status": "OK", "target": "AdsSettings truyền qua constructor, không gọi Remote Config" },
+    { "id": "NFR2.23", "status": "OK", "target": "Bọc bắt lỗi khi đọc phiên bản và mở đường dẫn" },
+    { "id": "NFR8.1", "status": "OK", "target": "Hàm kiểm tra https dùng chung" },
+    { "id": "NFR8.2", "status": "OK", "target": "StoreLauncher dùng chế độ externalApplication" },
+    { "id": "NFR8.3", "status": "OK", "target": "Log chỉ ghi kết quả so sánh" },
+    { "id": "NFR3.4", "status": "OK", "target": "InstalledVersionReader và StoreLauncher có bản giả" }
+  ]
+}

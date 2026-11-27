@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:block_blast/core/theme/gem_theme.dart';
 import 'package:block_blast/features/game/engine/board_geometry.dart';
 import 'package:block_blast/features/game/models/block_model.dart';
@@ -9,6 +11,7 @@ import 'package:block_blast/shared/widgets/level_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../features/ads/ads_fakes.dart';
 import '../features/game/engine/engine_test_helpers.dart';
 import '../fakes/fake_images.dart';
 import '../fakes/log_capture.dart';
@@ -307,9 +310,16 @@ void main() {
 
   group('game over (FR11.3, US2.6, US2.7)', () {
     // Level 9 = Amethyst · Shaping; thua thì về Amethyst · Rough Stone.
-    Future<GameHarness> lostGame(WidgetTester tester) async {
+    Future<GameHarness> lostGame(
+      WidgetTester tester, {
+      FakeAdsService? ads,
+    }) async {
       final h = await GameHarness.create(levelIndex: 9, target: 11);
-      await pumpGameScreen(tester, h);
+      if (ads == null) {
+        await pumpGameScreen(tester, h);
+      } else {
+        await pumpGameScreen(tester, h, ads: ads);
+      }
       h.fillBoardLeavingIsolatedGaps();
       h.controller.onDragStart(h.controller.tray.first);
       await h.controller.placeAt(0, 0);
@@ -369,6 +379,39 @@ void main() {
       expect(h.controller.level.levelIndex, 7);
       expect(_text(tester, 'game-level-name'), 'Amethyst · Rough Stone');
       expect(find.byKey(const Key('game-over-overlay')), findsNothing);
+    });
+
+    testWidgets('PLAY AGAIN shows a due interstitial first, then restarts '
+        '(u1-ads-core, AC2.1.1)', (tester) async {
+      final ads = FakeAdsService()..holdInterstitial = Completer<void>();
+      final h = await lostGame(tester, ads: ads);
+      final before = h.controller.roundId;
+
+      await tester.tap(find.byKey(const Key('game-over-play-again-button')));
+      await tester.pump();
+      expect(ads.interstitialCalls, 1);
+      expect(h.controller.roundId, before, reason: 'waits for the ad to close');
+
+      // Bấm lại trong lúc quảng cáo đang hiện không tính là lần bấm thứ hai.
+      await tester.tap(find.byKey(const Key('game-over-play-again-button')));
+      await tester.pump();
+      expect(ads.interstitialCalls, 1);
+
+      ads.holdInterstitial!.complete();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(h.controller.roundId, isNot(before));
+      expect(find.byKey(const Key('game-over-overlay')), findsNothing);
+    });
+
+    testWidgets('SHARE SCORE marks the return from the share sheet so it is '
+        'not counted as an app open (BR5.3)', (tester) async {
+      final ads = FakeAdsService();
+      final h = await lostGame(tester, ads: ads);
+      await tester.tap(find.byKey(const Key('game-over-share-button')));
+      await tester.pump();
+      expect(ads.suppressCalls, 1);
+      expect(h.share.shared, 1);
+      await tester.pump(const Duration(seconds: 1));
     });
 
     testWidgets('SHARE SCORE calls the share service with the final score', (
@@ -574,6 +617,169 @@ void main() {
       await turn;
       await tester.pump(const Duration(milliseconds: 500));
       expect(h.controller.status, LevelStatus.won);
+    });
+  });
+
+  group('reward on game over (u2-reward-ads, US3.1)', () {
+    Future<GameHarness> lostWithReward(
+      WidgetTester tester,
+      FakeAdsService ads, {
+      bool rewardEnabled = true,
+    }) async {
+      final h = await GameHarness.create(
+        levelIndex: 9,
+        target: 11,
+        ads: ads,
+        rewardEnabled: rewardEnabled,
+      );
+      await pumpGameScreen(tester, h, ads: ads);
+      h.fillBoardLeavingIsolatedGaps();
+      h.controller.onDragStart(h.controller.tray.first);
+      await h.controller.placeAt(0, 0);
+      await tester.pump(const Duration(milliseconds: 500));
+      return h;
+    }
+
+    testWidgets('shows the reward button and its hint in English (AC3.1.1)', (
+      tester,
+    ) async {
+      await lostWithReward(tester, FakeAdsService());
+      expect(find.byKey(const Key('game-over-reward-button')), findsOneWidget);
+      expect(find.text('WATCH AD TO TRY AGAIN'), findsOneWidget);
+      expect(find.text('Watch an ad to stay on this level'), findsOneWidget);
+      expect(
+        find.byKey(const Key('game-over-play-again-button')),
+        findsOneWidget,
+      );
+      await tester.pump(const Duration(seconds: 1));
+    });
+
+    testWidgets('no reward button when reward_enabled is false (AC3.1.2)', (
+      tester,
+    ) async {
+      await lostWithReward(tester, FakeAdsService(), rewardEnabled: false);
+      expect(find.byKey(const Key('game-over-overlay')), findsOneWidget);
+      expect(find.byKey(const Key('game-over-reward-button')), findsNothing);
+      expect(find.text('Watch an ad to stay on this level'), findsNothing);
+      await tester.pump(const Duration(seconds: 1));
+    });
+
+    testWidgets('tapping it shows the ad, then replays the same level '
+        '(AC3.1.3)', (tester) async {
+      final ads = FakeAdsService()..holdReward = Completer<void>();
+      final h = await lostWithReward(tester, ads);
+
+      await tester.tap(find.byKey(const Key('game-over-reward-button')));
+      await tester.pump();
+      expect(ads.rewardCalls, 1);
+      final button = tester.widget<ElevatedButton>(
+        find.descendant(
+          of: find.byKey(const Key('game-over-reward-button')),
+          matching: find.byWidgetPredicate((w) => w is ElevatedButton),
+        ),
+      );
+      expect(button.onPressed, isNull, reason: 'locked while the ad shows');
+
+      ads.holdReward!.complete();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.byKey(const Key('game-over-overlay')), findsNothing);
+      expect(h.controller.level.levelIndex, 9);
+      expect(h.controller.score, 0);
+      expect(_text(tester, 'game-score-target'), '0 / 11');
+      await tester.pump(const Duration(seconds: 1));
+    });
+
+    testWidgets('BACK TO MENU records the loss before leaving (BR6.2)', (
+      tester,
+    ) async {
+      final h = await lostWithReward(tester, FakeAdsService());
+      await tester.tap(find.byKey(const Key('game-over-menu-button')));
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(h.repo.progress.currentLevelIndex, 7);
+      expect(find.text('base-route'), findsOneWidget);
+    });
+  });
+
+  group('banner (u3-banner, US4.1)', () {
+    Future<GameHarness> pumpWithBanner(
+      WidgetTester tester,
+      FakeAdsService ads,
+    ) async {
+      final h = await GameHarness.create(levelIndex: 9, target: 11);
+      await pumpGameScreen(tester, h, ads: ads);
+      await tester.pump();
+      await tester.pump();
+      return h;
+    }
+
+    testWidgets('shows the banner below the board and tray (AC4.1.2)', (
+      tester,
+    ) async {
+      final ads = FakeAdsService()..eligible = true;
+      await pumpWithBanner(tester, ads);
+      final banner = tester.getRect(find.byKey(const Key('ad-banner-slot')));
+      expect(banner.height, 50);
+      expect(
+        banner.top,
+        greaterThanOrEqualTo(tester.getRect(find.byType(BlockPalette)).bottom),
+      );
+      expect(
+        banner.top,
+        greaterThanOrEqualTo(tester.getRect(find.byType(GameBoard)).bottom),
+      );
+      await tester.pump(const Duration(seconds: 1));
+    });
+
+    testWidgets('no banner keeps the layout unchanged (AC4.1.5)', (
+      tester,
+    ) async {
+      final ads = FakeAdsService()
+        ..eligible = true
+        ..bannerResultHeight = null;
+      await pumpWithBanner(tester, ads);
+      final withoutAds = tester.getRect(find.byType(BlockPalette));
+      expect(find.byKey(const Key('ad-banner-slot')), findsNothing);
+      expect(ads.bannerCalls, 1);
+      final h = await GameHarness.create(levelIndex: 9, target: 11);
+      await pumpGameScreen(tester, h);
+      await tester.pump();
+      expect(tester.getRect(find.byType(BlockPalette)), withoutAds);
+      await tester.pump(const Duration(seconds: 1));
+    });
+
+    testWidgets('on a short 360 x 640 screen nothing is covered (AC4.1.6)', (
+      tester,
+    ) async {
+      final ads = FakeAdsService()..eligible = true;
+      final h = await GameHarness.create(levelIndex: 9, target: 11);
+      await pumpGameScreen(tester, h, ads: ads);
+      tester.view.physicalSize = const Size(360, 640);
+      await tester.pump();
+      await tester.pump();
+      final banner = tester.getRect(find.byKey(const Key('ad-banner-slot')));
+      final tray = tester.getRect(find.byType(BlockPalette));
+      expect(banner.top, greaterThanOrEqualTo(tray.bottom));
+      expect(banner.bottom, lessThanOrEqualTo(640));
+      expect(tester.takeException(), isNull);
+      await tester.pump(const Duration(seconds: 1));
+    });
+
+    testWidgets('the Game Over overlay covers the banner (BR7.6)', (
+      tester,
+    ) async {
+      final ads = FakeAdsService()..eligible = true;
+      final h = await pumpWithBanner(tester, ads);
+      h.fillBoardLeavingIsolatedGaps();
+      h.controller.onDragStart(h.controller.tray.first);
+      await h.controller.placeAt(0, 0);
+      await tester.pump(const Duration(milliseconds: 500));
+      final overlay = tester.getRect(
+        find.byKey(const Key('game-over-overlay')),
+      );
+      final banner = tester.getRect(find.byKey(const Key('ad-banner-slot')));
+      expect(overlay.contains(banner.center), isTrue);
+      expect(ads.bannerCalls, 1, reason: 'kept across the round');
+      await tester.pump(const Duration(seconds: 1));
     });
   });
 }

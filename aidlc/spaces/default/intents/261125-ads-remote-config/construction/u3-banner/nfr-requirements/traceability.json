@@ -1,0 +1,14 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u3-banner",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7"],
+  "coverage": [
+    { "id": "NFR1", "status": "N/A", "target": "u3-banner không chạy ở khởi động; khởi tạo quảng cáo thuộc u1-ads-core" },
+    { "id": "NFR2", "status": "OK", "target": "NFR2.15, NFR2.16, NFR2.17, NFR2.18, NFR2.19, NFR2.20, NFR2.21, NFR2.22" },
+    { "id": "NFR3", "status": "OK", "target": "NFR3.3" },
+    { "id": "NFR4", "status": "N/A", "target": "Banner không có chuỗi giao diện của game" },
+    { "id": "NFR5", "status": "N/A", "target": "Không thêm màn hình mới, hướng dọc đã khóa từ trước" },
+    { "id": "NFR6", "status": "N/A", "target": "Không thêm tham số Remote Config mới; banner_start_visit đã có ở u1-ads-core" },
+    { "id": "NFR7", "status": "N/A", "target": "Không đổi hành vi hiện có ngoài bố cục màn chơi; test hiện có phải vẫn xanh" }
+  ]
+}

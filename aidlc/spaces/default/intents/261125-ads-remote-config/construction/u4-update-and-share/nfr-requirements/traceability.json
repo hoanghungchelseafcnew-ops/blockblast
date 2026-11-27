@@ -1,0 +1,14 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u4-update-and-share",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7"],
+  "coverage": [
+    { "id": "NFR1", "status": "OK", "target": "NFR1.2" },
+    { "id": "NFR2", "status": "OK", "target": "NFR2.23" },
+    { "id": "NFR3", "status": "OK", "target": "NFR3.4" },
+    { "id": "NFR4", "status": "N/A", "target": "Chuỗi tiếng Anh của popup đã chốt trong frontend-components.md và kiểm ở bước viết mã" },
+    { "id": "NFR5", "status": "N/A", "target": "Không thêm màn hình mới, hướng dọc đã khóa từ trước" },
+    { "id": "NFR6", "status": "OK", "target": "NFR6.2" },
+    { "id": "NFR7", "status": "N/A", "target": "Không đổi luồng thua ván; test hiện có của nội dung chia sẻ được cập nhật theo FR7" }
+  ]
+}

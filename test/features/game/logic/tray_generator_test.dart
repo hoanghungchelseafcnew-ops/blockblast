@@ -79,10 +79,9 @@ void main() {
       rows[0] = 255 & ~1;
       rows[3] = 255 & ~(1 << 4);
       rows[6] = 255 & ~(1 << 7);
-      final result = TrayGenerator(random: Random(3)).prepare(
-        _boardFromRows(rows),
-        20,
-      );
+      final result = TrayGenerator(
+        random: Random(3),
+      ).prepare(_boardFromRows(rows), 20);
       expect(result.gameOver, isFalse);
       expect(result.tray.length, 3);
     });
@@ -114,10 +113,9 @@ void main() {
         final board = _randomBoard(random, 30 + random.nextInt(60));
         if (_empties(board) < 3) continue;
         checked++;
-        final result = TrayGenerator(random: Random(i)).prepare(
-          board,
-          1 + random.nextInt(36),
-        );
+        final result = TrayGenerator(
+          random: Random(i),
+        ).prepare(board, 1 + random.nextInt(36));
         expect(result.gameOver, isFalse, reason: 'board $i');
         expect(result.tray.length, 3);
       }
@@ -182,9 +180,7 @@ void main() {
     test('a tray never holds more than two large blocks (BR3.3)', () {
       for (var i = 0; i < 200; i++) {
         final r = TrayGenerator(random: Random(i)).prepare(_emptyBoard(), 36);
-        final large = r.tray
-            .where((b) => BlockCatalog.isLarge(b.shape))
-            .length;
+        final large = r.tray.where((b) => BlockCatalog.isLarge(b.shape)).length;
         expect(large, lessThanOrEqualTo(DifficultyConstants.maxLargePerTray));
       }
     });
@@ -193,10 +189,9 @@ void main() {
       int largeAt(int level) {
         var count = 0;
         for (var i = 0; i < 400; i++) {
-          final r = TrayGenerator(random: Random(i)).prepare(
-            _emptyBoard(),
-            level,
-          );
+          final r = TrayGenerator(
+            random: Random(i),
+          ).prepare(_emptyBoard(), level);
           count += r.tray.where((b) => BlockCatalog.isLarge(b.shape)).length;
         }
         return count;

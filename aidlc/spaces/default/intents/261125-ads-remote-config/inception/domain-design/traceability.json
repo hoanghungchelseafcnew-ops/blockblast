@@ -1,0 +1,14 @@
+{
+  "stage": "domain-design",
+  "upstream_ids": ["US1.1", "US1.2", "US1.3", "US2.1", "US3.1", "US4.1", "US5.1", "US6.1"],
+  "coverage": [
+    { "id": "US1.1", "status": "OK", "target": "AdsConfig, RemoteConfigClient, AppBootstrap" },
+    { "id": "US1.2", "status": "OK", "target": "AdMediator, AdNetworkAdapters" },
+    { "id": "US1.3", "status": "OK", "target": "ConsentService" },
+    { "id": "US2.1", "status": "OK", "target": "AdMediator, AdCounters, HomeScreen" },
+    { "id": "US3.1", "status": "OK", "target": "LevelGameController, AdMediator, GameScreen" },
+    { "id": "US4.1", "status": "OK", "target": "AdCounters, AdMediator, GameScreen" },
+    { "id": "US5.1", "status": "OK", "target": "AppUpdateChecker, HomeScreen" },
+    { "id": "US6.1", "status": "OK", "target": "ScoreShareService, AdsConfig" }
+  ]
+}

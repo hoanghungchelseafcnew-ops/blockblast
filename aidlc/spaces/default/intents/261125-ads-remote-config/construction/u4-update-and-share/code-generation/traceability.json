@@ -1,0 +1,34 @@
+{
+  "stage": "code-generation",
+  "unit": "u4-update-and-share",
+  "upstream_ids": [
+    "AC5.1.1", "AC5.1.2", "AC5.1.3", "AC5.1.4", "AC5.1.5", "AC6.1.1", "AC6.1.2", "AC6.1.3",
+    "BR8.1", "BR8.2", "BR8.3", "BR8.4", "BR8.5", "BR8.6", "BR9.1",
+    "NFR1.2", "NFR2.23", "NFR3.4", "NFR4", "NFR6.2", "NFR8.1", "NFR8.2", "NFR8.3"
+  ],
+  "coverage": [
+    { "id": "AC5.1.1", "status": "OK", "target": "lib/features/update/services/app_update_checker.dart" },
+    { "id": "AC5.1.2", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "AC5.1.3", "status": "OK", "target": "lib/features/update/widgets/update_popup.dart" },
+    { "id": "AC5.1.4", "status": "OK", "target": "lib/features/update/widgets/update_popup.dart" },
+    { "id": "AC5.1.5", "status": "OK", "target": "lib/features/update/logic/version_check.dart" },
+    { "id": "AC6.1.1", "status": "OK", "target": "lib/features/game/services/score_share_service.dart" },
+    { "id": "AC6.1.2", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "AC6.1.3", "status": "OK", "target": "lib/features/game/services/score_share_service.dart" },
+    { "id": "BR8.1", "status": "OK", "target": "lib/features/update/logic/version_check.dart" },
+    { "id": "BR8.2", "status": "OK", "target": "lib/features/update/logic/version_check.dart" },
+    { "id": "BR8.3", "status": "OK", "target": "lib/features/update/logic/version_check.dart" },
+    { "id": "BR8.4", "status": "OK", "target": "lib/features/update/services/app_update_checker.dart" },
+    { "id": "BR8.5", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "BR8.6", "status": "OK", "target": "lib/features/update/widgets/update_popup.dart" },
+    { "id": "BR9.1", "status": "OK", "target": "lib/features/game/services/score_share_service.dart" },
+    { "id": "NFR1.2", "status": "OK", "target": "lib/features/home/screens/home_screen.dart" },
+    { "id": "NFR2.23", "status": "OK", "target": "lib/features/update/services/app_update_checker.dart" },
+    { "id": "NFR3.4", "status": "OK", "target": "test/features/update/update_fakes.dart" },
+    { "id": "NFR4", "status": "OK", "target": "lib/features/update/widgets/update_popup.dart" },
+    { "id": "NFR6.2", "status": "OK", "target": "lib/features/journey/services/app_bootstrap.dart" },
+    { "id": "NFR8.1", "status": "OK", "target": "lib/features/update/logic/version_check.dart" },
+    { "id": "NFR8.2", "status": "OK", "target": "lib/features/update/services/store_launcher.dart" },
+    { "id": "NFR8.3", "status": "OK", "target": "lib/features/update/services/app_update_checker.dart" }
+  ]
+}

@@ -19,12 +19,8 @@ SolveOutcome _solve(
   List<BlockModel> blocks, {
   required bool strict,
   int budget = 100000,
-}) => TraySolver.solve(
-  rows,
-  blocks,
-  strict: strict,
-  budget: NodeBudget(budget),
-);
+}) =>
+    TraySolver.solve(rows, blocks, strict: strict, budget: NodeBudget(budget));
 
 /// Bộ giải vét cạn độc lập, viết trên lưới bool, dùng để đối chiếu.
 bool _referenceSolvable(List<List<bool>> grid, List<BlockModel> blocks) {
@@ -176,7 +172,8 @@ void main() {
       for (var i = 0; i < 40; i++) {
         final rows = _randomRows(random, 40 + random.nextInt(40));
         final tray = [
-          for (var k = 0; k < 3; k++) _block(shapes[random.nextInt(shapes.length)]),
+          for (var k = 0; k < 3; k++)
+            _block(shapes[random.nextInt(shapes.length)]),
         ];
         final grid = _gridOf(rows);
         expect(
@@ -210,7 +207,10 @@ void main() {
     });
 
     test('rowsOf and filledCount read the board', () {
-      final board = List.generate(8, (_) => List.generate(8, (_) => CellModel()));
+      final board = List.generate(
+        8,
+        (_) => List.generate(8, (_) => CellModel()),
+      );
       board[0][0].filled = true;
       board[0][3].filled = true;
       board[7][7].filled = true;
@@ -224,7 +224,10 @@ void main() {
       final rows = _empty();
       rows[0] = 0xFE;
       expect(TraySolver.canClearLine(rows, BlockCatalog.small.first), isTrue);
-      expect(TraySolver.canClearLine(_empty(), BlockCatalog.small.first), isFalse);
+      expect(
+        TraySolver.canClearLine(_empty(), BlockCatalog.small.first),
+        isFalse,
+      );
     });
   });
 }

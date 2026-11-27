@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:block_blast/app.dart';
 import 'package:block_blast/core/firebase/firebase_gateway.dart';
 import 'package:block_blast/core/theme/gem_theme.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../fakes/fake_analytics.dart';
+import '../features/ads/ads_fakes.dart';
 import '../fakes/fake_clock.dart';
 import '../fakes/fake_progress_store.dart';
 import '../fakes/log_capture.dart';
@@ -245,6 +248,44 @@ void main() {
         1,
         reason: 'quitting never changes progress',
       );
+    });
+
+    testWidgets('Home starts the ads once and PLAY waits for a due '
+        'interstitial before opening the game (u1-ads-core, AC2.1.1)', (
+      tester,
+    ) async {
+      useMobileScreen(tester);
+      final ads = FakeAdsService()..holdInterstitial = Completer<void>();
+      final services = await buildServices(ads: ads);
+      await tester.pumpWidget(
+        MaterialApp(home: HomeScreen(services: services)),
+      );
+      await _settle(tester);
+      expect(ads.startCalls, 1);
+
+      await tester.tap(find.byKey(const Key('home-play-button')));
+      await tester.pump();
+      expect(ads.interstitialCalls, 1);
+      expect(find.byKey(const Key('game-score-target')), findsNothing);
+
+      ads.holdInterstitial!.complete();
+      await _settle(tester);
+      expect(find.byKey(const Key('game-score-target')), findsOneWidget);
+    });
+
+    testWidgets('a return from the background is reported to the ads '
+        '(u1-ads-core, BR5.1)', (tester) async {
+      useMobileScreen(tester);
+      final ads = FakeAdsService();
+      final services = await buildServices(ads: ads);
+      await tester.pumpWidget(
+        MaterialApp(home: HomeScreen(services: services)),
+      );
+      await _settle(tester);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pump();
+      expect(ads.resumeCalls, 1);
     });
 
     testWidgets('app going to the background flushes dirty progress (WF7)', (
