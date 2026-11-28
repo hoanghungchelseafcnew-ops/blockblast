@@ -17,10 +17,28 @@ abstract class SfxPlayer {
 /// âm (đặt khối, ăn dòng, combo, bom) phát chồng lên nhau thay vì cắt nhau.
 /// Player chỉ được tạo ở lần phát đầu tiên, nên dựng app không gọi plugin
 /// nền tảng.
+///
+/// Âm thanh của game phát chồng lên nhạc của ứng dụng khác thay vì làm nó
+/// dừng (yêu cầu thay đổi CR-3): trước lần phát đầu tiên, đặt [AudioContext]
+/// dùng chung với `mixWithOthers`. Android không giành audio focus; iOS dùng
+/// tùy chọn `mixWithOthers`.
 class AudioplayersSfxPlayer implements SfxPlayer {
-  AudioplayersSfxPlayer({this.poolSize = 4});
+  AudioplayersSfxPlayer({
+    this.poolSize = 4,
+    Future<void> Function(AudioContext context)? setGlobalContext,
+  }) : _setGlobalContext = setGlobalContext;
+
+  /// Ngữ cảnh âm thanh trộn với ứng dụng khác (CR-3).
+  /// Tính theo nền tảng đang chạy, nên dựng lúc cần.
+  static AudioContext get mixWithOthersContext =>
+      AudioContextConfig(focus: AudioContextConfigFocus.mixWithOthers).build();
 
   final int poolSize;
+
+  /// Null thì dùng `AudioPlayer.global`, chỉ chạm tới lúc phát lần đầu để
+  /// dựng app không gọi plugin nền tảng.
+  final Future<void> Function(AudioContext context)? _setGlobalContext;
+  Future<void>? _contextReady;
   final List<AudioPlayer> _players = <AudioPlayer>[];
   int _next = 0;
 
@@ -36,8 +54,29 @@ class AudioplayersSfxPlayer implements SfxPlayer {
     return player;
   }
 
+  /// Đặt ngữ cảnh âm thanh dùng chung đúng một lần. Lỗi được ghi log, game
+  /// vẫn phát âm với ngữ cảnh mặc định.
+  @visibleForTesting
+  Future<void> ensureAudioContext() => _contextReady ??= _applyContext();
+
+  Future<void> _applyContext() async {
+    try {
+      final setter = _setGlobalContext ?? AudioPlayer.global.setAudioContext;
+      await setter(mixWithOthersContext);
+    } catch (e) {
+      GjLog.warn(
+        'Audio',
+        'setting the mix-with-others audio context failed',
+        e,
+      );
+    }
+  }
+
   @override
-  Future<void> play(String asset) => _ready.play(AssetSource(asset));
+  Future<void> play(String asset) async {
+    await ensureAudioContext();
+    await _ready.play(AssetSource(asset));
+  }
 
   @override
   Future<void> stop() async {

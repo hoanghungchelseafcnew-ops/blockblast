@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:block_blast/core/audio/audio_controller.dart';
 import 'package:block_blast/core/audio/sfx.dart';
 import 'package:block_blast/features/game/services/game_feedback.dart';
@@ -36,7 +34,7 @@ void main() {
     await repo.load();
     final player = FakeSfxPlayer();
     final audio = AudioController(progress: repo, player: player);
-    return (DeviceGameFeedback(audio, random: Random(1)), player);
+    return (DeviceGameFeedback(audio), player);
   }
 
   test('NoopGameFeedback does nothing and never throws', () {
@@ -54,84 +52,53 @@ void main() {
       ..stopSfx();
   });
 
-  test('placed vibrates lightly and plays one of the place sounds', () async {
-    final (feedback, player) = await device();
-    feedback.placed();
-    await Future<void>.delayed(Duration.zero);
-    expect(haptics, ['HapticFeedbackType.lightImpact']);
-    expect(player.played, hasLength(1));
-    expect([
-      Sfx.place.asset,
-      Sfx.place2.asset,
-      Sfx.place3.asset,
-    ], contains(player.played.single));
-  });
+  group('only the level-complete sounds play (CR-2)', () {
+    test('placing a block makes no sound and no vibration', () async {
+      final (feedback, player) = await device();
+      for (var i = 0; i < 5; i++) {
+        feedback.placed();
+      }
+      await Future<void>.delayed(Duration.zero);
+      expect(player.played, isEmpty);
+      expect(haptics, isEmpty);
+    });
 
-  test('place sounds vary from move to move', () async {
-    final (feedback, player) = await device();
-    for (var i = 0; i < 30; i++) {
-      feedback.placed();
-    }
-    await Future<void>.delayed(Duration.zero);
-    expect(player.played.toSet().length, greaterThan(1));
-  });
+    test('clearing lines and combos are silent', () async {
+      final (feedback, player) = await device();
+      feedback
+        ..cleared()
+        ..clearedLines(1)
+        ..clearedLines(3)
+        ..combo()
+        ..comboStreak(2)
+        ..comboStreak(9);
+      await Future<void>.delayed(Duration.zero);
+      expect(player.played, isEmpty);
+    });
 
-  test('each event plays its own sound (FR13.1)', () async {
-    final (feedback, player) = await device();
-    feedback
-      ..cleared()
-      ..combo()
-      ..gameOver()
-      ..victory()
-      ..unlock();
-    await Future<void>.delayed(Duration.zero);
-    expect(player.played, [
-      Sfx.clear.asset,
-      Sfx.combo.asset,
-      Sfx.gameOver.asset,
-      Sfx.victory.asset,
-      Sfx.unlock.asset,
-    ]);
-  });
+    test('a bomb is silent and does not vibrate', () async {
+      final (feedback, player) = await device();
+      feedback.bombExploded();
+      await Future<void>.delayed(Duration.zero);
+      expect(player.played, isEmpty);
+      expect(haptics, isEmpty);
+    });
 
-  test('more lines cleared play a fuller chime', () async {
-    final (feedback, player) = await device();
-    feedback
-      ..clearedLines(1)
-      ..clearedLines(2)
-      ..clearedLines(3)
-      ..clearedLines(5);
-    await Future<void>.delayed(Duration.zero);
-    expect(player.played, [
-      Sfx.clear.asset,
-      Sfx.clear2.asset,
-      Sfx.clear3.asset,
-      Sfx.clear3.asset,
-    ]);
-  });
+    test('losing is silent, so Endless is fully silent (2b)', () async {
+      final (feedback, player) = await device();
+      feedback.gameOver();
+      await Future<void>.delayed(Duration.zero);
+      expect(player.played, isEmpty);
+    });
 
-  test('a higher combo plays a higher sound', () async {
-    final (feedback, player) = await device();
-    feedback
-      ..comboStreak(2)
-      ..comboStreak(3)
-      ..comboStreak(4)
-      ..comboStreak(9);
-    await Future<void>.delayed(Duration.zero);
-    expect(player.played, [
-      Sfx.combo.asset,
-      Sfx.combo2.asset,
-      Sfx.combo3.asset,
-      Sfx.combo3.asset,
-    ]);
-  });
-
-  test('a bomb explosion has its own sound and a strong vibration', () async {
-    final (feedback, player) = await device();
-    feedback.bombExploded();
-    await Future<void>.delayed(Duration.zero);
-    expect(player.played, [Sfx.bomb.asset]);
-    expect(haptics, ['HapticFeedbackType.heavyImpact']);
+    test('winning a level and unlocking a gem still play (2a)', () async {
+      final (feedback, player) = await device();
+      feedback
+        ..victory()
+        ..unlock();
+      await Future<void>.delayed(Duration.zero);
+      expect(player.played, [Sfx.victory.asset, Sfx.unlock.asset]);
+    });
   });
 
   test('stopSfx stops the player', () async {

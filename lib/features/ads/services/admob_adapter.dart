@@ -156,13 +156,9 @@ class AdmobAdapter implements AdNetworkAdapter {
     if (!_ids.bannerConfigured) return null;
     final result = Completer<LoadedBanner?>();
     try {
-      final size = await AdSize.getLargeAnchoredAdaptiveBannerAdSize(
-        width.truncate(),
-      );
-      if (size == null) {
-        GjLog.info(_log, 'no adaptive banner size for width $width');
-        return null;
-      }
+      // Cỡ chuẩn 320 x 50, nhỏ nhất, để màn chơi có nhiều chỗ hơn
+      // (yêu cầu thay đổi CR-1).
+      const size = AdSize.banner;
       final ad = BannerAd(
         adUnitId: _ids.bannerId,
         size: size,

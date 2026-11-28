@@ -180,8 +180,9 @@ class ApplovinAdapter implements AdNetworkAdapter {
     return closed.future;
   }
 
-  /// Tải trước một `MaxAdView` banner thích ứng. AppLovin báo kết quả tải
-  /// trước qua một listener dùng chung, nên mỗi lần chỉ một lần tải.
+  /// Tải trước một `MaxAdView` banner cỡ chuẩn 320 x 50 (yêu cầu thay đổi
+  /// CR-1). AppLovin báo kết quả tải trước qua một listener dùng chung, nên
+  /// mỗi lần chỉ một lần tải.
   @override
   Future<LoadedBanner?> loadBanner({
     required double width,
@@ -202,17 +203,16 @@ class ApplovinAdapter implements AdNetworkAdapter {
           },
         ),
       );
-      final height =
-          await AppLovinMAX.getAdaptiveBannerHeightForWidth(width) ?? 50;
       adViewId = await AppLovinMAX.preloadWidgetAdView(
         _ids.bannerId,
         AdFormat.banner,
+        isAdaptive: false,
       );
       if (adViewId == null || !await loaded.future) {
         if (adViewId != null) _destroyBanner(adViewId);
         return null;
       }
-      return _ApplovinBanner(_ids.bannerId, adViewId, width, height);
+      return _ApplovinBanner(_ids.bannerId, adViewId);
     } catch (e) {
       GjLog.warn(_log, 'banner load failed', e);
       _completeBannerLoad(false);
@@ -235,20 +235,22 @@ class ApplovinAdapter implements AdNetworkAdapter {
 }
 
 class _ApplovinBanner implements LoadedBanner {
-  _ApplovinBanner(this._adUnitId, this._adViewId, this._width, this.height);
+  _ApplovinBanner(this._adUnitId, this._adViewId);
+
+  static const double _width = 320;
 
   final String _adUnitId;
   final AdViewId _adViewId;
-  final double _width;
 
   @override
-  final double height;
+  double get height => 50;
 
   @override
   Widget build() => MaxAdView(
     adUnitId: _adUnitId,
     adFormat: AdFormat.banner,
     adViewId: _adViewId,
+    isAdaptiveBannerEnabled: false,
     width: _width,
     height: height,
   );

@@ -4,7 +4,7 @@ Nguồn: `code-generation-plan.md` (Testing Contract), `unit-test-instructions.m
 
 ## Trạng thái
 
-- Mã Dart: phân tích sạch, 669 test pass, độ phủ 87,8%.
+- Mã Dart: phân tích sạch, 672 test pass, độ phủ 87,8% (sau yêu cầu thay đổi CR-1 đến CR-3).
 - Build Android: **thất bại** do Kotlin Gradle Plugin 2.1.0 cũ hơn SDK AdMob (xem `test-results.md`).
 - Build iOS và kiểm thử trên máy thật: chưa chạy.
 
@@ -19,7 +19,7 @@ Nguồn: `code-generation-plan.md` (Testing Contract), `unit-test-instructions.m
 | Target ID | Source | Expected | Actual | Evidence | Owning Stage | Verdict |
 |-----------|--------|----------|--------|----------|--------------|---------|
 | TC-ANALYZE | Testing Contract (team) | `flutter analyze` không lỗi | Không lỗi | Điểm kiểm tra u4, exit 0 | build-and-test | Met |
-| TC-TESTS | Testing Contract (org, team) | Mọi test pass | 669 pass, 1 skip | Điểm kiểm tra u4 | build-and-test | Met |
+| TC-TESTS | Testing Contract (org, team) | Mọi test pass | 672 pass, 1 skip | Điểm kiểm tra u4 | build-and-test | Met |
 | TC-WIDGET | Testing Contract (team) | `test/widget_test.dart` pass | Pass | Điểm kiểm tra u4 | build-and-test | Met |
 | TC-COVERAGE | Testing Contract (org, team) | Độ phủ dòng ≥ 80% | 87,8% | `coverage/lcov.info` | build-and-test | Met |
 | BUILD-ANDROID | `build-instructions.md` | `flutter build apk` thành công | Lần 1 thất bại ở `compileDebugKotlin`; đã sửa Kotlin, chờ build lại | Log build của bạn | build-and-test | Unverified |
@@ -32,6 +32,9 @@ Nguồn: `code-generation-plan.md` (Testing Contract), `unit-test-instructions.m
 | NFR1.2, NFR2.23, NFR6.2, NFR8.1–NFR8.3 | u4 NFR | Popup không chặn, đường dẫn chỉ `https`, không ghi log giá trị | Đạt trong test | `update_popup_test.dart`, `version_check_test.dart`, `app_update_checker_test.dart` | build-and-test | Met |
 | NFR3.1–NFR3.4 | NFR của các unit | Mã SDK sau interface có bản giả | Đạt | `ads_fakes.dart`, `update_fakes.dart` | build-and-test | Met |
 | NFR7.1, NFR7.2 | u1, u2 NFR | Test cũ vẫn xanh | Đạt | Toàn bộ suite | build-and-test | Met |
+| CR-1 | Yêu cầu thay đổi | Banner cao 50 | 50 trong test; AdMob `AdSize.banner`, AppLovin 320 x 50 | `ad_banner_slot_test.dart`, `game_screen_test.dart` | build-and-test | Met |
+| CR-2 | Yêu cầu thay đổi | Chỉ âm qua màn, không rung khi chơi | Đạt trong test | `game_feedback_test.dart` | build-and-test | Met |
+| CR-3 | Yêu cầu thay đổi | Nhạc ứng dụng khác vẫn phát khi chơi | Ngữ cảnh `mixWithOthers` đúng trong test; chưa thử máy thật | `audioplayers_sfx_player_test.dart` | build-and-test | Unverified |
 | DEVICE-ADS | `integration-test-instructions.md` | Quảng cáo, đồng ý, cửa hàng chạy trên máy thật | Chưa chạy | — | build-and-test | Unverified |
 
 ## Mức sẵn sàng

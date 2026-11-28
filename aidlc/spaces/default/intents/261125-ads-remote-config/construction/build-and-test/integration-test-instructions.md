@@ -34,6 +34,8 @@ SDK quảng cáo thật, hộp thoại đồng ý và việc mở cửa hàng kh
 5. Đặt `android_version`/`ios_version` cao hơn bản cài và `android_url`/`ios_url` là link `https` trên Remote Config, mở lại ứng dụng: popup "Update available" hiện, UPDATE mở cửa hàng.
 6. Chia sẻ điểm: nội dung có link cửa hàng ở dòng cuối.
 7. Bật chế độ máy bay rồi lặp lại bước 2 đến 4: game vẫn chạy, không có quảng cáo.
+8. Mở một ứng dụng nghe nhạc (Spotify, YouTube Music) và phát nhạc, rồi vào chơi: nhạc vẫn phát; đặt khối, ăn dòng, thua không có âm và không rung; thắng level có âm qua màn chồng lên nhạc (CR-2, CR-3).
+9. Banner ở màn chơi cao 50 dp (CR-1).
 
 ## Assumptions & Open Questions
 

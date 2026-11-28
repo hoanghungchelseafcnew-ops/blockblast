@@ -98,13 +98,25 @@ Nguồn: `functional-spec.md`, `rules.md`, `frontend-components.md`, `performanc
 - [ ] Test: thêm vào `test/ui/game_screen_test.dart` và `test/ui/endless_game_screen_test.dart` (banner hiện dưới khay khối, không có banner thì bố cục như cũ, lớp phủ Game Over che banner, màn hình 360 x 640 không bị che).
 - Truy vết: AC4.1.4, AC4.1.6, BR7.6, BR7.8, NFR2.18.
 
-### Step 5: Tổng kết
+### Step 5: Yêu cầu thay đổi của bạn (2026-11-27, từ Build and Test)
+
+Bạn yêu cầu: banner cỡ nhỏ nhất để có chỗ chơi rộng hơn; bỏ âm thanh khi chơi, chỉ giữ âm qua màn; âm thanh của game không làm dừng nhạc của ứng dụng khác. Lựa chọn: 2a B (giữ `victory` và `unlock`), 2b A (Endless im lặng), 2c B (bỏ rung), 2d B (banner chỉ AdMob và AppLovin).
+
+- [ ] Banner cỡ chuẩn 320 x 50: `admob_adapter.dart` dùng `AdSize.banner` thay cho banner thích ứng lớn; `applovin_adapter.dart` tải trước `MaxAdView` không thích ứng (`isAdaptive: false`), rộng 320, cao 50. `unity_adapter.dart` vẫn trả null.
+- [ ] `lib/features/game/services/game_feedback.dart`: `DeviceGameFeedback` không phát âm và không rung khi đặt khối, ăn dòng, combo, bom và thua (Journey và Endless). Chỉ phát `victory` và `unlock`, và `stopSfx` vẫn dừng âm đang phát. Endless không có qua màn nên im lặng hoàn toàn.
+- [ ] `lib/core/audio/audio_controller.dart`: `AudioplayersSfxPlayer` đặt `AudioContext` dùng chung trước lần phát đầu tiên, với `AudioContextConfigFocus.mixWithOthers`. Android không giành audio focus; iOS dùng tùy chọn `mixWithOthers`. Nhạc của ứng dụng khác vẫn phát, tiếng game chồng lên. Lỗi đặt `AudioContext` được ghi log, game vẫn phát âm.
+- [ ] Test: cập nhật `test/features/game/services/game_feedback_test.dart` (đặt khối, ăn dòng, combo, bom, thua không phát gì; `victory` và `unlock` vẫn phát); thêm test cho `AudioplayersSfxPlayer` với bản giả nền tảng nếu khả thi, nếu không thì ghi là kiểm thủ công trên máy thật; giữ test banner với chiều cao 50.
+- Truy vết: yêu cầu thay đổi CR-1 (banner 320 x 50), CR-2 (chỉ âm qua màn), CR-3 (không dừng nhạc ứng dụng khác).
+
+### Step 6: Tổng kết
 - [ ] `code-summary.md`, `traceability.json`, `source-manifest.json`.
 
 ## Rủi ro
 
 - API banner của AppLovin (tải trước `MaxAdView`) viết theo mã nguồn thư viện 4.6.4; nếu `flutter analyze` báo lỗi sẽ sửa tên tham số.
 - Banner thật không chạy trong môi trường test, nên phần SDK trong hai adapter có độ phủ thấp như u1 và u2.
+- `game_feedback.dart` và `audio_controller.dart` thuộc workflow `gemstone-journey`; chỉ sửa đúng phần âm thanh và rung theo yêu cầu thay đổi.
+- Việc nhạc của ứng dụng khác có tiếp tục phát hay không chỉ kiểm được trên máy thật.
 
 ## Assumptions & Open Questions
 

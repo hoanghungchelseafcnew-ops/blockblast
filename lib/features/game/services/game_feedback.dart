@@ -1,7 +1,3 @@
-import 'dart:math';
-
-import 'package:flutter/services.dart';
-
 import '../../../core/audio/audio_controller.dart';
 import '../../../core/audio/sfx.dart';
 
@@ -60,60 +56,36 @@ class NoopGameFeedback extends GameFeedback {
   void stopSfx() {}
 }
 
-/// Triển khai thật: [AudioController] và rung của thiết bị.
+/// Triển khai thật bằng [AudioController].
+///
+/// Theo yêu cầu thay đổi CR-2 (2026-11-27): khi chơi không có âm thanh và
+/// không rung. Chỉ phát âm qua màn ([victory]) và mở khóa viên đá
+/// ([unlock]). Endless không có qua màn nên im lặng hoàn toàn.
 class DeviceGameFeedback extends GameFeedback {
-  DeviceGameFeedback(this.audio, {Random? random})
-    : _random = random ?? Random();
+  DeviceGameFeedback(this.audio);
 
   final AudioController audio;
-  final Random _random;
-
-  static const List<Sfx> _placeSounds = [Sfx.place, Sfx.place2, Sfx.place3];
 
   @override
-  void placed() {
-    HapticFeedback.lightImpact();
-    audio.play(_placeSounds[_random.nextInt(_placeSounds.length)]);
-  }
+  void placed() {}
 
   @override
-  void cleared() => audio.play(Sfx.clear);
-
-  /// 1 dòng: chuông đơn; 2 dòng: ba nốt; từ 3 dòng: bốn nốt kèm lấp lánh.
-  @override
-  void clearedLines(int lines) {
-    audio.play(
-      lines >= 3
-          ? Sfx.clear3
-          : lines == 2
-          ? Sfx.clear2
-          : Sfx.clear,
-    );
-  }
+  void cleared() {}
 
   @override
-  void combo() => audio.play(Sfx.combo);
-
-  /// Combo càng cao, âm càng cao và đầy: bậc 2, bậc 3, từ bậc 4.
-  @override
-  void comboStreak(int streak) {
-    audio.play(
-      streak >= 4
-          ? Sfx.combo3
-          : streak == 3
-          ? Sfx.combo2
-          : Sfx.combo,
-    );
-  }
+  void clearedLines(int lines) {}
 
   @override
-  void bombExploded() {
-    HapticFeedback.heavyImpact();
-    audio.play(Sfx.bomb);
-  }
+  void combo() {}
 
   @override
-  void gameOver() => audio.play(Sfx.gameOver);
+  void comboStreak(int streak) {}
+
+  @override
+  void bombExploded() {}
+
+  @override
+  void gameOver() {}
 
   @override
   void victory() => audio.play(Sfx.victory);

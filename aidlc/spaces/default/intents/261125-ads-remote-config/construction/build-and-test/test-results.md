@@ -4,14 +4,21 @@ Nguồn: `build-instructions.md`, `integration-test-instructions.md`, `unit-test
 
 ## Kiểm tra mã Dart
 
-Lệnh `flutter analyze && flutter test --coverage` chạy trên mã hiện tại ở điểm kiểm tra của `u4-update-and-share` (2026-11-26, exit 0). Sau đó mã không đổi. Lệnh riêng của từng unit trong `unit-test-instructions.md` là tập con của lệnh này, nên được tính một lần.
+Lệnh `flutter analyze && flutter test --coverage` chạy lại sau yêu cầu thay đổi CR-1 đến CR-3, ở điểm kiểm tra của `u4-update-and-share` (2026-11-27, exit 0). Sau đó mã không đổi. Lệnh riêng của từng unit trong `unit-test-instructions.md` là tập con của lệnh này, nên được tính một lần.
 
 | Mục | Kết quả |
 |-----|---------|
 | `flutter analyze` | Không có lỗi |
-| Test | 669 pass, 0 fail, 1 skip (có sẵn từ trước) |
+| Test | 672 pass, 0 fail, 1 skip (có sẵn từ trước) |
 | `test/widget_test.dart` | Pass |
-| Độ phủ dòng | 87,8% (3136/3572), sàn 80% |
+| Độ phủ dòng | 87,8% (3129/3563), sàn 80% |
+
+## Yêu cầu thay đổi trong lúc Build and Test
+
+Bạn yêu cầu (2026-11-27) ba thay đổi, đã làm qua lần quay lại Code Generation do bạn chọn (không tính vào giới hạn loop-back):
+- CR-1: banner 320 x 50 (AdMob, AppLovin).
+- CR-2: chỉ âm `victory` và `unlock`; không âm, không rung khi chơi; Endless im lặng.
+- CR-3: âm thanh game trộn với nhạc của ứng dụng khác (`mixWithOthers`).
 
 ## Build Android
 

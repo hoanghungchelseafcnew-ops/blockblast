@@ -10,8 +10,10 @@ Chiến lược kiểm thử: Standard. Phương pháp: test-after. Lệnh kiể
 ## Lệnh chạy cho riêng unit này
 
 ```bash
-flutter test test/features/ads/ad_mediator_test.dart test/features/ads/ad_banner_slot_test.dart test/ui/game_screen_test.dart test/ui/endless_game_screen_test.dart
+flutter test test/features/ads/ad_mediator_test.dart test/features/ads/ad_banner_slot_test.dart test/ui/game_screen_test.dart test/ui/endless_game_screen_test.dart test/features/game/services/game_feedback_test.dart test/core/audio/
 ```
+
+Yêu cầu thay đổi (2026-11-27): kiểm thủ công trên máy thật rằng nhạc của ứng dụng khác (ví dụ Spotify, YouTube Music) vẫn phát khi chơi, và chỉ có âm qua màn.
 
 ## Mục tiêu độ phủ
 

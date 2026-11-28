@@ -110,7 +110,14 @@ Nguồn: `functional-spec.md`, `rules.md`, `frontend-components.md`, `security-d
 - [ ] Test: thêm vào `test/ui/game_screen_test.dart` (nút hiện và ẩn đúng, bấm nút gọi reward rồi bắt đầu lại, chuỗi tiếng Anh) và một test trong `test/features/victory/` không cần.
 - Truy vết: AC3.1.1, AC3.1.2, AC3.1.7, NFR4.
 
-### Step 7: Tổng kết
+### Step 7: Yêu cầu thay đổi của bạn (2026-11-27, từ Build and Test)
+
+- [ ] CR-4: `lib/features/game/widgets/game_over_overlay.dart`: ở bản Journey, gộp `FINAL SCORE: <score>` và `Target: <target>` thành một dòng `<score> / <target>` (key `game-over-score`); bỏ dòng `Target`. Mọi thứ khác giữ nguyên, bản Endless giữ nguyên `FINAL SCORE` và `BEST`.
+- [ ] CR-5: `lib/shared/widgets/level_background.dart`: ảnh nền màn chơi rõ hơn để nhận ra viên ngọc: độ mờ `blurSigma` 12 → 4, lớp tối 50% (`0x80000000`) → 35% (`0x59000000`). Màn Home (lớp phủ theo màu viên ngọc) không đổi.
+- [ ] Test: cập nhật `test/ui/game_screen_test.dart` (dòng điểm là `10 / 11`, không còn `game-over-target`) và `test/shared/level_background_test.dart` (độ mờ 4, lớp tối 35%). `endless_game_screen_test.dart` giữ nguyên.
+- Truy vết: CR-4, CR-5. CR-5 đổi độ mờ 12 của FR5.3 thuộc workflow `gemstone-journey` theo yêu cầu của bạn.
+
+### Step 8: Tổng kết
 - [ ] `code-summary.md`, `traceability.json`, `source-manifest.json`.
 
 ## Rủi ro

@@ -12960,3 +12960,1860 @@
 **Open Questions**: f1002bcc
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-11-27T06:15:40Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 98564899
+**Open Questions**: f1002bcc
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T06:19:28Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 8e4d1b2b
+**Open Questions**: f1002bcc
+
+---
+
+## Question Answered
+**Timestamp**: 2026-11-27T06:19:49Z
+**Event**: QUESTION_ANSWERED
+**Stage**: build-and-test
+**Details**: Change request: 1 (loop back to Code Generation for all three); 2a B (keep victory and unlock sounds only); 2b A (Endless silent); 2c B (remove haptics during play); 2d B (banner 320x50 on AdMob and AppLovin only, no Unity)
+
+---
+
+## Stage Jump
+**Timestamp**: 2026-11-27T06:20:40Z
+**Event**: STAGE_JUMPED
+**Direction**: BACKWARD
+**Source**: build-and-test
+**Target**: code-generation
+**Scope**: feature
+**Details**: BACKWARD jump from build-and-test to code-generation (3.5). Scope: feature.
+**Changed Upstream Artifacts**: ["aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-plan.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/traceability.json","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/unit-test-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-plan.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/traceability.json","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/unit-test-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-plan.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/traceability.json","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/unit-test-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-generation-plan.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/traceability.json","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/unit-test-instructions.md"]
+**Invalidated Downstream Artifacts**: ["aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/build-and-test-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/build-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/cross-unit-traceability.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/integration-test-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/test-results.md"]
+**Invalidated Downstream Reviews**: []
+**Source Baseline**: sha256:a635bfb9384f9ed4fe29c7e1172f8bdd8c7053c953d44396e3e35992b81f7a80
+
+---
+
+## Stage Start
+**Timestamp**: 2026-11-27T06:20:40Z
+**Event**: STAGE_STARTED
+**Stage**: code-generation
+**Agent**: aidlc-developer-agent
+**Answer Mode**: file (reused from intent-capture)
+**Source Baseline**: sha256:a635bfb9384f9ed4fe29c7e1172f8bdd8c7053c953d44396e3e35992b81f7a80
+
+---
+
+## Question Asked
+**Timestamp**: 2026-11-27T06:21:34Z
+**Event**: QUESTION_ASKED
+**Question Id**: 29840a96
+**Question Type**: plan-approval
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:5021c7b42411c27eae2a3e0948bb84ec2193a05fe0e269dd24d43c09906e1b80
+**Stage**: code-generation
+**Unit**: u1-ads-core
+**Ask Id**: ec834315ca709359451d6acc4c656254
+**Options**: ["Approve Plan","Request Changes","I'll edit the files"]
+**Question Text SHA-256**: c44309302f8a1c8c902692d7a6f52947c482e53923808253b3891b579ef95ec0
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T06:22:42Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: fbdd5d96
+**Open Questions**: f1002bcc, 29840a96
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md","entries":{"Plan Approval":"ac92952b66239277"}}
+
+---
+
+## Plan Approval Recorded
+**Timestamp**: 2026-11-27T06:23:56Z
+**Event**: PLAN_APPROVAL_RECORDED
+**Stage**: code-generation
+**Details**: Approve Plan
+**Checkpoint**: plan-approval
+**Plan Target**: unit:u1-ads-core
+**Intent**: 01a21093-8838-75fd-8b5f-0b48d1a0236f
+**Directive Epoch**: sha256:4d77bd41942dc7b4d2d950e69d4cef1565b8bfe4443f7c3f0f8d7232440e16a7
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+**Approval Fingerprint**: sha256:v3:e90d49eb1841d42eb1838113649defdb6df2a104f15fa158b3e93c6f42b4e345
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md
+**Questions SHA-256**: c8c0fc8145ea19c590b2113037b72a00957119bbcae5c3ad73b2ccc8b984a16e
+**Prompt SHA-256**: 622ca71c9d5e433410098c641bdbed65fd8f564614378dbbe99dbe0ab5c9f38d
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Asked By**: engine
+**Person Reply**: 1
+**Message Id**: fbdd5d96
+**Unit**: u1-ads-core
+
+---
+
+## Plan Approval Blocked
+**Timestamp**: 2026-11-27T06:25:21Z
+**Event**: PLAN_APPROVAL_BLOCKED
+**Guard**: plan-approval-guard
+**Reason**: rules-arriving
+**Tool**: Bash
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Stage**: code-generation
+**Unit**: (missing marker)
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T06:30:34Z
+**Event**: SENSOR_FIRED
+**Fire id**: c2da6468
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T06:30:34Z
+**Event**: SENSOR_PASSED
+**Fire id**: c2da6468
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-plan.md
+**Duration ms**: 156
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T06:30:34Z
+**Event**: SENSOR_FIRED
+**Fire id**: cded7deb
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/unit-test-instructions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T06:30:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: cded7deb
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/unit-test-instructions.md
+**Duration ms**: 155
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T06:30:35Z
+**Event**: SENSOR_FIRED
+**Fire id**: c67d1e7e
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T06:30:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: c67d1e7e
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-summary.md
+**Duration ms**: 131
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T06:30:35Z
+**Event**: SENSOR_FIRED
+**Fire id**: 63e2f43d
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T06:30:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: 63e2f43d
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/traceability.json
+**Duration ms**: 126
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T06:31:09Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:2d5331bc0fc4522038828f526c5bacd4
+**Source Fingerprint**: aca93a14ed78021ed2227c2933c0e9f92f8132ff2a73a039b2f9a496314bbff2
+**Unit Source Fingerprint**: sha256:3ddb7c24fb5b36191ad4fcab044376891456c34769ecad77fd32e38ce2f3d44a
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/09921dc3741461e0/1.2d5331bc0fc4522038828f526c5bacd4.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T06:32:28Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 1
+**Source Fingerprint**: aca93a14ed78021ed2227c2933c0e9f92f8132ff2a73a039b2f9a496314bbff2
+**Unit Source Fingerprint**: sha256:3ddb7c24fb5b36191ad4fcab044376891456c34769ecad77fd32e38ce2f3d44a
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:2d5331bc0fc4522038828f526c5bacd4
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/09921dc3741461e0/1.2d5331bc0fc4522038828f526c5bacd4.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T06:33:15Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:2d5331bc0fc4522038828f526c5bacd4
+**Request Source Fingerprint**: aca93a14ed78021ed2227c2933c0e9f92f8132ff2a73a039b2f9a496314bbff2
+**Source Fingerprint**: aca93a14ed78021ed2227c2933c0e9f92f8132ff2a73a039b2f9a496314bbff2
+**Source Listing**: sha256:a635bfb9384f9ed4fe29c7e1172f8bdd8c7053c953d44396e3e35992b81f7a80
+**Unit Source Fingerprint**: sha256:3ddb7c24fb5b36191ad4fcab044376891456c34769ecad77fd32e38ce2f3d44a
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/09921dc3741461e0/1.json
+**Review Record Digest**: sha256:067fc4e130464f89a52d404d9da40d49bd2faead055e3b55b6ba3fede3559beb
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T06:34:36Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:a17c705335018c0b84d2f7fac2b1e557
+**Source Fingerprint**: aca93a14ed78021ed2227c2933c0e9f92f8132ff2a73a039b2f9a496314bbff2
+**Unit Source Fingerprint**: sha256:3ddb7c24fb5b36191ad4fcab044376891456c34769ecad77fd32e38ce2f3d44a
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/09921dc3741461e0/2.a17c705335018c0b84d2f7fac2b1e557.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T06:35:59Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 2
+**Source Fingerprint**: aca93a14ed78021ed2227c2933c0e9f92f8132ff2a73a039b2f9a496314bbff2
+**Unit Source Fingerprint**: sha256:3ddb7c24fb5b36191ad4fcab044376891456c34769ecad77fd32e38ce2f3d44a
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:a17c705335018c0b84d2f7fac2b1e557
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/09921dc3741461e0/2.a17c705335018c0b84d2f7fac2b1e557.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T06:36:44Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 2
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:a17c705335018c0b84d2f7fac2b1e557
+**Request Source Fingerprint**: aca93a14ed78021ed2227c2933c0e9f92f8132ff2a73a039b2f9a496314bbff2
+**Source Fingerprint**: aca93a14ed78021ed2227c2933c0e9f92f8132ff2a73a039b2f9a496314bbff2
+**Source Listing**: sha256:a635bfb9384f9ed4fe29c7e1172f8bdd8c7053c953d44396e3e35992b81f7a80
+**Unit Source Fingerprint**: sha256:3ddb7c24fb5b36191ad4fcab044376891456c34769ecad77fd32e38ce2f3d44a
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/09921dc3741461e0/2.json
+**Review Record Digest**: sha256:231036ab1cff80d9939953c1a2205c50b9018535514c3ed64b6d2a3cd48314e0
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-27T06:38:11Z
+**Event**: UNIT_STARTED
+**Stage**: code-generation
+**Unit**: u1-ads-core
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-27T06:39:50Z
+**Event**: UNIT_COMPLETED
+**Stage**: code-generation
+**Unit**: u1-ads-core
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-27T06:44:42Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u1-ads-core
+**Kind**: skeleton
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: c172450f-a02e-42c8-b4fc-984baeab6ff8
+**Fingerprint**: sha256:43a5afad368b9e65e9d62b1924c1a28ba10a05daeefcb85573c52cfaca519fb3
+**Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Exit Code**: 1
+**Verified**: false
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-27T06:48:44Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u1-ads-core
+**Kind**: skeleton
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 90767e69-6b2c-492b-9ad6-774bfdb5793b
+**Fingerprint**: sha256:43a5afad368b9e65e9d62b1924c1a28ba10a05daeefcb85573c52cfaca519fb3
+**Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Exit Code**: 0
+**Verified**: true
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-11-27T06:50:25Z
+**Event**: DECISION_RECORDED
+**Checkpoint**: Construction Unit Approval
+**Unit**: u1-ads-core
+**Kind**: skeleton
+**Stage**: code-generation
+**Fingerprint**: sha256:43a5afad368b9e65e9d62b1924c1a28ba10a05daeefcb85573c52cfaca519fb3
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Options**: Approve,Request Changes
+**Asked Evidence**: {"functional-design":["sha256:c2603aba51231e91f256488b28ff46c3eefb7f886152bfc18361ef5694915ba4",null],"nfr-requirements":["sha256:8b2736459b3884994a045cbbc71f083286c6612f305b762b1b2fb8c926a8fff6",null],"nfr-design":["sha256:d203edeea3e29595e719ad304503e4ee9b06a9d0ead573fc5dbeffcc5e820c59",null],"code-generation":["sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142","sha256:3ddb7c24fb5b36191ad4fcab044376891456c34769ecad77fd32e38ce2f3d44a",{"\u0000android/app/src/main/AndroidManifest.xml":"100755 ae69ddc3f211149cc9b895a34055cf16bcc7419f9570b3b90cb97669170dc806","\u0000ios/Runner/Info.plist":"100755 49a72eeeeafd037695116289f3200b54e3844e10b99345671f33e860bd9bbf34","\u0000lib/app_composition.dart":"100755 a7f0c270b2bfdc9745ba1e1635b013b21803719f0f36426dc8407885075e1e70","\u0000lib/core/config/remote_config_client.dart":"100755 27f0300e9172d0f9c8f5117e18ded250bc4482a3c12adc1f632a487a2d56cdc6","\u0000lib/core/firebase/firebase_remote_config_client.dart":"100755 625869c7e2b6b65ed280e6d1e8615a463e87eaba82873aeea814acb907ea09f1","\u0000lib/features/ads/models/ads_settings.dart":"100755 c465ee84c0f621747c95ff27f4befd45794fca5878d89f7092995127f2ed1234","\u0000lib/features/ads/services/ad_counters.dart":"100755 01a96780628ef8ad2b69e87a23d0d0130fb11635b428da62b547828e0e0cb666","\u0000lib/features/ads/services/ad_lifecycle_observer.dart":"100755 66c76c687fbc5dfc8f77b2e704f66077e6e04d1503983e3bab4b76cae1378c68","\u0000lib/features/ads/services/ad_mediator.dart":"100755 d5dcd66de01179ad07a01055c8950425a14c78174f15c6224197d401016082cb","\u0000lib/features/ads/services/ad_network_adapter.dart":"100755 df21b246f9465eae347ccd331096a657e2de639fc136c096050fc1adb96d0fb6","\u0000lib/features/ads/services/ad_unit_ids.dart":"100755 8da17df5d1c28bb196d88b1c7ab98dd2fb50897ee11de4e54c081efa2311cca1","\u0000lib/features/ads/services/admob_adapter.dart":"100755 d3a61732f8f292586deb44a5fdd63f1230d35a56166c39c7c6ade77db7990c90","\u0000lib/features/ads/services/ads_config.dart":"100755 9cfa83a2b60913f0a24e2995514b214cf95f2063cc584452911ee392507a9899","\u0000lib/features/ads/services/applovin_adapter.dart":"100755 3d2225fdf572695e4d1fd65426a73540b978a5bdc2b6af4d7a567c326f30b06b","\u0000lib/features/ads/services/consent_service.dart":"100755 ff214f64cb8e0072e062051d6946f33d68d74d277bc16fca71f332401dcc44f9","\u0000lib/features/ads/services/pending_loss_store.dart":"100755 b99dc9a2cd37bf2ce4e5c9a38134d8a70b4e03c9aae280af939c422e94b9f329","\u0000lib/features/ads/services/unity_adapter.dart":"100755 ca6d9ca9dc6497dc6c78e3edbd2f23d56e42f38aa8155596e15ca1a0016a0fc9","\u0000lib/features/ads/widgets/ad_banner_slot.dart":"100755 5704fc9273fcd4d71b02ab4bc0a36aca9687e3dca7f8a0a90830d0ccc49c333b","\u0000lib/features/endless/screens/endless_game_screen.dart":"100755 a535928d0d6b183ef21c5b69b6ab0af596b04231e4d99a77b377a63b44f688fb","\u0000lib/features/game/screens/game_screen.dart":"100755 3b5a4ea526c62a84f0cf86ad84553b8f5141b0f17486a5fae686af515d549107","\u0000lib/features/home/screens/home_screen.dart":"100755 81c00e077e696f5cf5930a01c660d931ac30e9ba94bd140653c0f44d14fabadb","\u0000lib/features/journey/services/app_bootstrap.dart":"100755 dca8fd5bbbf7cb8371a477eca678f0339338d603bc31385532ca9749e6f38e1a","\u0000pubspec.yaml":"100755 94c30e758215f3574bca5e7f01661504df18cc1f66566f74c80d823d158b8167","\u0000test/app_composition_test.dart":"100755 2713cd179a22c0eb515108858eb5f55adc915fbd81ac8e9703e723677a76577c","\u0000test/core/config/firebase_remote_config_client_test.dart":"100755 4e0818c4e267e5572214872c76b425db733d10e349047d8003e47e0e2decc9b7","\u0000test/fakes/fake_remote_config_client.dart":"100755 02e7ee5c004ab5bb8ab54e3307b887ce84d62e8d2582028e46c24ac240a331b2","\u0000test/features/ads/ad_banner_slot_test.dart":"100755 70bf1db0ee1ebc3333a0e667ad37b2b9146445c05bc7a9e07850145e193d067a","\u0000test/features/ads/ad_counters_test.dart":"100755 9d1eeeb4e5c5aa99092e1c47fc4265d896254388333b59a4b9c3b077355e7fae","\u0000test/features/ads/ad_lifecycle_observer_test.dart":"100755 7b1f11712fef7c332d898fb57da1a3f881396590db1eacdf953f4b58f82a10f6","\u0000test/features/ads/ad_mediator_test.dart":"100755 675acecca34251d049f74dd385ef3754b5b836d7201ab4f7f92402134d6eb157","\u0000test/features/ads/ads_config_test.dart":"100755 d073cc3be32c239481f89fbaabab36d810e1fbb571599a96e5a43907c772c4f7","\u0000test/features/ads/ads_fakes.dart":"100755 c051570e927ff883658dddd452e5c403e03704c9691193ac78894b1282bcfa1c","\u0000test/features/ads/consent_service_test.dart":"100755 347a281edd981863cfe918077f5123697f7c090d97ce852a4028c2580ddc9703","\u0000test/features/ads/pending_loss_store_test.dart":"100755 70bb720d9ffbea3a52f900adcb217558518f4de53b13c3d6090bc122c906bebe","\u0000test/features/journey/app_bootstrap_test.dart":"100755 81f6a0630e2cc20d2064eb61bd5a6e531be6abc61b854bd3d70705eb297ae433","\u0000test/ui/endless_game_screen_test.dart":"100755 72682fc7e06701f329de90af0475e18f4c6c23cb1454af78708f00d70fcdce6d","\u0000test/ui/game_screen_test.dart":"100755 3e41967dc3db6dffb6013eedd38736b5f5e4f2eb0490605a0be38647d77f1db4","\u0000test/ui/splash_home_test.dart":"100755 c2f7139786db3f31377f7eb4e6770fb47e6ec732bdf0d995572933895eab9b6e","\u0000test/ui/ui_test_helpers.dart":"100755 02d70ca366684cd17ea91c5a1f12f9709a76b4b9b6770b999f93944ebe030e51"}]}
+**Run floors**: {"functional-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-requirements":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","infrastructure-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","code-generation":"STAGE_JUMPED:2026-11-27T06:20:40Z#1"}
+**Question Id**: aaf2bd6f
+**Question Type**: unit-checkpoint
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:a21ae5bc6cb2f517f8f3760d98dedfe5ecab8a01ddfde89f9f7f32d3fda713b9
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T07:37:31Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 6e0eba99
+**Open Questions**: f1002bcc, aaf2bd6f
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md","entries":{"Plan Approval":"ac92952b66239277"}}
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-27T07:38:21Z
+**Event**: GATE_APPROVED
+**Unit**: u1-ads-core
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Stages**: functional-design, nfr-requirements, nfr-design, code-generation
+**Gate Scope**: unit-end
+**Checkpoint**: walking-skeleton
+**Fingerprint**: sha256:43a5afad368b9e65e9d62b1924c1a28ba10a05daeefcb85573c52cfaca519fb3
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+**Run floors**: {"functional-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-requirements":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","infrastructure-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","code-generation":"STAGE_JUMPED:2026-11-27T06:20:40Z#1"}
+**Verification Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Verification Id**: 90767e69-6b2c-492b-9ad6-774bfdb5793b
+**Approved Evidence**: {"functional-design":["sha256:c2603aba51231e91f256488b28ff46c3eefb7f886152bfc18361ef5694915ba4",null],"nfr-requirements":["sha256:8b2736459b3884994a045cbbc71f083286c6612f305b762b1b2fb8c926a8fff6",null],"nfr-design":["sha256:d203edeea3e29595e719ad304503e4ee9b06a9d0ead573fc5dbeffcc5e820c59",null],"code-generation":["sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142","sha256:3ddb7c24fb5b36191ad4fcab044376891456c34769ecad77fd32e38ce2f3d44a",{"\u0000android/app/src/main/AndroidManifest.xml":"100755 ae69ddc3f211149cc9b895a34055cf16bcc7419f9570b3b90cb97669170dc806","\u0000ios/Runner/Info.plist":"100755 49a72eeeeafd037695116289f3200b54e3844e10b99345671f33e860bd9bbf34","\u0000lib/app_composition.dart":"100755 a7f0c270b2bfdc9745ba1e1635b013b21803719f0f36426dc8407885075e1e70","\u0000lib/core/config/remote_config_client.dart":"100755 27f0300e9172d0f9c8f5117e18ded250bc4482a3c12adc1f632a487a2d56cdc6","\u0000lib/core/firebase/firebase_remote_config_client.dart":"100755 625869c7e2b6b65ed280e6d1e8615a463e87eaba82873aeea814acb907ea09f1","\u0000lib/features/ads/models/ads_settings.dart":"100755 c465ee84c0f621747c95ff27f4befd45794fca5878d89f7092995127f2ed1234","\u0000lib/features/ads/services/ad_counters.dart":"100755 01a96780628ef8ad2b69e87a23d0d0130fb11635b428da62b547828e0e0cb666","\u0000lib/features/ads/services/ad_lifecycle_observer.dart":"100755 66c76c687fbc5dfc8f77b2e704f66077e6e04d1503983e3bab4b76cae1378c68","\u0000lib/features/ads/services/ad_mediator.dart":"100755 d5dcd66de01179ad07a01055c8950425a14c78174f15c6224197d401016082cb","\u0000lib/features/ads/services/ad_network_adapter.dart":"100755 df21b246f9465eae347ccd331096a657e2de639fc136c096050fc1adb96d0fb6","\u0000lib/features/ads/services/ad_unit_ids.dart":"100755 8da17df5d1c28bb196d88b1c7ab98dd2fb50897ee11de4e54c081efa2311cca1","\u0000lib/features/ads/services/admob_adapter.dart":"100755 d3a61732f8f292586deb44a5fdd63f1230d35a56166c39c7c6ade77db7990c90","\u0000lib/features/ads/services/ads_config.dart":"100755 9cfa83a2b60913f0a24e2995514b214cf95f2063cc584452911ee392507a9899","\u0000lib/features/ads/services/applovin_adapter.dart":"100755 3d2225fdf572695e4d1fd65426a73540b978a5bdc2b6af4d7a567c326f30b06b","\u0000lib/features/ads/services/consent_service.dart":"100755 ff214f64cb8e0072e062051d6946f33d68d74d277bc16fca71f332401dcc44f9","\u0000lib/features/ads/services/pending_loss_store.dart":"100755 b99dc9a2cd37bf2ce4e5c9a38134d8a70b4e03c9aae280af939c422e94b9f329","\u0000lib/features/ads/services/unity_adapter.dart":"100755 ca6d9ca9dc6497dc6c78e3edbd2f23d56e42f38aa8155596e15ca1a0016a0fc9","\u0000lib/features/ads/widgets/ad_banner_slot.dart":"100755 5704fc9273fcd4d71b02ab4bc0a36aca9687e3dca7f8a0a90830d0ccc49c333b","\u0000lib/features/endless/screens/endless_game_screen.dart":"100755 a535928d0d6b183ef21c5b69b6ab0af596b04231e4d99a77b377a63b44f688fb","\u0000lib/features/game/screens/game_screen.dart":"100755 3b5a4ea526c62a84f0cf86ad84553b8f5141b0f17486a5fae686af515d549107","\u0000lib/features/home/screens/home_screen.dart":"100755 81c00e077e696f5cf5930a01c660d931ac30e9ba94bd140653c0f44d14fabadb","\u0000lib/features/journey/services/app_bootstrap.dart":"100755 dca8fd5bbbf7cb8371a477eca678f0339338d603bc31385532ca9749e6f38e1a","\u0000pubspec.yaml":"100755 94c30e758215f3574bca5e7f01661504df18cc1f66566f74c80d823d158b8167","\u0000test/app_composition_test.dart":"100755 2713cd179a22c0eb515108858eb5f55adc915fbd81ac8e9703e723677a76577c","\u0000test/core/config/firebase_remote_config_client_test.dart":"100755 4e0818c4e267e5572214872c76b425db733d10e349047d8003e47e0e2decc9b7","\u0000test/fakes/fake_remote_config_client.dart":"100755 02e7ee5c004ab5bb8ab54e3307b887ce84d62e8d2582028e46c24ac240a331b2","\u0000test/features/ads/ad_banner_slot_test.dart":"100755 70bf1db0ee1ebc3333a0e667ad37b2b9146445c05bc7a9e07850145e193d067a","\u0000test/features/ads/ad_counters_test.dart":"100755 9d1eeeb4e5c5aa99092e1c47fc4265d896254388333b59a4b9c3b077355e7fae","\u0000test/features/ads/ad_lifecycle_observer_test.dart":"100755 7b1f11712fef7c332d898fb57da1a3f881396590db1eacdf953f4b58f82a10f6","\u0000test/features/ads/ad_mediator_test.dart":"100755 675acecca34251d049f74dd385ef3754b5b836d7201ab4f7f92402134d6eb157","\u0000test/features/ads/ads_config_test.dart":"100755 d073cc3be32c239481f89fbaabab36d810e1fbb571599a96e5a43907c772c4f7","\u0000test/features/ads/ads_fakes.dart":"100755 c051570e927ff883658dddd452e5c403e03704c9691193ac78894b1282bcfa1c","\u0000test/features/ads/consent_service_test.dart":"100755 347a281edd981863cfe918077f5123697f7c090d97ce852a4028c2580ddc9703","\u0000test/features/ads/pending_loss_store_test.dart":"100755 70bb720d9ffbea3a52f900adcb217558518f4de53b13c3d6090bc122c906bebe","\u0000test/features/journey/app_bootstrap_test.dart":"100755 81f6a0630e2cc20d2064eb61bd5a6e531be6abc61b854bd3d70705eb297ae433","\u0000test/ui/endless_game_screen_test.dart":"100755 72682fc7e06701f329de90af0475e18f4c6c23cb1454af78708f00d70fcdce6d","\u0000test/ui/game_screen_test.dart":"100755 3e41967dc3db6dffb6013eedd38736b5f5e4f2eb0490605a0be38647d77f1db4","\u0000test/ui/splash_home_test.dart":"100755 c2f7139786db3f31377f7eb4e6770fb47e6ec732bdf0d995572933895eab9b6e","\u0000test/ui/ui_test_helpers.dart":"100755 02d70ca366684cd17ea91c5a1f12f9709a76b4b9b6770b999f93944ebe030e51"}]}
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**User Input**: Approve
+**Person Reply**: l1
+**Message Id**: 6e0eba99
+**Review**: not finished
+
+---
+
+## Memory Empty
+**Timestamp**: 2026-11-27T07:38:36Z
+**Event**: MEMORY_EMPTY
+**Stage**: nfr-requirements
+
+---
+
+## Memory Empty
+**Timestamp**: 2026-11-27T07:38:36Z
+**Event**: MEMORY_EMPTY
+**Stage**: nfr-design
+
+---
+
+## Question Asked
+**Timestamp**: 2026-11-27T07:39:20Z
+**Event**: QUESTION_ASKED
+**Question Id**: 72796d31
+**Question Type**: plan-approval
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:e7fecfd14e39e8aa85b45fb2634763a92f9fc780088cf8b4d4eb163281c99779
+**Stage**: code-generation
+**Unit**: u2-reward-ads
+**Ask Id**: b703ecea49d9f7e471d0c33a31082e64
+**Options**: ["Approve Plan","Request Changes","I'll edit the files"]
+**Question Text SHA-256**: a8a1135786fd04ccb9186219232328170792e2eefd930b051197bd03204f1f3f
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-questions.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T07:40:42Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: d3df9b43
+**Open Questions**: f1002bcc, 72796d31
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-questions.md","entries":{"Plan Approval":"35857cee1abf2dd7"}}
+
+---
+
+## Plan Approval Recorded
+**Timestamp**: 2026-11-27T07:40:59Z
+**Event**: PLAN_APPROVAL_RECORDED
+**Stage**: code-generation
+**Details**: Approve Plan
+**Checkpoint**: plan-approval
+**Plan Target**: unit:u2-reward-ads
+**Intent**: 01a21093-8838-75fd-8b5f-0b48d1a0236f
+**Directive Epoch**: sha256:bc6452dd36025e0a9e8fd813e4112a0ddf68e026e968eb24dd6601047b1734c3
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+**Approval Fingerprint**: sha256:v3:162d7e925753e845398c1d8cb624635e4ed3d2c7921b76d861b899876ef98a43
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-questions.md
+**Questions SHA-256**: 64a5479a880f7c78be23dc2eed813507bbe261f0795f3c8f77e5aaaac23f4a58
+**Prompt SHA-256**: 7fbc9ca6b5a63c94496126e0184d558d25497595c05a41c440c2c212e7829db1
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Asked By**: engine
+**Person Reply**: 1
+**Message Id**: d3df9b43
+**Unit**: u2-reward-ads
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T07:45:20Z
+**Event**: SENSOR_FIRED
+**Fire id**: bf3dc6dd
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-reward-ads
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T07:45:20Z
+**Event**: SENSOR_PASSED
+**Fire id**: bf3dc6dd
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-reward-ads
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-plan.md
+**Duration ms**: 159
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T07:45:20Z
+**Event**: SENSOR_FIRED
+**Fire id**: e839e0ef
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-reward-ads
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/unit-test-instructions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T07:45:20Z
+**Event**: SENSOR_PASSED
+**Fire id**: e839e0ef
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-reward-ads
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/unit-test-instructions.md
+**Duration ms**: 132
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T07:45:21Z
+**Event**: SENSOR_FIRED
+**Fire id**: 4a876e2e
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-reward-ads
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T07:45:21Z
+**Event**: SENSOR_PASSED
+**Fire id**: 4a876e2e
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-reward-ads
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-summary.md
+**Duration ms**: 123
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T07:45:21Z
+**Event**: SENSOR_FIRED
+**Fire id**: c046edaa
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-reward-ads
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T07:45:21Z
+**Event**: SENSOR_PASSED
+**Fire id**: c046edaa
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-reward-ads
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/traceability.json
+**Duration ms**: 123
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T07:45:32Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-reward-ads
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195
+**Request Id**: review:39c6eb524b66119e5a1affb9b10d3da2
+**Source Fingerprint**: ad55608c97c81147b8549f796569d5525fc517232729b50d5ca59646b0a1ef36
+**Unit Source Fingerprint**: sha256:faeb7a100efae940afb45acf910d3099d54db73e643a1743ed3847950ce7b365
+**Review File**: .aidlc-engine/reviews/code-generation/units/u2-reward-ads/09921dc3741461e0/1.39c6eb524b66119e5a1affb9b10d3da2.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T07:45:54Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-reward-ads
+**Iteration**: 1
+**Source Fingerprint**: ad55608c97c81147b8549f796569d5525fc517232729b50d5ca59646b0a1ef36
+**Unit Source Fingerprint**: sha256:faeb7a100efae940afb45acf910d3099d54db73e643a1743ed3847950ce7b365
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195
+**Request Id**: review:39c6eb524b66119e5a1affb9b10d3da2
+**Review File**: .aidlc-engine/reviews/code-generation/units/u2-reward-ads/09921dc3741461e0/1.39c6eb524b66119e5a1affb9b10d3da2.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T07:46:09Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-reward-ads
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195
+**Artifact Fingerprint**: sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195
+**Request Id**: review:39c6eb524b66119e5a1affb9b10d3da2
+**Request Source Fingerprint**: ad55608c97c81147b8549f796569d5525fc517232729b50d5ca59646b0a1ef36
+**Source Fingerprint**: ad55608c97c81147b8549f796569d5525fc517232729b50d5ca59646b0a1ef36
+**Source Listing**: sha256:267c98fde2a65da53133ae3f43c1cff207c91028f4c2de254c092282e948546f
+**Unit Source Fingerprint**: sha256:faeb7a100efae940afb45acf910d3099d54db73e643a1743ed3847950ce7b365
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u2-reward-ads/09921dc3741461e0/1.json
+**Review Record Digest**: sha256:4354c2bbf22f6c1bf85fe0b098840ca2c8d9c09a606f5ed393d6dac2600c56ff
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T07:46:41Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-reward-ads
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195
+**Request Id**: review:73c7a2f63d33a4d6630f56d553b650c5
+**Source Fingerprint**: ad55608c97c81147b8549f796569d5525fc517232729b50d5ca59646b0a1ef36
+**Unit Source Fingerprint**: sha256:faeb7a100efae940afb45acf910d3099d54db73e643a1743ed3847950ce7b365
+**Review File**: .aidlc-engine/reviews/code-generation/units/u2-reward-ads/09921dc3741461e0/2.73c7a2f63d33a4d6630f56d553b650c5.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T07:47:03Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-reward-ads
+**Iteration**: 2
+**Source Fingerprint**: ad55608c97c81147b8549f796569d5525fc517232729b50d5ca59646b0a1ef36
+**Unit Source Fingerprint**: sha256:faeb7a100efae940afb45acf910d3099d54db73e643a1743ed3847950ce7b365
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195
+**Request Id**: review:73c7a2f63d33a4d6630f56d553b650c5
+**Review File**: .aidlc-engine/reviews/code-generation/units/u2-reward-ads/09921dc3741461e0/2.73c7a2f63d33a4d6630f56d553b650c5.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T07:47:18Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-reward-ads
+**Iteration**: 2
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195
+**Artifact Fingerprint**: sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195
+**Request Id**: review:73c7a2f63d33a4d6630f56d553b650c5
+**Request Source Fingerprint**: ad55608c97c81147b8549f796569d5525fc517232729b50d5ca59646b0a1ef36
+**Source Fingerprint**: ad55608c97c81147b8549f796569d5525fc517232729b50d5ca59646b0a1ef36
+**Source Listing**: sha256:267c98fde2a65da53133ae3f43c1cff207c91028f4c2de254c092282e948546f
+**Unit Source Fingerprint**: sha256:faeb7a100efae940afb45acf910d3099d54db73e643a1743ed3847950ce7b365
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u2-reward-ads/09921dc3741461e0/2.json
+**Review Record Digest**: sha256:8d6a991f58e44d78316d191b668c529a6d3aee942cf49ceb8231d5ea9ba546a1
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-27T07:48:13Z
+**Event**: UNIT_STARTED
+**Stage**: code-generation
+**Unit**: u2-reward-ads
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-27T07:48:27Z
+**Event**: UNIT_COMPLETED
+**Stage**: code-generation
+**Unit**: u2-reward-ads
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-27T07:52:26Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u2-reward-ads
+**Kind**: unit
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 93f3a4bd-0e93-4927-bc20-b5a8d73c7acc
+**Fingerprint**: sha256:01d213c2c41b16ce7a39b38561120a39fca2251746d29cbd61b4e40af2f1d423
+**Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Exit Code**: 0
+**Verified**: true
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-27T07:53:25Z
+**Event**: GATE_APPROVED
+**Unit**: u2-reward-ads
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Stages**: functional-design, nfr-requirements, nfr-design, code-generation
+**Gate Scope**: unit-end
+**Checkpoint**: construction-unit
+**Fingerprint**: sha256:01d213c2c41b16ce7a39b38561120a39fca2251746d29cbd61b4e40af2f1d423
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+**Run floors**: {"functional-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-requirements":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","infrastructure-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","code-generation":"STAGE_JUMPED:2026-11-27T06:20:40Z#1"}
+**Verification Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Verification Id**: 93f3a4bd-0e93-4927-bc20-b5a8d73c7acc
+**Approved Evidence**: {"functional-design":["sha256:f6cd9e3079f6ba66b2bf8a60ccc33439bb0268c54178d5f40e855ec196d4eab0",null],"nfr-requirements":["sha256:f211a46558f008a066896f6e2b3bec2996a99446268f975ef7173144e900fe79",null],"nfr-design":["sha256:930460327b514f5e14c17c9fa7e4f09fde89a69891d6f85ee6c3e35d4d3defbb",null],"code-generation":["sha256:4f39e9f9f23df28ef7175941d9303ebc437f342c3aa9996477676f24632ff195","sha256:faeb7a100efae940afb45acf910d3099d54db73e643a1743ed3847950ce7b365",{"\u0000lib/app_composition.dart":"100755 a7f0c270b2bfdc9745ba1e1635b013b21803719f0f36426dc8407885075e1e70","\u0000lib/features/ads/services/ad_mediator.dart":"100755 d5dcd66de01179ad07a01055c8950425a14c78174f15c6224197d401016082cb","\u0000lib/features/ads/services/ad_network_adapter.dart":"100755 df21b246f9465eae347ccd331096a657e2de639fc136c096050fc1adb96d0fb6","\u0000lib/features/ads/services/ad_unit_ids.dart":"100755 8da17df5d1c28bb196d88b1c7ab98dd2fb50897ee11de4e54c081efa2311cca1","\u0000lib/features/ads/services/admob_adapter.dart":"100755 d3a61732f8f292586deb44a5fdd63f1230d35a56166c39c7c6ade77db7990c90","\u0000lib/features/ads/services/applovin_adapter.dart":"100755 3d2225fdf572695e4d1fd65426a73540b978a5bdc2b6af4d7a567c326f30b06b","\u0000lib/features/ads/services/pending_loss_store.dart":"100755 b99dc9a2cd37bf2ce4e5c9a38134d8a70b4e03c9aae280af939c422e94b9f329","\u0000lib/features/ads/services/unity_adapter.dart":"100755 ca6d9ca9dc6497dc6c78e3edbd2f23d56e42f38aa8155596e15ca1a0016a0fc9","\u0000lib/features/game/screens/game_screen.dart":"100755 3b5a4ea526c62a84f0cf86ad84553b8f5141b0f17486a5fae686af515d549107","\u0000lib/features/game/widgets/game_over_overlay.dart":"100755 cc0c55db26baffa209305d271a3a6ad721145405e5f421175f4ae513bc04aa84","\u0000lib/features/home/screens/home_screen.dart":"100755 81c00e077e696f5cf5930a01c660d931ac30e9ba94bd140653c0f44d14fabadb","\u0000lib/features/journey/controllers/level_game_controller.dart":"100755 38af5f91bb1185187e1ac606bf66d889a2df1b37eeb02f8646485130d4d6756b","\u0000lib/features/journey/services/app_bootstrap.dart":"100755 dca8fd5bbbf7cb8371a477eca678f0339338d603bc31385532ca9749e6f38e1a","\u0000test/features/ads/ad_mediator_test.dart":"100755 675acecca34251d049f74dd385ef3754b5b836d7201ab4f7f92402134d6eb157","\u0000test/features/ads/ads_fakes.dart":"100755 c051570e927ff883658dddd452e5c403e03704c9691193ac78894b1282bcfa1c","\u0000test/features/ads/pending_loss_store_test.dart":"100755 70bb720d9ffbea3a52f900adcb217558518f4de53b13c3d6090bc122c906bebe","\u0000test/features/journey/app_bootstrap_test.dart":"100755 81f6a0630e2cc20d2064eb61bd5a6e531be6abc61b854bd3d70705eb297ae433","\u0000test/features/journey/level_game_reward_test.dart":"100755 cf74a0c15100726a339e6c853e8f73c22a33b31a0f09ba04f7aeb4348e4660f3","\u0000test/ui/game_screen_test.dart":"100755 3e41967dc3db6dffb6013eedd38736b5f5e4f2eb0490605a0be38647d77f1db4","\u0000test/ui/ui_test_helpers.dart":"100755 02d70ca366684cd17ea91c5a1f12f9709a76b4b9b6770b999f93944ebe030e51"}]}
+**Autonomous**: true
+**Review**: not finished
+
+---
+
+## Question Asked
+**Timestamp**: 2026-11-27T07:54:30Z
+**Event**: QUESTION_ASKED
+**Question Id**: 977a3346
+**Question Type**: plan-approval
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:17d59a92b584cded9d8667112b28c208c2d0cdc83c9364b8ec4c68821588f9d8
+**Stage**: code-generation
+**Unit**: u3-banner
+**Ask Id**: 3dfff8471cc077c8e53feb17568b5602
+**Options**: ["Approve Plan","Request Changes","I'll edit the files"]
+**Question Text SHA-256**: 455648cc351a78bef047c2d3da8297a40da8951819826f5b0c823f3b5a00c415
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-questions.md
+
+---
+
+## Question Shown
+**Timestamp**: 2026-11-27T07:56:46Z
+**Event**: QUESTION_SHOWN
+**Question Id**: 977a3346
+**Question Type**: plan-approval
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:550287af61de4250ac55881b0cabbfe9e9691ecc06639bc14f475a4ad6bb836c
+**Stage**: code-generation
+**Unit**: u3-banner
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-questions.md
+**Ask Id**: 354d5c1a07e00d328a8c6598929f79eb
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T08:06:25Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 4b3ee656
+**Open Questions**: f1002bcc, 977a3346
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-questions.md","entries":{"Plan Approval":"ce3eb9d914617c87"}}
+
+---
+
+## Plan Approval Recorded
+**Timestamp**: 2026-11-27T08:06:51Z
+**Event**: PLAN_APPROVAL_RECORDED
+**Stage**: code-generation
+**Details**: Approve Plan
+**Checkpoint**: plan-approval
+**Plan Target**: unit:u3-banner
+**Intent**: 01a21093-8838-75fd-8b5f-0b48d1a0236f
+**Directive Epoch**: sha256:d4788042d420111535eeb73c866ced3c92d4ea7effc23e99d4902be7c90d76a4
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+**Approval Fingerprint**: sha256:v3:5861cf0b6ee2dbc3cb7be55242b11322b3f2f20b89ef2ec7ffb90ad28798dd73
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-questions.md
+**Questions SHA-256**: d2eae7994f68f709b8cb0562c11766cf351127f96b03f35856638b2a5ad0d6df
+**Prompt SHA-256**: c91fdc2978c1e19559f0199616bb1a2b61bd6c17e1cd6f3e674d1762bb756257
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Asked By**: engine
+**Person Reply**: 1
+**Message Id**: 4b3ee656
+**Unit**: u3-banner
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T08:18:35Z
+**Event**: SENSOR_FIRED
+**Fire id**: 72841e2c
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u3-banner
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T08:18:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: 72841e2c
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u3-banner
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-plan.md
+**Duration ms**: 126
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T08:18:36Z
+**Event**: SENSOR_FIRED
+**Fire id**: dc627826
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u3-banner
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/unit-test-instructions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T08:18:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: dc627826
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u3-banner
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/unit-test-instructions.md
+**Duration ms**: 121
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T08:18:36Z
+**Event**: SENSOR_FIRED
+**Fire id**: 98f8579d
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u3-banner
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T08:18:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: 98f8579d
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u3-banner
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-summary.md
+**Duration ms**: 123
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T08:18:36Z
+**Event**: SENSOR_FIRED
+**Fire id**: 131ecb29
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u3-banner
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T08:18:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: 131ecb29
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u3-banner
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/traceability.json
+**Duration ms**: 123
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-11-27T08:18:44Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: code-generation
+**Unit**: u2-reward-ads
+**Checkpoint**: review-receipt
+**Changed**: lib/features/ads/services/admob_adapter.dart, lib/features/ads/services/applovin_adapter.dart
+**Recorded**: sha256:faeb7a100efae940afb45acf910d3099d54db73e643a1743ed3847950ce7b365
+**Current**: sha256:84bf67a7ea753d3acfe46397f92688eb6f40e83088d7372d10034906f49d1e6c
+**Details**: lib/features/ads/services/admob_adapter.dart, lib/features/ads/services/applovin_adapter.dart changed after the reward ads Unit was reviewed; carrying on.
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T08:18:48Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u3-banner
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276
+**Request Id**: review:3dca1a53969b2781a11fefe4a5bd4362
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Unit Source Fingerprint**: sha256:d6bdb4a5559e93f6063340b1e16dc76af411f0ae67a14f4e25b4bc504a0e0cb6
+**Review File**: .aidlc-engine/reviews/code-generation/units/u3-banner/09921dc3741461e0/1.3dca1a53969b2781a11fefe4a5bd4362.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T08:19:10Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u3-banner
+**Iteration**: 1
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Unit Source Fingerprint**: sha256:d6bdb4a5559e93f6063340b1e16dc76af411f0ae67a14f4e25b4bc504a0e0cb6
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276
+**Request Id**: review:3dca1a53969b2781a11fefe4a5bd4362
+**Review File**: .aidlc-engine/reviews/code-generation/units/u3-banner/09921dc3741461e0/1.3dca1a53969b2781a11fefe4a5bd4362.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T08:19:25Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u3-banner
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276
+**Artifact Fingerprint**: sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276
+**Request Id**: review:3dca1a53969b2781a11fefe4a5bd4362
+**Request Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Source Listing**: sha256:3fbd64d7fe8d6f53e5617e7e8a3dee1fac212dbe64c20913c6128e0f470ba581
+**Unit Source Fingerprint**: sha256:d6bdb4a5559e93f6063340b1e16dc76af411f0ae67a14f4e25b4bc504a0e0cb6
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u3-banner/09921dc3741461e0/1.json
+**Review Record Digest**: sha256:cafc0b44f0054d2416761cca475186ebf420bf8a3843642b69cb118b6eb2c710
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T08:19:59Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u3-banner
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276
+**Request Id**: review:1c6c392cd30958778a285cbbd9607ec2
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Unit Source Fingerprint**: sha256:d6bdb4a5559e93f6063340b1e16dc76af411f0ae67a14f4e25b4bc504a0e0cb6
+**Review File**: .aidlc-engine/reviews/code-generation/units/u3-banner/09921dc3741461e0/2.1c6c392cd30958778a285cbbd9607ec2.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T08:20:22Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u3-banner
+**Iteration**: 2
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Unit Source Fingerprint**: sha256:d6bdb4a5559e93f6063340b1e16dc76af411f0ae67a14f4e25b4bc504a0e0cb6
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276
+**Request Id**: review:1c6c392cd30958778a285cbbd9607ec2
+**Review File**: .aidlc-engine/reviews/code-generation/units/u3-banner/09921dc3741461e0/2.1c6c392cd30958778a285cbbd9607ec2.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T08:20:37Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u3-banner
+**Iteration**: 2
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276
+**Artifact Fingerprint**: sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276
+**Request Id**: review:1c6c392cd30958778a285cbbd9607ec2
+**Request Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Source Listing**: sha256:3fbd64d7fe8d6f53e5617e7e8a3dee1fac212dbe64c20913c6128e0f470ba581
+**Unit Source Fingerprint**: sha256:d6bdb4a5559e93f6063340b1e16dc76af411f0ae67a14f4e25b4bc504a0e0cb6
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u3-banner/09921dc3741461e0/2.json
+**Review Record Digest**: sha256:25e13d97308cda2484d8c28225ad351f46a121bbbe49b723f418ecb8f9cba018
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-27T08:21:26Z
+**Event**: UNIT_STARTED
+**Stage**: code-generation
+**Unit**: u3-banner
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-27T08:21:40Z
+**Event**: UNIT_COMPLETED
+**Stage**: code-generation
+**Unit**: u3-banner
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-27T08:25:44Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u3-banner
+**Kind**: unit
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 4410f978-725a-45b1-aa46-3c89d825b0b0
+**Fingerprint**: sha256:ef33e4bef47163e27e60f28cf9d4de1c9de6c1bf6308c6f0f6c355fae194acc1
+**Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Exit Code**: 0
+**Verified**: true
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-27T08:26:40Z
+**Event**: GATE_APPROVED
+**Unit**: u3-banner
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Stages**: functional-design, nfr-requirements, nfr-design, code-generation
+**Gate Scope**: unit-end
+**Checkpoint**: construction-unit
+**Fingerprint**: sha256:ef33e4bef47163e27e60f28cf9d4de1c9de6c1bf6308c6f0f6c355fae194acc1
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+**Run floors**: {"functional-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-requirements":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","infrastructure-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","code-generation":"STAGE_JUMPED:2026-11-27T06:20:40Z#1"}
+**Verification Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Verification Id**: 4410f978-725a-45b1-aa46-3c89d825b0b0
+**Approved Evidence**: {"functional-design":["sha256:d96ce48ec3874176d52b11203480303775451e653b1aea55da51a4e2f8c712bf",null],"nfr-requirements":["sha256:1d376460682d5c34c2d576180b6c743ee09478c8ab0701949cb66b5d4f269824",null],"nfr-design":["sha256:d7e99b104d89c91e14d778ffe05df43d6eb78ed27bbbea0f9eed2a18156bbd7e",null],"code-generation":["sha256:1161766ddd2b3afea743ad26afbb0746685b65c7e7c96639fae8275814329276","sha256:d6bdb4a5559e93f6063340b1e16dc76af411f0ae67a14f4e25b4bc504a0e0cb6",{"\u0000lib/core/audio/audio_controller.dart":"100755 cfc83c5a4d5b4feee91453c3aa350a0e00de23f6af4b6c13d333153b6914012a","\u0000lib/features/ads/services/ad_mediator.dart":"100755 d5dcd66de01179ad07a01055c8950425a14c78174f15c6224197d401016082cb","\u0000lib/features/ads/services/ad_network_adapter.dart":"100755 df21b246f9465eae347ccd331096a657e2de639fc136c096050fc1adb96d0fb6","\u0000lib/features/ads/services/ad_unit_ids.dart":"100755 8da17df5d1c28bb196d88b1c7ab98dd2fb50897ee11de4e54c081efa2311cca1","\u0000lib/features/ads/services/admob_adapter.dart":"100755 e2de48f347257bd2f267163318fdd70698541ea49994b83c9ccb38706ea24681","\u0000lib/features/ads/services/applovin_adapter.dart":"100755 f853061ba3890fef39113158d321e4a3c09f16736e9b3f9c17a0fdce7d6f7d21","\u0000lib/features/ads/services/unity_adapter.dart":"100755 ca6d9ca9dc6497dc6c78e3edbd2f23d56e42f38aa8155596e15ca1a0016a0fc9","\u0000lib/features/ads/widgets/ad_banner_slot.dart":"100755 5704fc9273fcd4d71b02ab4bc0a36aca9687e3dca7f8a0a90830d0ccc49c333b","\u0000lib/features/endless/screens/endless_game_screen.dart":"100755 a535928d0d6b183ef21c5b69b6ab0af596b04231e4d99a77b377a63b44f688fb","\u0000lib/features/game/screens/game_screen.dart":"100755 3b5a4ea526c62a84f0cf86ad84553b8f5141b0f17486a5fae686af515d549107","\u0000lib/features/game/services/game_feedback.dart":"100755 325c811c9d1451685c478ddb37daa3f43662ff917f982862807c0e813986d5ea","\u0000test/core/audio/audioplayers_sfx_player_test.dart":"100755 0515593ee960f2ab377310c262fc936cd0592fb706482fc5a60b60f79ba94a03","\u0000test/features/ads/ad_banner_slot_test.dart":"100755 70bf1db0ee1ebc3333a0e667ad37b2b9146445c05bc7a9e07850145e193d067a","\u0000test/features/ads/ad_mediator_test.dart":"100755 675acecca34251d049f74dd385ef3754b5b836d7201ab4f7f92402134d6eb157","\u0000test/features/ads/ads_fakes.dart":"100755 c051570e927ff883658dddd452e5c403e03704c9691193ac78894b1282bcfa1c","\u0000test/features/game/services/game_feedback_test.dart":"100755 a56d340b5f6616fff7af45c04214f179bd6c87569b8bb5ae26e1c6498d358f0c","\u0000test/features/journey/app_bootstrap_test.dart":"100755 81f6a0630e2cc20d2064eb61bd5a6e531be6abc61b854bd3d70705eb297ae433","\u0000test/ui/endless_game_screen_test.dart":"100755 72682fc7e06701f329de90af0475e18f4c6c23cb1454af78708f00d70fcdce6d","\u0000test/ui/game_screen_test.dart":"100755 3e41967dc3db6dffb6013eedd38736b5f5e4f2eb0490605a0be38647d77f1db4"}]}
+**Autonomous**: true
+**Review**: not finished
+
+---
+
+## Question Asked
+**Timestamp**: 2026-11-27T08:27:49Z
+**Event**: QUESTION_ASKED
+**Question Id**: ab0a068a
+**Question Type**: plan-approval
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:73780f88fddaf109159d55a035c8a50610ae2c9ddce400437051abfeedcf886f
+**Stage**: code-generation
+**Unit**: u4-update-and-share
+**Ask Id**: fd2dc586b65a0e5e1c64f3e1efedd157
+**Options**: ["Approve Plan","Request Changes","I'll edit the files"]
+**Question Text SHA-256**: 883d3993df886f18c23750b394611cb95ddadcee052985e6292623011de11e9a
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-generation-questions.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T08:37:43Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 51edb0dc
+**Open Questions**: f1002bcc, ab0a068a
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-generation-questions.md","entries":{"Plan Approval":"b737134ac46d24fb"}}
+
+---
+
+## Plan Approval Recorded
+**Timestamp**: 2026-11-27T08:38:09Z
+**Event**: PLAN_APPROVAL_RECORDED
+**Stage**: code-generation
+**Details**: Approve Plan
+**Checkpoint**: plan-approval
+**Plan Target**: unit:u4-update-and-share
+**Intent**: 01a21093-8838-75fd-8b5f-0b48d1a0236f
+**Directive Epoch**: sha256:827c21007f58fafcbfe11026e527a641fcf3fb45a3328fe42326b16fe81049e2
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+**Approval Fingerprint**: sha256:v3:ed418927d7c5a3b65ffa606a942d108a82bc74fcbc0ef11b707fcc1c0da30840
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-generation-questions.md
+**Questions SHA-256**: ac1680503e3a48eaeaeb36261b649dbb587b89d6facdbe41944b55f324b19541
+**Prompt SHA-256**: 69e8b7446f301f5c5f0cee9703497471801e770935900cbb2d868685af361f43
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Asked By**: engine
+**Person Reply**: 1
+**Message Id**: 51edb0dc
+**Unit**: u4-update-and-share
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T08:42:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: 8a784b17
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u4-update-and-share
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-generation-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T08:42:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 8a784b17
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u4-update-and-share
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-generation-plan.md
+**Duration ms**: 137
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T08:42:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: edba4fe8
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u4-update-and-share
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/unit-test-instructions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T08:42:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: edba4fe8
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u4-update-and-share
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/unit-test-instructions.md
+**Duration ms**: 128
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T08:42:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: a6d809fa
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u4-update-and-share
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T08:42:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: a6d809fa
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u4-update-and-share
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-summary.md
+**Duration ms**: 127
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T08:42:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 1681a594
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u4-update-and-share
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T08:42:51Z
+**Event**: SENSOR_PASSED
+**Fire id**: 1681a594
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u4-update-and-share
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/traceability.json
+**Duration ms**: 124
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T08:43:04Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u4-update-and-share
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235
+**Request Id**: review:46d799e8472b6e6d7ef15ddf44b81b28
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Unit Source Fingerprint**: sha256:a8f7811bb879a33bb85b2a483e27ffff60cb0d18a94b0615f5a1db3cffb1a3b4
+**Review File**: .aidlc-engine/reviews/code-generation/units/u4-update-and-share/09921dc3741461e0/1.46d799e8472b6e6d7ef15ddf44b81b28.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T08:43:32Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u4-update-and-share
+**Iteration**: 1
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Unit Source Fingerprint**: sha256:a8f7811bb879a33bb85b2a483e27ffff60cb0d18a94b0615f5a1db3cffb1a3b4
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235
+**Request Id**: review:46d799e8472b6e6d7ef15ddf44b81b28
+**Review File**: .aidlc-engine/reviews/code-generation/units/u4-update-and-share/09921dc3741461e0/1.46d799e8472b6e6d7ef15ddf44b81b28.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T08:43:49Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u4-update-and-share
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235
+**Artifact Fingerprint**: sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235
+**Request Id**: review:46d799e8472b6e6d7ef15ddf44b81b28
+**Request Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Source Listing**: sha256:3fbd64d7fe8d6f53e5617e7e8a3dee1fac212dbe64c20913c6128e0f470ba581
+**Unit Source Fingerprint**: sha256:a8f7811bb879a33bb85b2a483e27ffff60cb0d18a94b0615f5a1db3cffb1a3b4
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u4-update-and-share/09921dc3741461e0/1.json
+**Review Record Digest**: sha256:d0e4021037fc0f86e40a9211fdbddc9d8e1254e7ba076e317a5d5023e0cdbe28
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T08:44:26Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u4-update-and-share
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235
+**Request Id**: review:7d48ffd4b986b7842d359f5ed4ffddd7
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Unit Source Fingerprint**: sha256:a8f7811bb879a33bb85b2a483e27ffff60cb0d18a94b0615f5a1db3cffb1a3b4
+**Review File**: .aidlc-engine/reviews/code-generation/units/u4-update-and-share/09921dc3741461e0/2.7d48ffd4b986b7842d359f5ed4ffddd7.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T08:44:55Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u4-update-and-share
+**Iteration**: 2
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Unit Source Fingerprint**: sha256:a8f7811bb879a33bb85b2a483e27ffff60cb0d18a94b0615f5a1db3cffb1a3b4
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235
+**Request Id**: review:7d48ffd4b986b7842d359f5ed4ffddd7
+**Review File**: .aidlc-engine/reviews/code-generation/units/u4-update-and-share/09921dc3741461e0/2.7d48ffd4b986b7842d359f5ed4ffddd7.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T08:45:11Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u4-update-and-share
+**Iteration**: 2
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235
+**Artifact Fingerprint**: sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235
+**Request Id**: review:7d48ffd4b986b7842d359f5ed4ffddd7
+**Request Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Source Fingerprint**: 94d0440c1329f961dd7ce5ef237d38e56478d606789c987c1f7559e8c1d7f410
+**Source Listing**: sha256:3fbd64d7fe8d6f53e5617e7e8a3dee1fac212dbe64c20913c6128e0f470ba581
+**Unit Source Fingerprint**: sha256:a8f7811bb879a33bb85b2a483e27ffff60cb0d18a94b0615f5a1db3cffb1a3b4
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u4-update-and-share/09921dc3741461e0/2.json
+**Review Record Digest**: sha256:f861915bc3d324ec5aab9c29418a820bccbcee190dea049d82594dcef6dfae8b
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-27T08:46:09Z
+**Event**: UNIT_STARTED
+**Stage**: code-generation
+**Unit**: u4-update-and-share
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-27T08:46:26Z
+**Event**: UNIT_COMPLETED
+**Stage**: code-generation
+**Unit**: u4-update-and-share
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-27T08:50:50Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u4-update-and-share
+**Kind**: unit
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 488482b6-f865-4f52-b2e8-df005b8bf827
+**Fingerprint**: sha256:7facc7179ce5e9554dbe987965745ef5dde8e1661b02dfde72a590130506e022
+**Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Exit Code**: 0
+**Verified**: true
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-27T08:52:00Z
+**Event**: GATE_APPROVED
+**Unit**: u4-update-and-share
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Stages**: functional-design, nfr-requirements, nfr-design, code-generation
+**Gate Scope**: unit-end
+**Checkpoint**: construction-unit
+**Fingerprint**: sha256:7facc7179ce5e9554dbe987965745ef5dde8e1661b02dfde72a590130506e022
+**Run floor**: STAGE_JUMPED:2026-11-27T06:20:40Z#1
+**Run floors**: {"functional-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-requirements":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","infrastructure-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","code-generation":"STAGE_JUMPED:2026-11-27T06:20:40Z#1"}
+**Verification Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Verification Id**: 488482b6-f865-4f52-b2e8-df005b8bf827
+**Approved Evidence**: {"functional-design":["sha256:62faa16e0608fab0199f3342b0e888e3c2b91d79895233df9eec0aecb7845c9b",null],"nfr-requirements":["sha256:44b947eab68161849b11109cfd82038ba3728b6426593046a4c492345ef22754",null],"nfr-design":["sha256:efdb4ce828eb162abc628f57596af53ad4335cc9aa6daedfc8e0546be5990d35",null],"code-generation":["sha256:fa83e7b40e92f13b4afa583052f368033827fef04f725de45eb557e5aed31235","sha256:a8f7811bb879a33bb85b2a483e27ffff60cb0d18a94b0615f5a1db3cffb1a3b4",{"\u0000android/app/src/main/AndroidManifest.xml":"100755 ae69ddc3f211149cc9b895a34055cf16bcc7419f9570b3b90cb97669170dc806","\u0000lib/app_composition.dart":"100755 a7f0c270b2bfdc9745ba1e1635b013b21803719f0f36426dc8407885075e1e70","\u0000lib/features/ads/services/ad_mediator.dart":"100755 d5dcd66de01179ad07a01055c8950425a14c78174f15c6224197d401016082cb","\u0000lib/features/game/services/score_share_service.dart":"100755 fc23f6fa0ff89067a2f84b1124710b1326520760db8133a8a835b364851b7eb6","\u0000lib/features/home/screens/home_screen.dart":"100755 81c00e077e696f5cf5930a01c660d931ac30e9ba94bd140653c0f44d14fabadb","\u0000lib/features/journey/services/app_bootstrap.dart":"100755 dca8fd5bbbf7cb8371a477eca678f0339338d603bc31385532ca9749e6f38e1a","\u0000lib/features/update/logic/version_check.dart":"100755 96525ee072769ceba62413304326c6c1b0f9f1af9e7db6a11d48e46137c06ec3","\u0000lib/features/update/services/app_update_checker.dart":"100755 001810ddc7c344eabf676d8c966313e49264904390c77c23e88d11cf7cdf9ded","\u0000lib/features/update/services/installed_version_reader.dart":"100755 dd5b4e44d721d29cc527f1b0ebc539da68a14019c52f49b42fe7e84a76eb4744","\u0000lib/features/update/services/store_launcher.dart":"100755 51df1de0f16197d233bbb384136a245bf3e06b5f3312a88b17a2a18d1eaa232d","\u0000lib/features/update/widgets/update_popup.dart":"100755 69e8ab5e96b32c3a1b945e458b0f4cff08546758ef20c1fd5df1ed4ea8763e7b","\u0000pubspec.lock":"100755 aa57b62b558314ef37c678e468891c703faec52c7aacad61d8814a560d72f56c","\u0000pubspec.yaml":"100755 94c30e758215f3574bca5e7f01661504df18cc1f66566f74c80d823d158b8167","\u0000test/features/ads/ad_mediator_test.dart":"100755 675acecca34251d049f74dd385ef3754b5b836d7201ab4f7f92402134d6eb157","\u0000test/features/ads/ads_fakes.dart":"100755 c051570e927ff883658dddd452e5c403e03704c9691193ac78894b1282bcfa1c","\u0000test/features/game/services/score_share_service_test.dart":"100755 f5cc47dd569640bb65d76f0a0c18f49b6f7fe124942901dab577e0d0dbcba95f","\u0000test/features/journey/app_bootstrap_test.dart":"100755 81f6a0630e2cc20d2064eb61bd5a6e531be6abc61b854bd3d70705eb297ae433","\u0000test/features/update/app_update_checker_test.dart":"100755 5816236ac969bb2772c440d15dbff2323d4b256ab763f683b36a94085cf1c8cf","\u0000test/features/update/update_fakes.dart":"100755 97fc9ff91d1a7beea0507c6ac448c55aaa9514ab92489f4edae2ecc21dc32c53","\u0000test/features/update/update_popup_test.dart":"100755 2c8687ad873a88b8b32f37df6eeba3dc50395a19a1b499b5d167a514d393b716","\u0000test/features/update/version_check_test.dart":"100755 f6fab833eb1f29b82558220ea9559c75b9d1a81c5685e1022531311caba7bf96","\u0000test/ui/ui_test_helpers.dart":"100755 02d70ca366684cd17ea91c5a1f12f9709a76b4b9b6770b999f93944ebe030e51"}]}
+**Autonomous**: true
+**Review**: not finished
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-11-27T09:00:01Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: code-generation
+**Next Stage**: build-and-test
+**Brief Digest**: none
+**Sensor State**: required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-plan.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/unit-test-instructions.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-summary.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/traceability.json=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-plan.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/unit-test-instructions.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-summary.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/traceability.json=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-plan.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/unit-test-instructions.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-summary.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/traceability.json=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-generation-plan.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/unit-test-instructions.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-summary.md=passed; required-sections@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/traceability.json=passed; traceability@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/traceability.json=not-run; traceability@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/traceability.json=not-run; traceability@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/traceability.json=not-run; traceability@aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/traceability.json=not-run
+**Open Decisions**: 0
+**Question Id**: 9d2ca3c0
+**Question Type**: gate
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:b8ca865e0baac1244634d1c448f119feedc0ae310247359b1002a1945b56e1ac
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-27T09:04:33Z
+**Event**: GATE_APPROVED
+**Stage**: code-generation
+**Brief Digest**: none
+
+---
+
+## Stage Completion
+**Timestamp**: 2026-11-27T09:04:33Z
+**Event**: STAGE_COMPLETED
+**Stage**: code-generation
+**Validation Basis**: {"graphContract":"sha256:ac0ef7ae03ae2fcfab9e2a94500d84c4fe00d00384d1f8dcff92c96b2e1f50de","inputs":[{"artifact":"contract-summary","contentHash":"sha256:15ae4545197b9e049048c4efb4e70ec3379d2805c9099a306f393694927f0bcf","instanceCount":1,"presentCount":1,"producer":"contract-design","required":false,"structureHash":"sha256:4e787c558ef8e1974582de667baf2872c908807469dcf1a0bde32455b5c249a4"},{"artifact":"entities","contentHash":"sha256:de176a072975ab2209a3e4cf01f350a1f65881b927ac7595f7d3cc8dd1148993","instanceCount":1,"presentCount":1,"producer":"functional-design","required":false,"structureHash":"sha256:900bf44b7cb82ab6bf4786f841dd6d2cb4b89c85e23cbf897fa26ab4830fe036"},{"artifact":"functional-spec","contentHash":"sha256:13b754bc9bbdfe547489bd7eb5a4cb7233c34d1306f50b5c633315c75831b532","instanceCount":4,"presentCount":4,"producer":"functional-design","required":false,"structureHash":"sha256:2d3a04b0860ae423d34daeb1c88a9260da23931d99cd631f2ca35921c3662ded"},{"artifact":"performance-design","contentHash":"sha256:aa7cd34a948cb941ad7aaf37f1f459d60eec45cbcb90992f36583c6ecc06c1d7","instanceCount":3,"presentCount":3,"producer":"nfr-design","required":false,"structureHash":"sha256:256930a21926a101d46721bebcb1931785d80c95c11a6408ff339fa038b0b5f8"},{"artifact":"requirements","contentHash":"sha256:f7c75498598966108e72e8e788dd186550b90a328468bb38d577f84487c0670f","instanceCount":1,"presentCount":1,"producer":"requirements-analysis","required":true,"structureHash":"sha256:d6474204540f64c61e96fbf8d82083495d06050b72242b826556276d66ad31e9"},{"artifact":"rules","contentHash":"sha256:81a7e6416304847d185b1920a7652d8133923c7ffd0e6e92de68853854ca317e","instanceCount":1,"presentCount":1,"producer":"functional-design","required":false,"structureHash":"sha256:6526bb3ddd63e8f2329a6b09ddc75f2cd9a6a7d747c6c93a76dedef5ca0014a0"},{"artifact":"security-design","contentHash":"sha256:e2310aac0a796e21eff41e6ec8b575e0a9ea04cdce059e3fa1237e83e744bcef","instanceCount":4,"presentCount":4,"producer":"nfr-design","required":false,"structureHash":"sha256:6b35a5735bf484084372041b1aca688b8b6872806c2281b065cb5e5c53285820"},{"artifact":"unit-of-work","contentHash":"sha256:123953b82363937ab32d990cd7e0a2293ef2071ce385f471acd594f57432b5b5","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:7b9429a70c96421f9d2ae85db728a3f6e455d08a4f2a73aefcd80171fb7e8d6b"}],"outputs":[{"artifact":"code-generation-plan","contentHash":"sha256:926a22d4dfd8525c89d218675efd2e98730d879f33937155524a5e4e51bca6de","instanceCount":4,"presentCount":4,"producer":"code-generation","required":true,"structureHash":"sha256:ce0dc2bcf5e21b90dd7d810195efea47f0b462700bbc59230d9726545229fd69"},{"artifact":"code-summary","contentHash":"sha256:c1ed75cd073dfe5f6bde75f4b2bd93c0101a7a8d40a098dda4b0334a35ecb111","instanceCount":4,"presentCount":4,"producer":"code-generation","required":true,"structureHash":"sha256:0c7e2d022b9bf02028d121cd0101aadd631035d4fb44a9faa15213ad695a8508"},{"artifact":"traceability","contentHash":"sha256:6153ae5b9081efbd6494101dee4d0d20efca362f71278e25e338ec1a603253b4","instanceCount":4,"presentCount":4,"producer":"code-generation","required":true,"structureHash":"sha256:290fef74963bcf32caea514f69381a76bbaa95fa0a471b77401bee46c4050e47"},{"artifact":"unit-test-instructions","contentHash":"sha256:8bb0a1acc7cadc0cb3c938a2af6ca1f34660ffa1a5b1010ff8c82a42a52d5e43","instanceCount":4,"presentCount":4,"producer":"code-generation","required":true,"structureHash":"sha256:13dc27dd9b9ec3b33e4ea0fd4dd6b1a73c565bb8b05c212c3228feccbf6dd2ab"}],"projectType":"brownfield","schema":3}
+**Details**: Stage Code Generation approved by gate
+
+---
+
+## Stage Start
+**Timestamp**: 2026-11-27T09:05:03Z
+**Event**: STAGE_STARTED
+**Stage**: build-and-test
+**Agent**: aidlc-quality-agent
+**Answer Mode**: file (reused from intent-capture)
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T09:27:33Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 656d6cfb
+**Open Questions**: f1002bcc
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T09:37:03Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 13fb4ad6
+**Open Questions**: f1002bcc
+
+---
+
+## Question Answered
+**Timestamp**: 2026-11-27T09:37:25Z
+**Event**: QUESTION_ANSWERED
+**Stage**: build-and-test
+**Details**: Change request CR-4: on the Journey Game Over overlay, replace 'FINAL SCORE: n' and 'Target: t' with one line 'n / t'; keep everything else unchanged
+
+---
+
+## Stage Jump
+**Timestamp**: 2026-11-27T09:38:16Z
+**Event**: STAGE_JUMPED
+**Direction**: BACKWARD
+**Source**: build-and-test
+**Target**: code-generation
+**Scope**: feature
+**Details**: BACKWARD jump from build-and-test to code-generation (3.5). Scope: feature.
+**Changed Upstream Artifacts**: ["aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-plan.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/traceability.json","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/unit-test-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-plan.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/traceability.json","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/unit-test-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-generation-plan.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/code-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/traceability.json","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u3-banner/code-generation/unit-test-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-generation-plan.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/code-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/traceability.json","aidlc/spaces/default/intents/261125-ads-remote-config/construction/u4-update-and-share/code-generation/unit-test-instructions.md"]
+**Invalidated Downstream Artifacts**: ["aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/build-and-test-summary.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/build-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/cross-unit-traceability.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/integration-test-instructions.md","aidlc/spaces/default/intents/261125-ads-remote-config/construction/build-and-test/test-results.md"]
+**Invalidated Downstream Reviews**: []
+**Source Baseline**: sha256:f0e3de9fa537ffefc2086be2a4fc860cc446aa2c70171294e7780792edf393e0
+
+---
+
+## Stage Start
+**Timestamp**: 2026-11-27T09:38:16Z
+**Event**: STAGE_STARTED
+**Stage**: code-generation
+**Agent**: aidlc-developer-agent
+**Answer Mode**: file (reused from intent-capture)
+**Source Baseline**: sha256:f0e3de9fa537ffefc2086be2a4fc860cc446aa2c70171294e7780792edf393e0
+
+---
+
+## Question Asked
+**Timestamp**: 2026-11-27T09:39:12Z
+**Event**: QUESTION_ASKED
+**Question Id**: c14fb8de
+**Question Type**: plan-approval
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:f3e3a84bd99d0f0be6f8f2326facfd0d30d8de64085b06b90cf0ce195eb19d75
+**Stage**: code-generation
+**Unit**: u1-ads-core
+**Ask Id**: 46a0d761ff55ee1dc38d538541081cba
+**Options**: ["Approve Plan","Request Changes","I'll edit the files"]
+**Question Text SHA-256**: c44309302f8a1c8c902692d7a6f52947c482e53923808253b3891b579ef95ec0
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T09:40:53Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: d2c8c724
+**Open Questions**: f1002bcc, c14fb8de
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md","entries":{"Plan Approval":"5260f929a94ca1f7"}}
+
+---
+
+## Plan Approval Recorded
+**Timestamp**: 2026-11-27T09:42:05Z
+**Event**: PLAN_APPROVAL_RECORDED
+**Stage**: code-generation
+**Details**: Approve Plan
+**Checkpoint**: plan-approval
+**Plan Target**: unit:u1-ads-core
+**Intent**: 01a21093-8838-75fd-8b5f-0b48d1a0236f
+**Directive Epoch**: sha256:277794535721069ee7976682de397a71ce8225c7e0fc0dbf968d799561a5194b
+**Run floor**: STAGE_JUMPED:2026-11-27T09:38:16Z#2
+**Approval Fingerprint**: sha256:v3:2af351fda1e45be824b73c02a8778088d22acb8c04df10bd934f259e84e819bd
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md
+**Questions SHA-256**: 4e4293fca5dace0ffd506f3e09d4490da18ff23e5cab305423bb0e20eeee70ab
+**Prompt SHA-256**: ef8f477fbee5f899eb6f1544813f0baeab102d31157277d78fe4e08fae51eb0b
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Asked By**: engine
+**Person Reply**: 1
+**Message Id**: d2c8c724
+**Unit**: u1-ads-core
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T09:48:14Z
+**Event**: SENSOR_FIRED
+**Fire id**: d6423adf
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T09:48:15Z
+**Event**: SENSOR_PASSED
+**Fire id**: d6423adf
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-plan.md
+**Duration ms**: 136
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T09:48:15Z
+**Event**: SENSOR_FIRED
+**Fire id**: 23dd6f02
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/unit-test-instructions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T09:48:15Z
+**Event**: SENSOR_PASSED
+**Fire id**: 23dd6f02
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/unit-test-instructions.md
+**Duration ms**: 122
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T09:48:15Z
+**Event**: SENSOR_FIRED
+**Fire id**: b89b3183
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T09:48:15Z
+**Event**: SENSOR_PASSED
+**Fire id**: b89b3183
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-summary.md
+**Duration ms**: 127
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-27T09:48:16Z
+**Event**: SENSOR_FIRED
+**Fire id**: 08c884e2
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-27T09:48:16Z
+**Event**: SENSOR_PASSED
+**Fire id**: 08c884e2
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u1-ads-core
+**Output path**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/traceability.json
+**Duration ms**: 122
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T09:48:51Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:99b9b45d7e23db96e499e90ba1b50098
+**Source Fingerprint**: c862fcb15df2cf94bf293335a5d1d46cd404c198b9b8c7fa96b36ecac7175f1d
+**Unit Source Fingerprint**: sha256:881cdb694072cb7553664d1db7968e1c3074e481a4798072f2b6cfa8e779b9f1
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/f28580472d640b08/1.99b9b45d7e23db96e499e90ba1b50098.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T09:50:09Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 1
+**Source Fingerprint**: c862fcb15df2cf94bf293335a5d1d46cd404c198b9b8c7fa96b36ecac7175f1d
+**Unit Source Fingerprint**: sha256:881cdb694072cb7553664d1db7968e1c3074e481a4798072f2b6cfa8e779b9f1
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:99b9b45d7e23db96e499e90ba1b50098
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/f28580472d640b08/1.99b9b45d7e23db96e499e90ba1b50098.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T09:50:56Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:99b9b45d7e23db96e499e90ba1b50098
+**Request Source Fingerprint**: c862fcb15df2cf94bf293335a5d1d46cd404c198b9b8c7fa96b36ecac7175f1d
+**Source Fingerprint**: c862fcb15df2cf94bf293335a5d1d46cd404c198b9b8c7fa96b36ecac7175f1d
+**Source Listing**: sha256:f0e3de9fa537ffefc2086be2a4fc860cc446aa2c70171294e7780792edf393e0
+**Unit Source Fingerprint**: sha256:881cdb694072cb7553664d1db7968e1c3074e481a4798072f2b6cfa8e779b9f1
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/f28580472d640b08/1.json
+**Review Record Digest**: sha256:0ead9e43463108c748b9470da46a7a11279d34fb4efdffc6c2e5755b13a0d8d4
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T09:52:18Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:b264d0c417ea3295121bdb68351a53dd
+**Source Fingerprint**: c862fcb15df2cf94bf293335a5d1d46cd404c198b9b8c7fa96b36ecac7175f1d
+**Unit Source Fingerprint**: sha256:881cdb694072cb7553664d1db7968e1c3074e481a4798072f2b6cfa8e779b9f1
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/f28580472d640b08/2.b264d0c417ea3295121bdb68351a53dd.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-27T09:53:38Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 2
+**Source Fingerprint**: c862fcb15df2cf94bf293335a5d1d46cd404c198b9b8c7fa96b36ecac7175f1d
+**Unit Source Fingerprint**: sha256:881cdb694072cb7553664d1db7968e1c3074e481a4798072f2b6cfa8e779b9f1
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:b264d0c417ea3295121bdb68351a53dd
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/f28580472d640b08/2.b264d0c417ea3295121bdb68351a53dd.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-27T09:54:23Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-ads-core
+**Iteration**: 2
+**Verdict**: NOT-READY
+**Review Finished**: no
+**Request Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Artifact Fingerprint**: sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142
+**Request Id**: review:b264d0c417ea3295121bdb68351a53dd
+**Request Source Fingerprint**: c862fcb15df2cf94bf293335a5d1d46cd404c198b9b8c7fa96b36ecac7175f1d
+**Source Fingerprint**: c862fcb15df2cf94bf293335a5d1d46cd404c198b9b8c7fa96b36ecac7175f1d
+**Source Listing**: sha256:f0e3de9fa537ffefc2086be2a4fc860cc446aa2c70171294e7780792edf393e0
+**Unit Source Fingerprint**: sha256:881cdb694072cb7553664d1db7968e1c3074e481a4798072f2b6cfa8e779b9f1
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u1-ads-core/f28580472d640b08/2.json
+**Review Record Digest**: sha256:5bbf925174bf530395fc7ddf084b98984d8e1380f51192e61b8703aa321ea148
+**Testing Contract**: sha256:a81de4428560901c72e86bedab48c3d1809be07a1a8ee64055ac2dcf93228529
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-27T09:55:32Z
+**Event**: UNIT_STARTED
+**Stage**: code-generation
+**Unit**: u1-ads-core
+**Run floor**: STAGE_JUMPED:2026-11-27T09:38:16Z#2
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-27T09:57:09Z
+**Event**: UNIT_COMPLETED
+**Stage**: code-generation
+**Unit**: u1-ads-core
+**Run floor**: STAGE_JUMPED:2026-11-27T09:38:16Z#2
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-27T10:01:48Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u1-ads-core
+**Kind**: skeleton
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 80c5ee9e-6ad2-4c4c-8737-da539d98f385
+**Fingerprint**: sha256:1976146f3aaebbc0d61fe773a09c5685d5a288a43f4d39692eea448419185cdd
+**Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Exit Code**: 1
+**Verified**: false
+**Run floor**: STAGE_JUMPED:2026-11-27T09:38:16Z#2
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-27T10:05:30Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u1-ads-core
+**Kind**: skeleton
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 7ef41961-e4c6-4f74-80ed-32d7c5176e27
+**Fingerprint**: sha256:1976146f3aaebbc0d61fe773a09c5685d5a288a43f4d39692eea448419185cdd
+**Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Exit Code**: 0
+**Verified**: true
+**Run floor**: STAGE_JUMPED:2026-11-27T09:38:16Z#2
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-11-27T10:07:07Z
+**Event**: DECISION_RECORDED
+**Checkpoint**: Construction Unit Approval
+**Unit**: u1-ads-core
+**Kind**: skeleton
+**Stage**: code-generation
+**Fingerprint**: sha256:1976146f3aaebbc0d61fe773a09c5685d5a288a43f4d39692eea448419185cdd
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Options**: Approve,Request Changes
+**Asked Evidence**: {"functional-design":["sha256:c2603aba51231e91f256488b28ff46c3eefb7f886152bfc18361ef5694915ba4",null],"nfr-requirements":["sha256:8b2736459b3884994a045cbbc71f083286c6612f305b762b1b2fb8c926a8fff6",null],"nfr-design":["sha256:d203edeea3e29595e719ad304503e4ee9b06a9d0ead573fc5dbeffcc5e820c59",null],"code-generation":["sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142","sha256:881cdb694072cb7553664d1db7968e1c3074e481a4798072f2b6cfa8e779b9f1",{"\u0000android/app/src/main/AndroidManifest.xml":"100755 ae69ddc3f211149cc9b895a34055cf16bcc7419f9570b3b90cb97669170dc806","\u0000ios/Runner/Info.plist":"100755 49a72eeeeafd037695116289f3200b54e3844e10b99345671f33e860bd9bbf34","\u0000lib/app_composition.dart":"100755 a7f0c270b2bfdc9745ba1e1635b013b21803719f0f36426dc8407885075e1e70","\u0000lib/core/config/remote_config_client.dart":"100755 27f0300e9172d0f9c8f5117e18ded250bc4482a3c12adc1f632a487a2d56cdc6","\u0000lib/core/firebase/firebase_remote_config_client.dart":"100755 625869c7e2b6b65ed280e6d1e8615a463e87eaba82873aeea814acb907ea09f1","\u0000lib/features/ads/models/ads_settings.dart":"100755 c465ee84c0f621747c95ff27f4befd45794fca5878d89f7092995127f2ed1234","\u0000lib/features/ads/services/ad_counters.dart":"100755 01a96780628ef8ad2b69e87a23d0d0130fb11635b428da62b547828e0e0cb666","\u0000lib/features/ads/services/ad_lifecycle_observer.dart":"100755 66c76c687fbc5dfc8f77b2e704f66077e6e04d1503983e3bab4b76cae1378c68","\u0000lib/features/ads/services/ad_mediator.dart":"100755 d5dcd66de01179ad07a01055c8950425a14c78174f15c6224197d401016082cb","\u0000lib/features/ads/services/ad_network_adapter.dart":"100755 df21b246f9465eae347ccd331096a657e2de639fc136c096050fc1adb96d0fb6","\u0000lib/features/ads/services/ad_unit_ids.dart":"100755 8da17df5d1c28bb196d88b1c7ab98dd2fb50897ee11de4e54c081efa2311cca1","\u0000lib/features/ads/services/admob_adapter.dart":"100755 e2de48f347257bd2f267163318fdd70698541ea49994b83c9ccb38706ea24681","\u0000lib/features/ads/services/ads_config.dart":"100755 9cfa83a2b60913f0a24e2995514b214cf95f2063cc584452911ee392507a9899","\u0000lib/features/ads/services/applovin_adapter.dart":"100755 f853061ba3890fef39113158d321e4a3c09f16736e9b3f9c17a0fdce7d6f7d21","\u0000lib/features/ads/services/consent_service.dart":"100755 ff214f64cb8e0072e062051d6946f33d68d74d277bc16fca71f332401dcc44f9","\u0000lib/features/ads/services/pending_loss_store.dart":"100755 b99dc9a2cd37bf2ce4e5c9a38134d8a70b4e03c9aae280af939c422e94b9f329","\u0000lib/features/ads/services/unity_adapter.dart":"100755 ca6d9ca9dc6497dc6c78e3edbd2f23d56e42f38aa8155596e15ca1a0016a0fc9","\u0000lib/features/ads/widgets/ad_banner_slot.dart":"100755 5704fc9273fcd4d71b02ab4bc0a36aca9687e3dca7f8a0a90830d0ccc49c333b","\u0000lib/features/endless/screens/endless_game_screen.dart":"100755 a535928d0d6b183ef21c5b69b6ab0af596b04231e4d99a77b377a63b44f688fb","\u0000lib/features/game/screens/game_screen.dart":"100755 3b5a4ea526c62a84f0cf86ad84553b8f5141b0f17486a5fae686af515d549107","\u0000lib/features/home/screens/home_screen.dart":"100755 81c00e077e696f5cf5930a01c660d931ac30e9ba94bd140653c0f44d14fabadb","\u0000lib/features/journey/services/app_bootstrap.dart":"100755 dca8fd5bbbf7cb8371a477eca678f0339338d603bc31385532ca9749e6f38e1a","\u0000pubspec.yaml":"100755 94c30e758215f3574bca5e7f01661504df18cc1f66566f74c80d823d158b8167","\u0000test/app_composition_test.dart":"100755 2713cd179a22c0eb515108858eb5f55adc915fbd81ac8e9703e723677a76577c","\u0000test/core/config/firebase_remote_config_client_test.dart":"100755 4e0818c4e267e5572214872c76b425db733d10e349047d8003e47e0e2decc9b7","\u0000test/fakes/fake_remote_config_client.dart":"100755 02e7ee5c004ab5bb8ab54e3307b887ce84d62e8d2582028e46c24ac240a331b2","\u0000test/features/ads/ad_banner_slot_test.dart":"100755 70bf1db0ee1ebc3333a0e667ad37b2b9146445c05bc7a9e07850145e193d067a","\u0000test/features/ads/ad_counters_test.dart":"100755 9d1eeeb4e5c5aa99092e1c47fc4265d896254388333b59a4b9c3b077355e7fae","\u0000test/features/ads/ad_lifecycle_observer_test.dart":"100755 7b1f11712fef7c332d898fb57da1a3f881396590db1eacdf953f4b58f82a10f6","\u0000test/features/ads/ad_mediator_test.dart":"100755 675acecca34251d049f74dd385ef3754b5b836d7201ab4f7f92402134d6eb157","\u0000test/features/ads/ads_config_test.dart":"100755 d073cc3be32c239481f89fbaabab36d810e1fbb571599a96e5a43907c772c4f7","\u0000test/features/ads/ads_fakes.dart":"100755 c051570e927ff883658dddd452e5c403e03704c9691193ac78894b1282bcfa1c","\u0000test/features/ads/consent_service_test.dart":"100755 347a281edd981863cfe918077f5123697f7c090d97ce852a4028c2580ddc9703","\u0000test/features/ads/pending_loss_store_test.dart":"100755 70bb720d9ffbea3a52f900adcb217558518f4de53b13c3d6090bc122c906bebe","\u0000test/features/journey/app_bootstrap_test.dart":"100755 81f6a0630e2cc20d2064eb61bd5a6e531be6abc61b854bd3d70705eb297ae433","\u0000test/ui/endless_game_screen_test.dart":"100755 72682fc7e06701f329de90af0475e18f4c6c23cb1454af78708f00d70fcdce6d","\u0000test/ui/game_screen_test.dart":"100755 3e41967dc3db6dffb6013eedd38736b5f5e4f2eb0490605a0be38647d77f1db4","\u0000test/ui/splash_home_test.dart":"100755 c2f7139786db3f31377f7eb4e6770fb47e6ec732bdf0d995572933895eab9b6e","\u0000test/ui/ui_test_helpers.dart":"100755 02d70ca366684cd17ea91c5a1f12f9709a76b4b9b6770b999f93944ebe030e51"}]}
+**Run floors**: {"functional-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-requirements":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","infrastructure-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","code-generation":"STAGE_JUMPED:2026-11-27T09:38:16Z#2"}
+**Question Id**: 18cece21
+**Question Type**: unit-checkpoint
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:0fa339e4800bb541a8c2bbd6010d2a4cc82fc6bf7367dc2a6abe0768bbd4c6ea
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T16:32:54Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 82241269
+**Open Questions**: f1002bcc, 18cece21
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md","entries":{"Plan Approval":"5260f929a94ca1f7"}}
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-27T16:38:22Z
+**Event**: HUMAN_TURN
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Origin**: person
+**Source**: typed
+**Message Id**: 659fa07e
+**Open Questions**: f1002bcc, 18cece21
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261125-ads-remote-config/construction/u1-ads-core/code-generation/code-generation-questions.md","entries":{"Plan Approval":"5260f929a94ca1f7"}}
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-27T16:40:03Z
+**Event**: GATE_APPROVED
+**Unit**: u1-ads-core
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Stages**: functional-design, nfr-requirements, nfr-design, code-generation
+**Gate Scope**: unit-end
+**Checkpoint**: walking-skeleton
+**Fingerprint**: sha256:1976146f3aaebbc0d61fe773a09c5685d5a288a43f4d39692eea448419185cdd
+**Run floor**: STAGE_JUMPED:2026-11-27T09:38:16Z#2
+**Run floors**: {"functional-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-requirements":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","nfr-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","infrastructure-design":"WORKFLOW_STARTED:2026-11-25T02:41:04Z#1","code-generation":"STAGE_JUMPED:2026-11-27T09:38:16Z#2"}
+**Verification Command SHA-256**: 75c8e86e547c2e63d7ecb0c5e8c986f2fcd016b1038e7878cf90f1dd310cf83c
+**Verification Id**: 7ef41961-e4c6-4f74-80ed-32d7c5176e27
+**Approved Evidence**: {"functional-design":["sha256:c2603aba51231e91f256488b28ff46c3eefb7f886152bfc18361ef5694915ba4",null],"nfr-requirements":["sha256:8b2736459b3884994a045cbbc71f083286c6612f305b762b1b2fb8c926a8fff6",null],"nfr-design":["sha256:d203edeea3e29595e719ad304503e4ee9b06a9d0ead573fc5dbeffcc5e820c59",null],"code-generation":["sha256:a429e93f1a7976c29f43907b3fb6c8f1140572e2258fb8af38c9d2dafcda4142","sha256:881cdb694072cb7553664d1db7968e1c3074e481a4798072f2b6cfa8e779b9f1",{"\u0000android/app/src/main/AndroidManifest.xml":"100755 ae69ddc3f211149cc9b895a34055cf16bcc7419f9570b3b90cb97669170dc806","\u0000ios/Runner/Info.plist":"100755 49a72eeeeafd037695116289f3200b54e3844e10b99345671f33e860bd9bbf34","\u0000lib/app_composition.dart":"100755 a7f0c270b2bfdc9745ba1e1635b013b21803719f0f36426dc8407885075e1e70","\u0000lib/core/config/remote_config_client.dart":"100755 27f0300e9172d0f9c8f5117e18ded250bc4482a3c12adc1f632a487a2d56cdc6","\u0000lib/core/firebase/firebase_remote_config_client.dart":"100755 625869c7e2b6b65ed280e6d1e8615a463e87eaba82873aeea814acb907ea09f1","\u0000lib/features/ads/models/ads_settings.dart":"100755 c465ee84c0f621747c95ff27f4befd45794fca5878d89f7092995127f2ed1234","\u0000lib/features/ads/services/ad_counters.dart":"100755 01a96780628ef8ad2b69e87a23d0d0130fb11635b428da62b547828e0e0cb666","\u0000lib/features/ads/services/ad_lifecycle_observer.dart":"100755 66c76c687fbc5dfc8f77b2e704f66077e6e04d1503983e3bab4b76cae1378c68","\u0000lib/features/ads/services/ad_mediator.dart":"100755 d5dcd66de01179ad07a01055c8950425a14c78174f15c6224197d401016082cb","\u0000lib/features/ads/services/ad_network_adapter.dart":"100755 df21b246f9465eae347ccd331096a657e2de639fc136c096050fc1adb96d0fb6","\u0000lib/features/ads/services/ad_unit_ids.dart":"100755 8da17df5d1c28bb196d88b1c7ab98dd2fb50897ee11de4e54c081efa2311cca1","\u0000lib/features/ads/services/admob_adapter.dart":"100755 e2de48f347257bd2f267163318fdd70698541ea49994b83c9ccb38706ea24681","\u0000lib/features/ads/services/ads_config.dart":"100755 9cfa83a2b60913f0a24e2995514b214cf95f2063cc584452911ee392507a9899","\u0000lib/features/ads/services/applovin_adapter.dart":"100755 f853061ba3890fef39113158d321e4a3c09f16736e9b3f9c17a0fdce7d6f7d21","\u0000lib/features/ads/services/consent_service.dart":"100755 ff214f64cb8e0072e062051d6946f33d68d74d277bc16fca71f332401dcc44f9","\u0000lib/features/ads/services/pending_loss_store.dart":"100755 b99dc9a2cd37bf2ce4e5c9a38134d8a70b4e03c9aae280af939c422e94b9f329","\u0000lib/features/ads/services/unity_adapter.dart":"100755 ca6d9ca9dc6497dc6c78e3edbd2f23d56e42f38aa8155596e15ca1a0016a0fc9","\u0000lib/features/ads/widgets/ad_banner_slot.dart":"100755 5704fc9273fcd4d71b02ab4bc0a36aca9687e3dca7f8a0a90830d0ccc49c333b","\u0000lib/features/endless/screens/endless_game_screen.dart":"100755 a535928d0d6b183ef21c5b69b6ab0af596b04231e4d99a77b377a63b44f688fb","\u0000lib/features/game/screens/game_screen.dart":"100755 3b5a4ea526c62a84f0cf86ad84553b8f5141b0f17486a5fae686af515d549107","\u0000lib/features/home/screens/home_screen.dart":"100755 81c00e077e696f5cf5930a01c660d931ac30e9ba94bd140653c0f44d14fabadb","\u0000lib/features/journey/services/app_bootstrap.dart":"100755 dca8fd5bbbf7cb8371a477eca678f0339338d603bc31385532ca9749e6f38e1a","\u0000pubspec.yaml":"100755 94c30e758215f3574bca5e7f01661504df18cc1f66566f74c80d823d158b8167","\u0000test/app_composition_test.dart":"100755 2713cd179a22c0eb515108858eb5f55adc915fbd81ac8e9703e723677a76577c","\u0000test/core/config/firebase_remote_config_client_test.dart":"100755 4e0818c4e267e5572214872c76b425db733d10e349047d8003e47e0e2decc9b7","\u0000test/fakes/fake_remote_config_client.dart":"100755 02e7ee5c004ab5bb8ab54e3307b887ce84d62e8d2582028e46c24ac240a331b2","\u0000test/features/ads/ad_banner_slot_test.dart":"100755 70bf1db0ee1ebc3333a0e667ad37b2b9146445c05bc7a9e07850145e193d067a","\u0000test/features/ads/ad_counters_test.dart":"100755 9d1eeeb4e5c5aa99092e1c47fc4265d896254388333b59a4b9c3b077355e7fae","\u0000test/features/ads/ad_lifecycle_observer_test.dart":"100755 7b1f11712fef7c332d898fb57da1a3f881396590db1eacdf953f4b58f82a10f6","\u0000test/features/ads/ad_mediator_test.dart":"100755 675acecca34251d049f74dd385ef3754b5b836d7201ab4f7f92402134d6eb157","\u0000test/features/ads/ads_config_test.dart":"100755 d073cc3be32c239481f89fbaabab36d810e1fbb571599a96e5a43907c772c4f7","\u0000test/features/ads/ads_fakes.dart":"100755 c051570e927ff883658dddd452e5c403e03704c9691193ac78894b1282bcfa1c","\u0000test/features/ads/consent_service_test.dart":"100755 347a281edd981863cfe918077f5123697f7c090d97ce852a4028c2580ddc9703","\u0000test/features/ads/pending_loss_store_test.dart":"100755 70bb720d9ffbea3a52f900adcb217558518f4de53b13c3d6090bc122c906bebe","\u0000test/features/journey/app_bootstrap_test.dart":"100755 81f6a0630e2cc20d2064eb61bd5a6e531be6abc61b854bd3d70705eb297ae433","\u0000test/ui/endless_game_screen_test.dart":"100755 72682fc7e06701f329de90af0475e18f4c6c23cb1454af78708f00d70fcdce6d","\u0000test/ui/game_screen_test.dart":"100755 3e41967dc3db6dffb6013eedd38736b5f5e4f2eb0490605a0be38647d77f1db4","\u0000test/ui/splash_home_test.dart":"100755 c2f7139786db3f31377f7eb4e6770fb47e6ec732bdf0d995572933895eab9b6e","\u0000test/ui/ui_test_helpers.dart":"100755 02d70ca366684cd17ea91c5a1f12f9709a76b4b9b6770b999f93944ebe030e51"}]}
+**Session**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**User Input**: Approve
+**Person Reply**: tôi muốn backgroud ở dưới màn chơi rõ hơn 1 chút để có thể biết đó là bức ảnh viên ngọc thì nên để như nào ?\nu1: 1, nền: 1
+**Message Id**: 659fa07e
+**Message Ids**: 82241269,659fa07e
+**Review**: not finished
+
+---
+
+## Question Asked
+**Timestamp**: 2026-11-27T16:42:01Z
+**Event**: QUESTION_ASKED
+**Question Id**: e53cc018
+**Question Type**: plan-approval
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:ee68749d7a80d50b84791851ab9c82f7711599ae7111e5502881c10a478d529f
+**Stage**: code-generation
+**Unit**: u2-reward-ads
+**Ask Id**: 31b4f22c63d68ea4e5446f56deab1929
+**Options**: ["Approve Plan","Request Changes","I'll edit the files"]
+**Question Text SHA-256**: a8a1135786fd04ccb9186219232328170792e2eefd930b051197bd03204f1f3f
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-questions.md
+
+---
+
+## Question Shown
+**Timestamp**: 2026-11-27T16:43:42Z
+**Event**: QUESTION_SHOWN
+**Question Id**: e53cc018
+**Question Type**: plan-approval
+**Question Chat**: sess_fc8d60ef-635c-44d9-9e76-2a1a9c0df8c2
+**Question Shows**: sha256:f4c07a096a5af177dd814c5b6161077fe8d43aae3b6525ed7e4727f8cbeebf0e
+**Stage**: code-generation
+**Unit**: u2-reward-ads
+**Questions File**: aidlc/spaces/default/intents/261125-ads-remote-config/construction/u2-reward-ads/code-generation/code-generation-questions.md
+**Ask Id**: 98640ddc4f0faa79ceab637b1a6e8d0f
+
+---
